@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: m123
+
+logging:
+  level:
+    com.bestfeng.dydj.*: debug
+    org.springframework: warn
+    org.aurochsframework.boot.*: debug
+    log4j.logger.com.ibatis: debug
+    #system: debug
+
+
