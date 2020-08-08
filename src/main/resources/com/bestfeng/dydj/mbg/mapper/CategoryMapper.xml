@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestfeng.dydj.mbg.mapper.CategoryMapper">
+  <resultMap id="BaseResultMap" type="com.bestfeng.dydj.mbg.model.Category">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="weid" jdbcType="INTEGER" property="weid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="thumb" jdbcType="VARCHAR" property="thumb" />
+    <result column="parentid" jdbcType="INTEGER" property="parentid" />
+    <result column="isrecommand" jdbcType="INTEGER" property="isrecommand" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="displayorder" jdbcType="TINYINT" property="displayorder" />
+    <result column="enabled" jdbcType="TINYINT" property="enabled" />
+    <result column="model" jdbcType="INTEGER" property="model" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, weid, name, thumb, parentid, isrecommand, description, displayorder, enabled, 
+    model
+  </sql>
+  <select id="selectByExample" parameterType="com.bestfeng.dydj.mbg.model.CategoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ims_weixinmao_jz_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ims_weixinmao_jz_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ims_weixinmao_jz_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bestfeng.dydj.mbg.model.CategoryExample">
+    delete from ims_weixinmao_jz_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bestfeng.dydj.mbg.model.Category">
+    insert into ims_weixinmao_jz_category (id, weid, name, 
+      thumb, parentid, isrecommand, 
+      description, displayorder, enabled, 
+      model)
+    values (#{id,jdbcType=INTEGER}, #{weid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{thumb,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER}, #{isrecommand,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{displayorder,jdbcType=TINYINT}, #{enabled,jdbcType=TINYINT}, 
+      #{model,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Category">
+    insert into ims_weixinmao_jz_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="weid != null">
+        weid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="thumb != null">
+        thumb,
+      </if>
+      <if test="parentid != null">
+        parentid,
+      </if>
+      <if test="isrecommand != null">
+        isrecommand,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="displayorder != null">
+        displayorder,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="weid != null">
+        #{weid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null">
+        #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="isrecommand != null">
+        #{isrecommand,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayorder != null">
+        #{displayorder,jdbcType=TINYINT},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=TINYINT},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bestfeng.dydj.mbg.model.CategoryExample" resultType="java.lang.Long">
+    select count(*) from ims_weixinmao_jz_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ims_weixinmao_jz_category
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.weid != null">
+        weid = #{record.weid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thumb != null">
+        thumb = #{record.thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null">
+        parentid = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.isrecommand != null">
+        isrecommand = #{record.isrecommand,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.displayorder != null">
+        displayorder = #{record.displayorder,jdbcType=TINYINT},
+      </if>
+      <if test="record.enabled != null">
+        enabled = #{record.enabled,jdbcType=TINYINT},
+      </if>
+      <if test="record.model != null">
+        model = #{record.model,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ims_weixinmao_jz_category
+    set id = #{record.id,jdbcType=INTEGER},
+      weid = #{record.weid,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      thumb = #{record.thumb,jdbcType=VARCHAR},
+      parentid = #{record.parentid,jdbcType=INTEGER},
+      isrecommand = #{record.isrecommand,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      displayorder = #{record.displayorder,jdbcType=TINYINT},
+      enabled = #{record.enabled,jdbcType=TINYINT},
+      model = #{record.model,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bestfeng.dydj.mbg.model.Category">
+    update ims_weixinmao_jz_category
+    <set>
+      <if test="weid != null">
+        weid = #{weid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="thumb != null">
+        thumb = #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        parentid = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="isrecommand != null">
+        isrecommand = #{isrecommand,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayorder != null">
+        displayorder = #{displayorder,jdbcType=TINYINT},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=TINYINT},
+      </if>
+      <if test="model != null">
+        model = #{model,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bestfeng.dydj.mbg.model.Category">
+    update ims_weixinmao_jz_category
+    set weid = #{weid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=INTEGER},
+      isrecommand = #{isrecommand,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      displayorder = #{displayorder,jdbcType=TINYINT},
+      enabled = #{enabled,jdbcType=TINYINT},
+      model = #{model,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
