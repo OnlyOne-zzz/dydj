@@ -2,9 +2,16 @@ package com.bestfeng.dydj.enums;
 
 import lombok.Getter;
 
+/**
+ * @author zh
+ * @Des 订单相关枚举
+ */
 @Getter
 public class OrderEnums {
 
+    /**
+     * 订单的状态枚举
+     */
     @Getter
     public enum  OrderStatusEnum{
 
@@ -22,6 +29,16 @@ public class OrderEnums {
         OrderStatusEnum(Integer code,String name){
             this.code=code;
             this.name=name;
+        }
+
+        public String getNameByCode(Integer code){
+            OrderStatusEnum[]  statusEnums = OrderStatusEnum.values();
+            for (OrderStatusEnum statusEnum:statusEnums){
+                if(statusEnum.getCode() == code){
+                    return statusEnum.getName();
+                }
+            }
+            return null;
         }
     }
 }
