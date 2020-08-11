@@ -1,14 +1,12 @@
 package com.bestfeng.dydj.controller;
 
 import com.bestfeng.dydj.enums.ApiErrorCodeEnums;
-import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.commons.api.CommonResult;
-import org.aurochsframework.boot.core.exceptions.AccessDenyException;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
-import org.aurochsframework.boot.core.exceptions.UnAuthorizedException;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +32,7 @@ public class RestControllerException {
             BusinessException businessException = (BusinessException)exception;
            return CommonResult.custom(businessException.getStatus(),businessException.getMessage(),null);
         }else {
+            exception.printStackTrace();
             return CommonResult.custom(code,text,null);
         }
     }

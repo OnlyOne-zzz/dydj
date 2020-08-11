@@ -7,13 +7,11 @@ import com.bestfeng.dydj.enums.ApiErrorCodeEnums;
 import com.bestfeng.dydj.manager.request.DefaultSignVerify;
 import com.bestfeng.dydj.utils.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.aurochsframework.boot.commons.api.CommonResult;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -24,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 @Component
@@ -35,18 +34,9 @@ public class ContainerInterceptor implements HandlerInterceptor {
     /**是否打印所有参数*/
     private boolean enablePrintParam=true;
 
-    // 在DispatcherServlet完全处理完请求之后被调用，可用于清理资源
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        // log.debug("在DispatcherServlet完全处理完请求之后被调用，可用于清理资源 ");
-    }
+    private final String UTF_8 = Charset.forName("UTF-8").displayName();
 
-    // 在业务处理器处理请求完成之后，生成视图之前执行
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        // log.debug("在业务处理器处理请求完成之后，生成视图之前执行");
 
-    }
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         /**做日志链路*/
@@ -58,9 +48,9 @@ public class ContainerInterceptor implements HandlerInterceptor {
             log.error("请求批次号={},请求发生error", nowRequest);
             return false;
         }
+        String reqBody = IOUtils.toString(request.getInputStream(), UTF_8);
         /**参数打印*/
         this.printParam(request);
-
         /**判断当前类或者方法是否需要验签*/
         if (handler.getClass().isAssignableFrom(HandlerMethod.class)) {
             HandlerMethod  handlerMethod = (HandlerMethod) handler;
@@ -82,7 +72,6 @@ public class ContainerInterceptor implements HandlerInterceptor {
                     setResPonse(response,ApiErrorCodeEnums.SIGN_ERR);
                     return false;
                 }
-                String      reqBody   = IOUtils.toString(request.getInputStream(), Charsets.UTF_8);
                 try {
                     signVerify.check(sign,reqBody);
                 }catch (Exception e){
@@ -97,7 +86,18 @@ public class ContainerInterceptor implements HandlerInterceptor {
         }
         return true;
     }
+    // 在DispatcherServlet完全处理完请求之后被调用，可用于清理资源
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        // log.debug("在DispatcherServlet完全处理完请求之后被调用，可用于清理资源 ");
+    }
 
+    // 在业务处理器处理请求完成之后，生成视图之前执行
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        // log.debug("在业务处理器处理请求完成之后，生成视图之前执行");
+
+    }
     /**
      * 设置拦截器响应数据信息
      * @param response
@@ -138,7 +138,7 @@ public class ContainerInterceptor implements HandlerInterceptor {
                 String ip = IpUtils.getIpAddr(request);
                 String url = request.getRequestURI();
                 String userAgent = request.getHeader("User-Agent");
-                String reqParams = IOUtils.toString(request.getInputStream(), "utf-8");
+                String reqParams = IOUtils.toString(request.getInputStream(), UTF_8);
                 /**暂时请求头只有sign*/
                 Map<String, String> headers = WebUtils.getHeaders(request, Constants.SIGN);
                 if (log.isDebugEnabled()) {
