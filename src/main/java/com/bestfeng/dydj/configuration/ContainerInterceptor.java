@@ -78,6 +78,8 @@ public class ContainerInterceptor implements HandlerInterceptor {
                     if(e instanceof BusinessException){
                         setResPonse(response,ApiErrorCodeEnums.SIGN_ERR);
                         return false;
+                    }else {
+                        throw e;
                     }
                 }
             }else {

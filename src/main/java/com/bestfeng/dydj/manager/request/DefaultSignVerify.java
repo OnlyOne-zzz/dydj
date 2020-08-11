@@ -1,8 +1,8 @@
 package com.bestfeng.dydj.manager.request;
 
-import com.alibaba.fastjson.JSON;
 import com.bestfeng.dydj.configuration.request.BasicRequest;
 import com.bestfeng.dydj.enums.ApiErrorCodeEnums;
+import com.bestfeng.dydj.utils.FastJsons;
 import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class DefaultSignVerify implements SignVerifySupport {
     }
 
     protected String signParamsSplicing(Object params) {
-        return JSON.parseObject(JSON.toJSONString(params))
+        return FastJsons.convertObjectToJSONObject(params)
                 .entrySet()
                 .stream()
                 .filter(entry -> !"sign".equals(entry.getKey()))
