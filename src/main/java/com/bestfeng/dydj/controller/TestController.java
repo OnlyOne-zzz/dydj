@@ -3,6 +3,7 @@ package com.bestfeng.dydj.controller;
 import com.alibaba.fastjson.JSON;
 import com.bestfeng.dydj.configuration.request.TestRequest;
 import com.bestfeng.dydj.manager.request.SignVerifySupport;
+import com.bestfeng.dydj.utils.FastJsons;
 import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.commons.api.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class TestController {
 
     @PostMapping
     public CommonResult<Object> test(@RequestBody TestRequest request) {
-        log.info("test 请求参数={}", JSON.toJSONString(request));
+        log.info("test 请求参数={}", FastJsons.convertObjectToJSON(request));
         signVerifySupport.check(request);
         return CommonResult.success("测试请求成功");
     }
