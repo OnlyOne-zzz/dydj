@@ -1,6 +1,5 @@
 package com.bestfeng.dydj.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.bestfeng.dydj.configuration.request.TestRequest;
 import com.bestfeng.dydj.manager.request.SignVerifySupport;
 import com.bestfeng.dydj.utils.FastJsons;
