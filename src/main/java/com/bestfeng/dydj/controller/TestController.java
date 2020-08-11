@@ -24,8 +24,8 @@ public class TestController {
     @Autowired
     private SignVerifySupport signVerifySupport;
 
-    @PostMapping
-    public CommonResult<Object> test(@RequestBody TestRequest request) {
+    @PostMapping("/aaa")
+    public CommonResult<Object> test(TestRequest request) {
         log.info("test 请求参数={}", FastJsons.convertObjectToJSON(request));
         signVerifySupport.check(request);
         return CommonResult.success("测试请求成功");
