@@ -11,8 +11,8 @@ class DydjApplicationTests {
     @Autowired
     private TestMapper testMapper;
 
-    @Test
-    public void dataSourceTest(){
-        com.bestfeng.dydj.mbg.model.Test test = testMapper.selectByPrimaryKey(1);
-    }
+//    @Test
+//    public void dataSourceTest(){
+//        com.bestfeng.dydj.mbg.model.Test test = testMapper.selectByPrimaryKey(1);
+//    }
 }
