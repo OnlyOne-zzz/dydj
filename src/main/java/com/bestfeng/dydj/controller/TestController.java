@@ -1,5 +1,6 @@
 package com.bestfeng.dydj.controller;
 
+import com.bestfeng.dydj.annotation.SignValidated;
 import com.bestfeng.dydj.configuration.request.TestRequest;
 import com.bestfeng.dydj.manager.request.SignVerifySupport;
 import com.bestfeng.dydj.utils.FastJsons;
@@ -24,9 +25,10 @@ public class TestController {
     private SignVerifySupport signVerifySupport;
 
     @PostMapping
+    @SignValidated
     public CommonResult<Object> test(@RequestBody TestRequest request) {
         log.info("test 请求参数={}", FastJsons.convertObjectToJSON(request));
-        signVerifySupport.check(request);
+//        signVerifySupport.check(request);
         return CommonResult.success("测试请求成功");
     }
 }

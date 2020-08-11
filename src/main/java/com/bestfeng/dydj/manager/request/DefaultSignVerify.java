@@ -26,11 +26,11 @@ public class DefaultSignVerify implements SignVerifySupport {
     }
 
 
-    protected void check(String sign, Object params) {
+    public void check(String sign, Object params) {
         String localSign = getMd5Sign(getCompleteSignParams(signParamsSplicing(params)));
         if (StringUtils.isEmpty(sign) || !localSign.equals(sign)) {
             log.warn("请求验签失败。");
-            throw new BusinessException("验签失败", ApiErrorCodeEnums.SIGN_ERR.getValue());
+            throw new BusinessException(ApiErrorCodeEnums.SIGN_ERR.getText(), ApiErrorCodeEnums.SIGN_ERR.getCode());
         }
     }
 
