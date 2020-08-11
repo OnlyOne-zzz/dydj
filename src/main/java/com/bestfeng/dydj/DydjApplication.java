@@ -10,7 +10,7 @@ public class DydjApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DydjApplication.class, args);
-		log.info("DydjApplication start success");
+		log.info("SpringBoot DydjApplication start success");
 	}
 
 }
