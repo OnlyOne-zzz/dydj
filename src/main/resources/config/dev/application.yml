@@ -34,6 +34,6 @@ spring:
   profiles:
     active: dev
   application:
-    name: dylj
+    name: dydj
   resources:
     static-locations: file:./ui/,file:./static/,/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/resources/,classpath:/static/, classpath:/ui/

@@ -1,13 +1,15 @@
 package com.bestfeng.dydj.controller;
 
+import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.mbg.model.Order;
 import com.bestfeng.dydj.service.OrderService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.aurochsframework.boot.commons.api.CommonResult;
 import org.aurochsframework.boot.commons.controller.GeneralCrudController;
 import org.aurochsframework.boot.commons.service.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author bsetfeng
@@ -26,5 +28,11 @@ public class OrderController implements GeneralCrudController<Order> {
     @Override
     public GeneralService<Order> getService() {
         return orderService;
+    }
+
+    @PostMapping("/doOrder")
+    @ApiOperation(value = "创建订单")
+    public CommonResult<Void> doOrder(@RequestBody OrderDto orderDto){
+        return CommonResult.success();
     }
 }
