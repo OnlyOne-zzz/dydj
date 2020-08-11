@@ -1,7 +1,10 @@
 package com.bestfeng.dydj.configuration;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -29,5 +32,12 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 		return new ContainerInterceptor();
 	}
 
-
+	@Bean
+	@Order(Ordered.HIGHEST_PRECEDENCE)
+	public FilterRegistrationBean filterRegist() {
+		FilterRegistrationBean frBean = new FilterRegistrationBean();
+		frBean.setFilter(new ContainerFilter());
+		frBean.addUrlPatterns("/*");
+		return frBean;
+	}
 }

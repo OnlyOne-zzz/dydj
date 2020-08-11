@@ -48,7 +48,6 @@ public class ContainerInterceptor implements HandlerInterceptor {
             log.error("请求批次号={},请求发生error", nowRequest);
             return false;
         }
-        String reqBody = IOUtils.toString(request.getInputStream(), UTF_8);
         /**参数打印*/
         this.printParam(request);
         /**判断当前类或者方法是否需要验签*/
@@ -73,6 +72,7 @@ public class ContainerInterceptor implements HandlerInterceptor {
                     return false;
                 }
                 try {
+                    String reqBody = IOUtils.toString(request.getInputStream(), UTF_8);
                     signVerify.check(sign,reqBody);
                 }catch (Exception e){
                     if(e instanceof BusinessException){
