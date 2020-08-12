@@ -31,6 +31,15 @@
     <result column="lng" jdbcType="DECIMAL" property="lng" />
     <result column="finalmoney" jdbcType="REAL" property="finalmoney" />
     <result column="spaid" jdbcType="TINYINT" property="spaid" />
+    <result column="note_avatar_url" jdbcType="VARCHAR" property="noteAvatarUrl" />
+    <result column="note_name" jdbcType="VARCHAR" property="noteName" />
+    <result column="content_id" jdbcType="INTEGER" property="contentId" />
+    <result column="content_thumb" jdbcType="VARCHAR" property="contentThumb" />
+    <result column="sub_time" jdbcType="VARCHAR" property="subTime" />
+    <result column="traffic_type" jdbcType="INTEGER" property="trafficType" />
+    <result column="traffic_reckon_mile" jdbcType="DECIMAL" property="trafficReckonMile" />
+    <result column="traffic_price" jdbcType="DECIMAL" property="trafficPrice" />
+    <result column="daddress" jdbcType="VARCHAR" property="daddress" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -93,7 +102,9 @@
   <sql id="Base_Column_List">
     id, uniacid, uid, name, tel, msgtime, orderid, money, paytime, createtime, paid, 
     status, type, address, content, mark, noteid, sendtime, dmoney, couponid, model, 
-    refund, pid, title, cityid, lat, lng, finalmoney, spaid
+    refund, pid, title, cityid, lat, lng, finalmoney, spaid, note_avatar_url, note_name, 
+    content_id, content_thumb, sub_time, traffic_type, traffic_reckon_mile, traffic_price, 
+    daddress
   </sql>
   <select id="selectByExample" parameterType="com.bestfeng.dydj.mbg.model.OrderExample" resultMap="BaseResultMap">
     select
@@ -135,7 +146,10 @@
       dmoney, couponid, model, 
       refund, pid, title, 
       cityid, lat, lng, finalmoney, 
-      spaid)
+      spaid, note_avatar_url, note_name, 
+      content_id, content_thumb, sub_time, 
+      traffic_type, traffic_reckon_mile, traffic_price, 
+      daddress)
     values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{msgtime,jdbcType=VARCHAR}, 
       #{orderid,jdbcType=VARCHAR}, #{money,jdbcType=REAL}, #{paytime,jdbcType=INTEGER}, 
@@ -145,7 +159,10 @@
       #{dmoney,jdbcType=REAL}, #{couponid,jdbcType=INTEGER}, #{model,jdbcType=TINYINT}, 
       #{refund,jdbcType=TINYINT}, #{pid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{cityid,jdbcType=INTEGER}, #{lat,jdbcType=DECIMAL}, #{lng,jdbcType=DECIMAL}, #{finalmoney,jdbcType=REAL}, 
-      #{spaid,jdbcType=TINYINT})
+      #{spaid,jdbcType=TINYINT}, #{noteAvatarUrl,jdbcType=VARCHAR}, #{noteName,jdbcType=VARCHAR}, 
+      #{contentId,jdbcType=INTEGER}, #{contentThumb,jdbcType=VARCHAR}, #{subTime,jdbcType=VARCHAR}, 
+      #{trafficType,jdbcType=INTEGER}, #{trafficReckonMile,jdbcType=DECIMAL}, #{trafficPrice,jdbcType=DECIMAL}, 
+      #{daddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Order">
     insert into ims_weixinmao_jz_order
@@ -237,6 +254,33 @@
       <if test="spaid != null">
         spaid,
       </if>
+      <if test="noteAvatarUrl != null">
+        note_avatar_url,
+      </if>
+      <if test="noteName != null">
+        note_name,
+      </if>
+      <if test="contentId != null">
+        content_id,
+      </if>
+      <if test="contentThumb != null">
+        content_thumb,
+      </if>
+      <if test="subTime != null">
+        sub_time,
+      </if>
+      <if test="trafficType != null">
+        traffic_type,
+      </if>
+      <if test="trafficReckonMile != null">
+        traffic_reckon_mile,
+      </if>
+      <if test="trafficPrice != null">
+        traffic_price,
+      </if>
+      <if test="daddress != null">
+        daddress,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -325,6 +369,33 @@
       </if>
       <if test="spaid != null">
         #{spaid,jdbcType=TINYINT},
+      </if>
+      <if test="noteAvatarUrl != null">
+        #{noteAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="noteName != null">
+        #{noteName,jdbcType=VARCHAR},
+      </if>
+      <if test="contentId != null">
+        #{contentId,jdbcType=INTEGER},
+      </if>
+      <if test="contentThumb != null">
+        #{contentThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="subTime != null">
+        #{subTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficType != null">
+        #{trafficType,jdbcType=INTEGER},
+      </if>
+      <if test="trafficReckonMile != null">
+        #{trafficReckonMile,jdbcType=DECIMAL},
+      </if>
+      <if test="trafficPrice != null">
+        #{trafficPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="daddress != null">
+        #{daddress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -424,6 +495,33 @@
       <if test="record.spaid != null">
         spaid = #{record.spaid,jdbcType=TINYINT},
       </if>
+      <if test="record.noteAvatarUrl != null">
+        note_avatar_url = #{record.noteAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noteName != null">
+        note_name = #{record.noteName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contentId != null">
+        content_id = #{record.contentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.contentThumb != null">
+        content_thumb = #{record.contentThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subTime != null">
+        sub_time = #{record.subTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trafficType != null">
+        traffic_type = #{record.trafficType,jdbcType=INTEGER},
+      </if>
+      <if test="record.trafficReckonMile != null">
+        traffic_reckon_mile = #{record.trafficReckonMile,jdbcType=DECIMAL},
+      </if>
+      <if test="record.trafficPrice != null">
+        traffic_price = #{record.trafficPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.daddress != null">
+        daddress = #{record.daddress,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -459,7 +557,16 @@
       lat = #{record.lat,jdbcType=DECIMAL},
       lng = #{record.lng,jdbcType=DECIMAL},
       finalmoney = #{record.finalmoney,jdbcType=REAL},
-      spaid = #{record.spaid,jdbcType=TINYINT}
+      spaid = #{record.spaid,jdbcType=TINYINT},
+      note_avatar_url = #{record.noteAvatarUrl,jdbcType=VARCHAR},
+      note_name = #{record.noteName,jdbcType=VARCHAR},
+      content_id = #{record.contentId,jdbcType=INTEGER},
+      content_thumb = #{record.contentThumb,jdbcType=VARCHAR},
+      sub_time = #{record.subTime,jdbcType=VARCHAR},
+      traffic_type = #{record.trafficType,jdbcType=INTEGER},
+      traffic_reckon_mile = #{record.trafficReckonMile,jdbcType=DECIMAL},
+      traffic_price = #{record.trafficPrice,jdbcType=DECIMAL},
+      daddress = #{record.daddress,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -551,6 +658,33 @@
       <if test="spaid != null">
         spaid = #{spaid,jdbcType=TINYINT},
       </if>
+      <if test="noteAvatarUrl != null">
+        note_avatar_url = #{noteAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="noteName != null">
+        note_name = #{noteName,jdbcType=VARCHAR},
+      </if>
+      <if test="contentId != null">
+        content_id = #{contentId,jdbcType=INTEGER},
+      </if>
+      <if test="contentThumb != null">
+        content_thumb = #{contentThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="subTime != null">
+        sub_time = #{subTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trafficType != null">
+        traffic_type = #{trafficType,jdbcType=INTEGER},
+      </if>
+      <if test="trafficReckonMile != null">
+        traffic_reckon_mile = #{trafficReckonMile,jdbcType=DECIMAL},
+      </if>
+      <if test="trafficPrice != null">
+        traffic_price = #{trafficPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="daddress != null">
+        daddress = #{daddress,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -583,7 +717,16 @@
       lat = #{lat,jdbcType=DECIMAL},
       lng = #{lng,jdbcType=DECIMAL},
       finalmoney = #{finalmoney,jdbcType=REAL},
-      spaid = #{spaid,jdbcType=TINYINT}
+      spaid = #{spaid,jdbcType=TINYINT},
+      note_avatar_url = #{noteAvatarUrl,jdbcType=VARCHAR},
+      note_name = #{noteName,jdbcType=VARCHAR},
+      content_id = #{contentId,jdbcType=INTEGER},
+      content_thumb = #{contentThumb,jdbcType=VARCHAR},
+      sub_time = #{subTime,jdbcType=VARCHAR},
+      traffic_type = #{trafficType,jdbcType=INTEGER},
+      traffic_reckon_mile = #{trafficReckonMile,jdbcType=DECIMAL},
+      traffic_price = #{trafficPrice,jdbcType=DECIMAL},
+      daddress = #{daddress,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

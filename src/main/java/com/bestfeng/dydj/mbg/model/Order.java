@@ -68,6 +68,33 @@ public class Order implements Serializable {
 
     private Byte spaid;
 
+    @ApiModelProperty(value = "技师图片(冗余)")
+    private String noteAvatarUrl;
+
+    @ApiModelProperty(value = "技师名字(冗余)")
+    private String noteName;
+
+    @ApiModelProperty(value = "项目Id")
+    private Integer contentId;
+
+    @ApiModelProperty(value = "项目图(冗余)")
+    private String contentThumb;
+
+    @ApiModelProperty(value = "预约时间")
+    private String subTime;
+
+    @ApiModelProperty(value = "交通方式0:出租 1:公交/地铁")
+    private Integer trafficType;
+
+    @ApiModelProperty(value = "估算公里数")
+    private BigDecimal trafficReckonMile;
+
+    @ApiModelProperty(value = "交通费用")
+    private BigDecimal trafficPrice;
+
+    @ApiModelProperty(value = "详细地址")
+    private String daddress;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -302,6 +329,78 @@ public class Order implements Serializable {
         this.spaid = spaid;
     }
 
+    public String getNoteAvatarUrl() {
+        return noteAvatarUrl;
+    }
+
+    public void setNoteAvatarUrl(String noteAvatarUrl) {
+        this.noteAvatarUrl = noteAvatarUrl;
+    }
+
+    public String getNoteName() {
+        return noteName;
+    }
+
+    public void setNoteName(String noteName) {
+        this.noteName = noteName;
+    }
+
+    public Integer getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(Integer contentId) {
+        this.contentId = contentId;
+    }
+
+    public String getContentThumb() {
+        return contentThumb;
+    }
+
+    public void setContentThumb(String contentThumb) {
+        this.contentThumb = contentThumb;
+    }
+
+    public String getSubTime() {
+        return subTime;
+    }
+
+    public void setSubTime(String subTime) {
+        this.subTime = subTime;
+    }
+
+    public Integer getTrafficType() {
+        return trafficType;
+    }
+
+    public void setTrafficType(Integer trafficType) {
+        this.trafficType = trafficType;
+    }
+
+    public BigDecimal getTrafficReckonMile() {
+        return trafficReckonMile;
+    }
+
+    public void setTrafficReckonMile(BigDecimal trafficReckonMile) {
+        this.trafficReckonMile = trafficReckonMile;
+    }
+
+    public BigDecimal getTrafficPrice() {
+        return trafficPrice;
+    }
+
+    public void setTrafficPrice(BigDecimal trafficPrice) {
+        this.trafficPrice = trafficPrice;
+    }
+
+    public String getDaddress() {
+        return daddress;
+    }
+
+    public void setDaddress(String daddress) {
+        this.daddress = daddress;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -337,6 +436,15 @@ public class Order implements Serializable {
         sb.append(", lng=").append(lng);
         sb.append(", finalmoney=").append(finalmoney);
         sb.append(", spaid=").append(spaid);
+        sb.append(", noteAvatarUrl=").append(noteAvatarUrl);
+        sb.append(", noteName=").append(noteName);
+        sb.append(", contentId=").append(contentId);
+        sb.append(", contentThumb=").append(contentThumb);
+        sb.append(", subTime=").append(subTime);
+        sb.append(", trafficType=").append(trafficType);
+        sb.append(", trafficReckonMile=").append(trafficReckonMile);
+        sb.append(", trafficPrice=").append(trafficPrice);
+        sb.append(", daddress=").append(daddress);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

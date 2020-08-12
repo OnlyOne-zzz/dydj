@@ -1,5 +1,6 @@
 package com.bestfeng.dydj.controller;
 
+import com.bestfeng.dydj.annotation.SignValidated;
 import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.mbg.model.Order;
 import com.bestfeng.dydj.service.OrderService;
@@ -10,6 +11,7 @@ import org.aurochsframework.boot.commons.controller.GeneralCrudController;
 import org.aurochsframework.boot.commons.service.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/order")
 @Api(tags = "OrderController", description = "订单管理")
+@SignValidated
 public class OrderController implements GeneralCrudController<Order> {
 
 
@@ -35,6 +38,15 @@ public class OrderController implements GeneralCrudController<Order> {
     @ApiOperation(value = "创建订单")
     public CommonResult<Void> doOrder(@RequestBody OrderDto orderDto){
         Assert.notNull(orderDto,"订单参数不能为空");
+        Assert.notNull(orderDto.getContentId(),"项目Id不能为空");
+        Assert.notNull(orderDto.getNoteid(),"技师Id不能为空");
+        Assert.notNull(orderDto.getMoney(),"项目金额不能为空");
+        Assert.notNull(orderDto.getFinalmoney(),"总金额不能为空");
+        Assert.notNull(orderDto.getTrafficType(),"出行类型不能为空");
+        Assert.isTrue(!StringUtils.isEmpty(orderDto.getName()),"用户名不能为空");
+        Assert.isTrue(!StringUtils.isEmpty(orderDto.getTel()),"手机号不能为空");
+        Assert.isTrue(!StringUtils.isEmpty(orderDto.getAddress()),"地址不能为空");
+        Assert.isTrue(!StringUtils.isEmpty(orderDto.getDaddress()),"详细地址不能为空");
         orderService.doOrder(orderDto);
         return CommonResult.success();
     }
