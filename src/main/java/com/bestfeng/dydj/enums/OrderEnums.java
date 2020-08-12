@@ -21,7 +21,8 @@ public class OrderEnums {
         SERVICE_START(3,"技师开始服务"),
         REFUND_ING(4,"退款中"),
         REFUND_SUCCESS(5,"退款成功"),
-        WAIT_EVALUATE(6,"用户待评价");
+        WAIT_EVALUATE(6,"用户待评价"),
+        CLOSE(7,"订单已关闭");
 
         private Integer code;
         private String name;
