@@ -31,9 +31,10 @@ public class RestControllerException {
         if (exception instanceof BusinessException) {
             BusinessException businessException = (BusinessException)exception;
            return CommonResult.custom(businessException.getStatus(),businessException.getMessage(),null);
-        }else {
-            exception.printStackTrace();
-            return CommonResult.custom(code,text,null);
         }
+         if (exception instanceof IllegalArgumentException) {
+           return CommonResult.custom(ApiErrorCodeEnums.ILLEGAL_ARGUMENT_ERROR.getCode(),exception.getMessage(),null);
+        }
+         return CommonResult.custom(code,text,null);
     }
 }

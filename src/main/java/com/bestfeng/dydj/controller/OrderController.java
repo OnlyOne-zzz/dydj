@@ -9,6 +9,7 @@ import org.aurochsframework.boot.commons.api.CommonResult;
 import org.aurochsframework.boot.commons.controller.GeneralCrudController;
 import org.aurochsframework.boot.commons.service.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,6 +34,8 @@ public class OrderController implements GeneralCrudController<Order> {
     @PostMapping("/doOrder")
     @ApiOperation(value = "创建订单")
     public CommonResult<Void> doOrder(@RequestBody OrderDto orderDto){
+        Assert.notNull(orderDto,"订单参数不能为空");
+        orderService.doOrder(orderDto);
         return CommonResult.success();
     }
 }
