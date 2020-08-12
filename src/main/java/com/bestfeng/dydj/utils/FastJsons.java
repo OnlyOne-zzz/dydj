@@ -15,7 +15,7 @@ import java.util.Map;
 
 
 /**
- * Created by Taoxs on 2017/7/18.
+ * fastJson util
  */
 public class FastJsons {
 
