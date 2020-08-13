@@ -64,8 +64,19 @@ public class OrderController implements GeneralCrudController<Order> {
     @ApiOperation(value = "技师操作订单")
     public CommonResult<Void> artificerDoOrder(@RequestBody OrderDto orderDto){
         Assert.notNull(orderDto,"订单参数不能为空");
-        Assert.notNull(orderDto.getOrderid(),"订单Id不能为空");
+        Assert.notNull(orderDto.getId(),"Id不能为空");
         Assert.notNull(orderDto.getOrderStatusEnum(),"订单状态不能为空");
+        orderService.operationOrder(orderDto);
+        return CommonResult.success();
+    }
+
+
+    @PostMapping("/userEvaluateCallBack")
+    @ApiOperation(value = "用户评价回调")
+    public CommonResult<Void> userEvaluateCallBack(@RequestBody OrderDto orderDto){
+        Assert.notNull(orderDto,"订单参数不能为空");
+        Assert.notNull(orderDto.getId(),"Id不能为空");
+        orderService.userEvaluateCallBack(orderDto.getId());
         return CommonResult.success();
     }
 }

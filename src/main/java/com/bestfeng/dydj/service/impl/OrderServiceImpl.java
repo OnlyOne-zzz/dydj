@@ -96,9 +96,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      */
     @Override
     public void userRefund(OrderDto orderDto) {
-       Integer id = orderDto.getId();
-       Order order = orderMapper.selectByPrimaryKey(id);
-       Optional.ofNullable(order).orElseThrow(()->new BusinessException("订单不存在"));
+       Order order = this.checkOrderExist(orderDto.getId());
        //todo 退款业务
     }
 
@@ -108,16 +106,29 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      */
     @Override
     public void operationOrder(OrderDto orderDto) {
-        Integer id = orderDto.getId();
         OrderEnums.OrderStatusEnum updateStatusEnum = orderDto.getOrderStatusEnum();
-        Order order = orderMapper.selectByPrimaryKey(id);
+        Order order = this.checkOrderExist(orderDto.getId());
         Integer status = order.getStatus();
         OrderEnums.OrderStatusEnum orderStatusEnum = OrderEnums.OrderStatusEnum.getNameByCode(status);
-        Optional.ofNullable(order).orElseThrow(()->new BusinessException("订单不存在"));
         this.checkUserIdentity(order.getUid(),orderDto.getUserIdentityEnum());
         this.checkOrderStatus(orderStatusEnum,updateStatusEnum,orderDto.getUserIdentityEnum());
         order.setStatus(updateStatusEnum.getCode());
         order.setUpdatetime((int)(System.currentTimeMillis()/1000));
+        orderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    /**
+     * 用户评价订单
+     * @param orderId
+     */
+    @Override
+    public void userEvaluateCallBack(Integer orderId) {
+        Order order = this.checkOrderExist(orderId);
+        Integer orderStatus = order.getStatus();
+        if(OrderEnums.OrderStatusEnum.WAIT_EVALUATE.getCode()!=orderStatus){
+             throw new BusinessException("订单非待评价状态不可评价成功修改");
+        }
+        order.setStatus(OrderEnums.OrderStatusEnum.EVALUATE_SUCCESS.getCode());
         orderMapper.updateByPrimaryKeySelective(order);
     }
 
@@ -174,5 +185,16 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
             default:
                 throw new BusinessException("身份异常");
         }
+    }
+
+    /**
+     * 校验订单是否存在
+     * @param id
+     * @return
+     */
+    private Order checkOrderExist(Integer id){
+        Order order = orderMapper.selectByPrimaryKey(id);
+        Optional.ofNullable(order).orElseThrow(()->new BusinessException("订单不存在"));
+        return order;
     }
 }

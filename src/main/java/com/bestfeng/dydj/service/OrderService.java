@@ -16,4 +16,6 @@ public interface OrderService extends GeneralService<Order> {
     void userRefund(OrderDto orderDto);
 
     void operationOrder(OrderDto orderDto);
+
+    void userEvaluateCallBack(Integer orderId);
 }
