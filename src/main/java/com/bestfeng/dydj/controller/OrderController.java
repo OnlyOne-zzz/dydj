@@ -2,6 +2,7 @@ package com.bestfeng.dydj.controller;
 
 import com.bestfeng.dydj.annotation.SignValidated;
 import com.bestfeng.dydj.dto.OrderDto;
+import com.bestfeng.dydj.enums.UserEnums;
 import com.bestfeng.dydj.mbg.model.Order;
 import com.bestfeng.dydj.service.OrderService;
 import io.swagger.annotations.Api;
@@ -66,6 +67,7 @@ public class OrderController implements GeneralCrudController<Order> {
         Assert.notNull(orderDto,"订单参数不能为空");
         Assert.notNull(orderDto.getId(),"Id不能为空");
         Assert.notNull(orderDto.getOrderStatusEnum(),"订单状态不能为空");
+        orderDto.setUserIdentityEnum(UserEnums.UserIdentityEnum.ARTIFICER);
         orderService.operationOrder(orderDto);
         return CommonResult.success();
     }
