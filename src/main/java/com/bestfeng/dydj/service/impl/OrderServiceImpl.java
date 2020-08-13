@@ -9,8 +9,6 @@ import com.bestfeng.dydj.mbg.model.Content;
 import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.mbg.model.Order;
 import com.bestfeng.dydj.mbg.model.OrderExample;
-import com.bestfeng.dydj.service.ContentService;
-import com.bestfeng.dydj.service.NoteService;
 import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.utils.IDUtils;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
