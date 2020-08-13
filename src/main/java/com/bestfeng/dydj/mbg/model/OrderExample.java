@@ -2514,6 +2514,76 @@ public class OrderExample {
             addCriterion("daddress not between", value1, value2, "daddress");
             return (Criteria) this;
         }
+
+        public Criteria andContentNameIsNull() {
+            addCriterion("content_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameIsNotNull() {
+            addCriterion("content_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameEqualTo(String value) {
+            addCriterion("content_name =", value, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameNotEqualTo(String value) {
+            addCriterion("content_name <>", value, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameGreaterThan(String value) {
+            addCriterion("content_name >", value, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameGreaterThanOrEqualTo(String value) {
+            addCriterion("content_name >=", value, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameLessThan(String value) {
+            addCriterion("content_name <", value, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameLessThanOrEqualTo(String value) {
+            addCriterion("content_name <=", value, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameLike(String value) {
+            addCriterion("content_name like", value, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameNotLike(String value) {
+            addCriterion("content_name not like", value, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameIn(List<String> values) {
+            addCriterion("content_name in", values, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameNotIn(List<String> values) {
+            addCriterion("content_name not in", values, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameBetween(String value1, String value2) {
+            addCriterion("content_name between", value1, value2, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentNameNotBetween(String value1, String value2) {
+            addCriterion("content_name not between", value1, value2, "contentName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

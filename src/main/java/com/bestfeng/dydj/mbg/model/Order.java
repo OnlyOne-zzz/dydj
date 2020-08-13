@@ -95,6 +95,9 @@ public class Order implements Serializable {
     @ApiModelProperty(value = "详细地址")
     private String daddress;
 
+    @ApiModelProperty(value = "服务项目名字")
+    private String contentName;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -401,6 +404,14 @@ public class Order implements Serializable {
         this.daddress = daddress;
     }
 
+    public String getContentName() {
+        return contentName;
+    }
+
+    public void setContentName(String contentName) {
+        this.contentName = contentName;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -445,6 +456,7 @@ public class Order implements Serializable {
         sb.append(", trafficReckonMile=").append(trafficReckonMile);
         sb.append(", trafficPrice=").append(trafficPrice);
         sb.append(", daddress=").append(daddress);
+        sb.append(", contentName=").append(contentName);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

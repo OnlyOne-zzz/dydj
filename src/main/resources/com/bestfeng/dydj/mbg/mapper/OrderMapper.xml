@@ -40,6 +40,7 @@
     <result column="traffic_reckon_mile" jdbcType="DECIMAL" property="trafficReckonMile" />
     <result column="traffic_price" jdbcType="DECIMAL" property="trafficPrice" />
     <result column="daddress" jdbcType="VARCHAR" property="daddress" />
+    <result column="content_name" jdbcType="VARCHAR" property="contentName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -104,7 +105,7 @@
     status, type, address, content, mark, noteid, sendtime, dmoney, couponid, model, 
     refund, pid, title, cityid, lat, lng, finalmoney, spaid, note_avatar_url, note_name, 
     content_id, content_thumb, sub_time, traffic_type, traffic_reckon_mile, traffic_price, 
-    daddress
+    daddress, content_name
   </sql>
   <select id="selectByExample" parameterType="com.bestfeng.dydj.mbg.model.OrderExample" resultMap="BaseResultMap">
     select
@@ -149,7 +150,7 @@
       spaid, note_avatar_url, note_name, 
       content_id, content_thumb, sub_time, 
       traffic_type, traffic_reckon_mile, traffic_price, 
-      daddress)
+      daddress, content_name)
     values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{msgtime,jdbcType=VARCHAR}, 
       #{orderid,jdbcType=VARCHAR}, #{money,jdbcType=REAL}, #{paytime,jdbcType=INTEGER}, 
@@ -162,7 +163,7 @@
       #{spaid,jdbcType=TINYINT}, #{noteAvatarUrl,jdbcType=VARCHAR}, #{noteName,jdbcType=VARCHAR}, 
       #{contentId,jdbcType=INTEGER}, #{contentThumb,jdbcType=VARCHAR}, #{subTime,jdbcType=VARCHAR}, 
       #{trafficType,jdbcType=INTEGER}, #{trafficReckonMile,jdbcType=DECIMAL}, #{trafficPrice,jdbcType=DECIMAL}, 
-      #{daddress,jdbcType=VARCHAR})
+      #{daddress,jdbcType=VARCHAR}, #{contentName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Order">
     insert into ims_weixinmao_jz_order
@@ -281,6 +282,9 @@
       <if test="daddress != null">
         daddress,
       </if>
+      <if test="contentName != null">
+        content_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -396,6 +400,9 @@
       </if>
       <if test="daddress != null">
         #{daddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contentName != null">
+        #{contentName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -522,6 +529,9 @@
       <if test="record.daddress != null">
         daddress = #{record.daddress,jdbcType=VARCHAR},
       </if>
+      <if test="record.contentName != null">
+        content_name = #{record.contentName,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -566,7 +576,8 @@
       traffic_type = #{record.trafficType,jdbcType=INTEGER},
       traffic_reckon_mile = #{record.trafficReckonMile,jdbcType=DECIMAL},
       traffic_price = #{record.trafficPrice,jdbcType=DECIMAL},
-      daddress = #{record.daddress,jdbcType=VARCHAR}
+      daddress = #{record.daddress,jdbcType=VARCHAR},
+      content_name = #{record.contentName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -685,6 +696,9 @@
       <if test="daddress != null">
         daddress = #{daddress,jdbcType=VARCHAR},
       </if>
+      <if test="contentName != null">
+        content_name = #{contentName,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -726,7 +740,8 @@
       traffic_type = #{trafficType,jdbcType=INTEGER},
       traffic_reckon_mile = #{trafficReckonMile,jdbcType=DECIMAL},
       traffic_price = #{trafficPrice,jdbcType=DECIMAL},
-      daddress = #{daddress,jdbcType=VARCHAR}
+      daddress = #{daddress,jdbcType=VARCHAR},
+      content_name = #{contentName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
