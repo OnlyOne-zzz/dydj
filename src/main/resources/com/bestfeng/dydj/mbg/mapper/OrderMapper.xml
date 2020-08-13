@@ -9,28 +9,28 @@
     <result column="tel" jdbcType="VARCHAR" property="tel" />
     <result column="msgtime" jdbcType="VARCHAR" property="msgtime" />
     <result column="orderid" jdbcType="VARCHAR" property="orderid" />
-    <result column="money" jdbcType="REAL" property="money" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
     <result column="paytime" jdbcType="INTEGER" property="paytime" />
     <result column="createtime" jdbcType="INTEGER" property="createtime" />
-    <result column="paid" jdbcType="TINYINT" property="paid" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="paid" jdbcType="INTEGER" property="paid" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="mark" jdbcType="VARCHAR" property="mark" />
     <result column="noteid" jdbcType="INTEGER" property="noteid" />
     <result column="sendtime" jdbcType="INTEGER" property="sendtime" />
-    <result column="dmoney" jdbcType="REAL" property="dmoney" />
+    <result column="dmoney" jdbcType="DECIMAL" property="dmoney" />
     <result column="couponid" jdbcType="INTEGER" property="couponid" />
-    <result column="model" jdbcType="TINYINT" property="model" />
-    <result column="refund" jdbcType="TINYINT" property="refund" />
+    <result column="model" jdbcType="INTEGER" property="model" />
+    <result column="refund" jdbcType="INTEGER" property="refund" />
     <result column="pid" jdbcType="INTEGER" property="pid" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="cityid" jdbcType="INTEGER" property="cityid" />
     <result column="lat" jdbcType="DECIMAL" property="lat" />
     <result column="lng" jdbcType="DECIMAL" property="lng" />
-    <result column="finalmoney" jdbcType="REAL" property="finalmoney" />
-    <result column="spaid" jdbcType="TINYINT" property="spaid" />
+    <result column="finalmoney" jdbcType="DECIMAL" property="finalmoney" />
+    <result column="spaid" jdbcType="INTEGER" property="spaid" />
     <result column="note_avatar_url" jdbcType="VARCHAR" property="noteAvatarUrl" />
     <result column="note_name" jdbcType="VARCHAR" property="noteName" />
     <result column="content_id" jdbcType="INTEGER" property="contentId" />
@@ -41,6 +41,7 @@
     <result column="traffic_price" jdbcType="DECIMAL" property="trafficPrice" />
     <result column="daddress" jdbcType="VARCHAR" property="daddress" />
     <result column="content_name" jdbcType="VARCHAR" property="contentName" />
+    <result column="updatetime" jdbcType="INTEGER" property="updatetime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -105,7 +106,7 @@
     status, type, address, content, mark, noteid, sendtime, dmoney, couponid, model, 
     refund, pid, title, cityid, lat, lng, finalmoney, spaid, note_avatar_url, note_name, 
     content_id, content_thumb, sub_time, traffic_type, traffic_reckon_mile, traffic_price, 
-    daddress, content_name
+    daddress, content_name, updatetime
   </sql>
   <select id="selectByExample" parameterType="com.bestfeng.dydj.mbg.model.OrderExample" resultMap="BaseResultMap">
     select
@@ -150,20 +151,22 @@
       spaid, note_avatar_url, note_name, 
       content_id, content_thumb, sub_time, 
       traffic_type, traffic_reckon_mile, traffic_price, 
-      daddress, content_name)
+      daddress, content_name, updatetime
+      )
     values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{msgtime,jdbcType=VARCHAR}, 
-      #{orderid,jdbcType=VARCHAR}, #{money,jdbcType=REAL}, #{paytime,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=INTEGER}, #{paid,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, 
-      #{type,jdbcType=TINYINT}, #{address,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{orderid,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{paytime,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=INTEGER}, #{paid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
       #{mark,jdbcType=VARCHAR}, #{noteid,jdbcType=INTEGER}, #{sendtime,jdbcType=INTEGER}, 
-      #{dmoney,jdbcType=REAL}, #{couponid,jdbcType=INTEGER}, #{model,jdbcType=TINYINT}, 
-      #{refund,jdbcType=TINYINT}, #{pid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
-      #{cityid,jdbcType=INTEGER}, #{lat,jdbcType=DECIMAL}, #{lng,jdbcType=DECIMAL}, #{finalmoney,jdbcType=REAL}, 
-      #{spaid,jdbcType=TINYINT}, #{noteAvatarUrl,jdbcType=VARCHAR}, #{noteName,jdbcType=VARCHAR}, 
+      #{dmoney,jdbcType=DECIMAL}, #{couponid,jdbcType=INTEGER}, #{model,jdbcType=INTEGER}, 
+      #{refund,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{cityid,jdbcType=INTEGER}, #{lat,jdbcType=DECIMAL}, #{lng,jdbcType=DECIMAL}, #{finalmoney,jdbcType=DECIMAL}, 
+      #{spaid,jdbcType=INTEGER}, #{noteAvatarUrl,jdbcType=VARCHAR}, #{noteName,jdbcType=VARCHAR}, 
       #{contentId,jdbcType=INTEGER}, #{contentThumb,jdbcType=VARCHAR}, #{subTime,jdbcType=VARCHAR}, 
       #{trafficType,jdbcType=INTEGER}, #{trafficReckonMile,jdbcType=DECIMAL}, #{trafficPrice,jdbcType=DECIMAL}, 
-      #{daddress,jdbcType=VARCHAR}, #{contentName,jdbcType=VARCHAR})
+      #{daddress,jdbcType=VARCHAR}, #{contentName,jdbcType=VARCHAR}, #{updatetime,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Order">
     insert into ims_weixinmao_jz_order
@@ -285,6 +288,9 @@
       <if test="contentName != null">
         content_name,
       </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -309,7 +315,7 @@
         #{orderid,jdbcType=VARCHAR},
       </if>
       <if test="money != null">
-        #{money,jdbcType=REAL},
+        #{money,jdbcType=DECIMAL},
       </if>
       <if test="paytime != null">
         #{paytime,jdbcType=INTEGER},
@@ -318,13 +324,13 @@
         #{createtime,jdbcType=INTEGER},
       </if>
       <if test="paid != null">
-        #{paid,jdbcType=TINYINT},
+        #{paid,jdbcType=INTEGER},
       </if>
       <if test="status != null">
-        #{status,jdbcType=TINYINT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="type != null">
-        #{type,jdbcType=TINYINT},
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="address != null">
         #{address,jdbcType=VARCHAR},
@@ -342,16 +348,16 @@
         #{sendtime,jdbcType=INTEGER},
       </if>
       <if test="dmoney != null">
-        #{dmoney,jdbcType=REAL},
+        #{dmoney,jdbcType=DECIMAL},
       </if>
       <if test="couponid != null">
         #{couponid,jdbcType=INTEGER},
       </if>
       <if test="model != null">
-        #{model,jdbcType=TINYINT},
+        #{model,jdbcType=INTEGER},
       </if>
       <if test="refund != null">
-        #{refund,jdbcType=TINYINT},
+        #{refund,jdbcType=INTEGER},
       </if>
       <if test="pid != null">
         #{pid,jdbcType=INTEGER},
@@ -369,10 +375,10 @@
         #{lng,jdbcType=DECIMAL},
       </if>
       <if test="finalmoney != null">
-        #{finalmoney,jdbcType=REAL},
+        #{finalmoney,jdbcType=DECIMAL},
       </if>
       <if test="spaid != null">
-        #{spaid,jdbcType=TINYINT},
+        #{spaid,jdbcType=INTEGER},
       </if>
       <if test="noteAvatarUrl != null">
         #{noteAvatarUrl,jdbcType=VARCHAR},
@@ -403,6 +409,9 @@
       </if>
       <if test="contentName != null">
         #{contentName,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -437,7 +446,7 @@
         orderid = #{record.orderid,jdbcType=VARCHAR},
       </if>
       <if test="record.money != null">
-        money = #{record.money,jdbcType=REAL},
+        money = #{record.money,jdbcType=DECIMAL},
       </if>
       <if test="record.paytime != null">
         paytime = #{record.paytime,jdbcType=INTEGER},
@@ -446,13 +455,13 @@
         createtime = #{record.createtime,jdbcType=INTEGER},
       </if>
       <if test="record.paid != null">
-        paid = #{record.paid,jdbcType=TINYINT},
+        paid = #{record.paid,jdbcType=INTEGER},
       </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=TINYINT},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.type != null">
-        type = #{record.type,jdbcType=TINYINT},
+        type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.address != null">
         address = #{record.address,jdbcType=VARCHAR},
@@ -470,16 +479,16 @@
         sendtime = #{record.sendtime,jdbcType=INTEGER},
       </if>
       <if test="record.dmoney != null">
-        dmoney = #{record.dmoney,jdbcType=REAL},
+        dmoney = #{record.dmoney,jdbcType=DECIMAL},
       </if>
       <if test="record.couponid != null">
         couponid = #{record.couponid,jdbcType=INTEGER},
       </if>
       <if test="record.model != null">
-        model = #{record.model,jdbcType=TINYINT},
+        model = #{record.model,jdbcType=INTEGER},
       </if>
       <if test="record.refund != null">
-        refund = #{record.refund,jdbcType=TINYINT},
+        refund = #{record.refund,jdbcType=INTEGER},
       </if>
       <if test="record.pid != null">
         pid = #{record.pid,jdbcType=INTEGER},
@@ -497,10 +506,10 @@
         lng = #{record.lng,jdbcType=DECIMAL},
       </if>
       <if test="record.finalmoney != null">
-        finalmoney = #{record.finalmoney,jdbcType=REAL},
+        finalmoney = #{record.finalmoney,jdbcType=DECIMAL},
       </if>
       <if test="record.spaid != null">
-        spaid = #{record.spaid,jdbcType=TINYINT},
+        spaid = #{record.spaid,jdbcType=INTEGER},
       </if>
       <if test="record.noteAvatarUrl != null">
         note_avatar_url = #{record.noteAvatarUrl,jdbcType=VARCHAR},
@@ -532,6 +541,9 @@
       <if test="record.contentName != null">
         content_name = #{record.contentName,jdbcType=VARCHAR},
       </if>
+      <if test="record.updatetime != null">
+        updatetime = #{record.updatetime,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -546,28 +558,28 @@
       tel = #{record.tel,jdbcType=VARCHAR},
       msgtime = #{record.msgtime,jdbcType=VARCHAR},
       orderid = #{record.orderid,jdbcType=VARCHAR},
-      money = #{record.money,jdbcType=REAL},
+      money = #{record.money,jdbcType=DECIMAL},
       paytime = #{record.paytime,jdbcType=INTEGER},
       createtime = #{record.createtime,jdbcType=INTEGER},
-      paid = #{record.paid,jdbcType=TINYINT},
-      status = #{record.status,jdbcType=TINYINT},
-      type = #{record.type,jdbcType=TINYINT},
+      paid = #{record.paid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
       address = #{record.address,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       mark = #{record.mark,jdbcType=VARCHAR},
       noteid = #{record.noteid,jdbcType=INTEGER},
       sendtime = #{record.sendtime,jdbcType=INTEGER},
-      dmoney = #{record.dmoney,jdbcType=REAL},
+      dmoney = #{record.dmoney,jdbcType=DECIMAL},
       couponid = #{record.couponid,jdbcType=INTEGER},
-      model = #{record.model,jdbcType=TINYINT},
-      refund = #{record.refund,jdbcType=TINYINT},
+      model = #{record.model,jdbcType=INTEGER},
+      refund = #{record.refund,jdbcType=INTEGER},
       pid = #{record.pid,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       cityid = #{record.cityid,jdbcType=INTEGER},
       lat = #{record.lat,jdbcType=DECIMAL},
       lng = #{record.lng,jdbcType=DECIMAL},
-      finalmoney = #{record.finalmoney,jdbcType=REAL},
-      spaid = #{record.spaid,jdbcType=TINYINT},
+      finalmoney = #{record.finalmoney,jdbcType=DECIMAL},
+      spaid = #{record.spaid,jdbcType=INTEGER},
       note_avatar_url = #{record.noteAvatarUrl,jdbcType=VARCHAR},
       note_name = #{record.noteName,jdbcType=VARCHAR},
       content_id = #{record.contentId,jdbcType=INTEGER},
@@ -577,7 +589,8 @@
       traffic_reckon_mile = #{record.trafficReckonMile,jdbcType=DECIMAL},
       traffic_price = #{record.trafficPrice,jdbcType=DECIMAL},
       daddress = #{record.daddress,jdbcType=VARCHAR},
-      content_name = #{record.contentName,jdbcType=VARCHAR}
+      content_name = #{record.contentName,jdbcType=VARCHAR},
+      updatetime = #{record.updatetime,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -604,7 +617,7 @@
         orderid = #{orderid,jdbcType=VARCHAR},
       </if>
       <if test="money != null">
-        money = #{money,jdbcType=REAL},
+        money = #{money,jdbcType=DECIMAL},
       </if>
       <if test="paytime != null">
         paytime = #{paytime,jdbcType=INTEGER},
@@ -613,13 +626,13 @@
         createtime = #{createtime,jdbcType=INTEGER},
       </if>
       <if test="paid != null">
-        paid = #{paid,jdbcType=TINYINT},
+        paid = #{paid,jdbcType=INTEGER},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="type != null">
-        type = #{type,jdbcType=TINYINT},
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
@@ -637,16 +650,16 @@
         sendtime = #{sendtime,jdbcType=INTEGER},
       </if>
       <if test="dmoney != null">
-        dmoney = #{dmoney,jdbcType=REAL},
+        dmoney = #{dmoney,jdbcType=DECIMAL},
       </if>
       <if test="couponid != null">
         couponid = #{couponid,jdbcType=INTEGER},
       </if>
       <if test="model != null">
-        model = #{model,jdbcType=TINYINT},
+        model = #{model,jdbcType=INTEGER},
       </if>
       <if test="refund != null">
-        refund = #{refund,jdbcType=TINYINT},
+        refund = #{refund,jdbcType=INTEGER},
       </if>
       <if test="pid != null">
         pid = #{pid,jdbcType=INTEGER},
@@ -664,10 +677,10 @@
         lng = #{lng,jdbcType=DECIMAL},
       </if>
       <if test="finalmoney != null">
-        finalmoney = #{finalmoney,jdbcType=REAL},
+        finalmoney = #{finalmoney,jdbcType=DECIMAL},
       </if>
       <if test="spaid != null">
-        spaid = #{spaid,jdbcType=TINYINT},
+        spaid = #{spaid,jdbcType=INTEGER},
       </if>
       <if test="noteAvatarUrl != null">
         note_avatar_url = #{noteAvatarUrl,jdbcType=VARCHAR},
@@ -699,6 +712,9 @@
       <if test="contentName != null">
         content_name = #{contentName,jdbcType=VARCHAR},
       </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -710,28 +726,28 @@
       tel = #{tel,jdbcType=VARCHAR},
       msgtime = #{msgtime,jdbcType=VARCHAR},
       orderid = #{orderid,jdbcType=VARCHAR},
-      money = #{money,jdbcType=REAL},
+      money = #{money,jdbcType=DECIMAL},
       paytime = #{paytime,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=INTEGER},
-      paid = #{paid,jdbcType=TINYINT},
-      status = #{status,jdbcType=TINYINT},
-      type = #{type,jdbcType=TINYINT},
+      paid = #{paid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
       address = #{address,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       mark = #{mark,jdbcType=VARCHAR},
       noteid = #{noteid,jdbcType=INTEGER},
       sendtime = #{sendtime,jdbcType=INTEGER},
-      dmoney = #{dmoney,jdbcType=REAL},
+      dmoney = #{dmoney,jdbcType=DECIMAL},
       couponid = #{couponid,jdbcType=INTEGER},
-      model = #{model,jdbcType=TINYINT},
-      refund = #{refund,jdbcType=TINYINT},
+      model = #{model,jdbcType=INTEGER},
+      refund = #{refund,jdbcType=INTEGER},
       pid = #{pid,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       cityid = #{cityid,jdbcType=INTEGER},
       lat = #{lat,jdbcType=DECIMAL},
       lng = #{lng,jdbcType=DECIMAL},
-      finalmoney = #{finalmoney,jdbcType=REAL},
-      spaid = #{spaid,jdbcType=TINYINT},
+      finalmoney = #{finalmoney,jdbcType=DECIMAL},
+      spaid = #{spaid,jdbcType=INTEGER},
       note_avatar_url = #{noteAvatarUrl,jdbcType=VARCHAR},
       note_name = #{noteName,jdbcType=VARCHAR},
       content_id = #{contentId,jdbcType=INTEGER},
@@ -741,7 +757,8 @@
       traffic_reckon_mile = #{trafficReckonMile,jdbcType=DECIMAL},
       traffic_price = #{trafficPrice,jdbcType=DECIMAL},
       daddress = #{daddress,jdbcType=VARCHAR},
-      content_name = #{contentName,jdbcType=VARCHAR}
+      content_name = #{contentName,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

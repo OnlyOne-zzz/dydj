@@ -34,9 +34,9 @@ public class OrderController implements GeneralCrudController<Order> {
         return orderService;
     }
 
-    @PostMapping("/doOrder")
+    @PostMapping("/saveOrder")
     @ApiOperation(value = "创建订单")
-    public CommonResult<Void> doOrder(@RequestBody OrderDto orderDto){
+    public CommonResult<Void> saveOrder(@RequestBody OrderDto orderDto){
         Assert.notNull(orderDto,"订单参数不能为空");
         Assert.notNull(orderDto.getContentId(),"项目Id不能为空");
         Assert.notNull(orderDto.getNoteid(),"技师Id不能为空");
@@ -47,7 +47,25 @@ public class OrderController implements GeneralCrudController<Order> {
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getTel()),"手机号不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getAddress()),"地址不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getDaddress()),"详细地址不能为空");
-        orderService.doOrder(orderDto);
+        orderService.saveOrder(orderDto);
+        return CommonResult.success();
+    }
+
+    @PostMapping("/userRefund")
+    @ApiOperation(value = "用户退款")
+    public CommonResult<Void> userRefund(@RequestBody OrderDto orderDto){
+        Assert.notNull(orderDto,"订单参数不能为空");
+        Assert.notNull(orderDto.getId(),"订单主键Id不能为空");
+        orderService.userRefund(orderDto);
+        return CommonResult.success();
+    }
+
+    @PostMapping("/artificerDoOrder")
+    @ApiOperation(value = "技师操作订单")
+    public CommonResult<Void> artificerDoOrder(@RequestBody OrderDto orderDto){
+        Assert.notNull(orderDto,"订单参数不能为空");
+        Assert.notNull(orderDto.getOrderid(),"订单Id不能为空");
+        Assert.notNull(orderDto.getOrderStatusEnum(),"订单状态不能为空");
         return CommonResult.success();
     }
 }

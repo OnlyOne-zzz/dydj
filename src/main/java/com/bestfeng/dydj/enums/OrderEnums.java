@@ -22,12 +22,42 @@ public class OrderEnums {
         REFUND_ING(4,"退款中"),
         REFUND_SUCCESS(5,"退款成功"),
         WAIT_EVALUATE(6,"用户待评价"),
-        CLOSE(7,"订单已关闭");
+        EVALUATE_SUCCESS(7,"评价成功"),
+        CLOSE(8,"订单已关闭");
 
         private Integer code;
         private String name;
 
         OrderStatusEnum(Integer code,String name){
+            this.code=code;
+            this.name=name;
+        }
+
+        public static OrderStatusEnum getNameByCode(Integer code){
+            OrderStatusEnum[]  statusEnums = OrderStatusEnum.values();
+            for (OrderStatusEnum statusEnum:statusEnums){
+                if(statusEnum.getCode() == code){
+                    return statusEnum;
+                }
+            }
+            return null;
+        }
+    }
+
+    /**
+     * 订单的状态枚举
+     */
+    @Getter
+    public enum  OrderRefundEnum{
+
+        REFUND_ING(0,"退款中"),
+        REFUND_SUCCESS(1,"退款成功"),
+        REFUND_FAIL(2,"退款失败");
+
+        private Integer code;
+        private String name;
+
+        OrderRefundEnum(Integer code,String name){
             this.code=code;
             this.name=name;
         }
@@ -42,4 +72,7 @@ public class OrderEnums {
             return null;
         }
     }
+
+
+
 }

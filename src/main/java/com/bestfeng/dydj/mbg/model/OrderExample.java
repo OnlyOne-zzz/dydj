@@ -575,52 +575,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andMoneyEqualTo(Float value) {
+        public Criteria andMoneyEqualTo(BigDecimal value) {
             addCriterion("money =", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyNotEqualTo(Float value) {
+        public Criteria andMoneyNotEqualTo(BigDecimal value) {
             addCriterion("money <>", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyGreaterThan(Float value) {
+        public Criteria andMoneyGreaterThan(BigDecimal value) {
             addCriterion("money >", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyGreaterThanOrEqualTo(Float value) {
+        public Criteria andMoneyGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("money >=", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyLessThan(Float value) {
+        public Criteria andMoneyLessThan(BigDecimal value) {
             addCriterion("money <", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyLessThanOrEqualTo(Float value) {
+        public Criteria andMoneyLessThanOrEqualTo(BigDecimal value) {
             addCriterion("money <=", value, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyIn(List<Float> values) {
+        public Criteria andMoneyIn(List<BigDecimal> values) {
             addCriterion("money in", values, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyNotIn(List<Float> values) {
+        public Criteria andMoneyNotIn(List<BigDecimal> values) {
             addCriterion("money not in", values, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyBetween(Float value1, Float value2) {
+        public Criteria andMoneyBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("money between", value1, value2, "money");
             return (Criteria) this;
         }
 
-        public Criteria andMoneyNotBetween(Float value1, Float value2) {
+        public Criteria andMoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("money not between", value1, value2, "money");
             return (Criteria) this;
         }
@@ -755,52 +755,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andPaidEqualTo(Byte value) {
+        public Criteria andPaidEqualTo(Integer value) {
             addCriterion("paid =", value, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidNotEqualTo(Byte value) {
+        public Criteria andPaidNotEqualTo(Integer value) {
             addCriterion("paid <>", value, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidGreaterThan(Byte value) {
+        public Criteria andPaidGreaterThan(Integer value) {
             addCriterion("paid >", value, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidGreaterThanOrEqualTo(Byte value) {
+        public Criteria andPaidGreaterThanOrEqualTo(Integer value) {
             addCriterion("paid >=", value, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidLessThan(Byte value) {
+        public Criteria andPaidLessThan(Integer value) {
             addCriterion("paid <", value, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidLessThanOrEqualTo(Byte value) {
+        public Criteria andPaidLessThanOrEqualTo(Integer value) {
             addCriterion("paid <=", value, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidIn(List<Byte> values) {
+        public Criteria andPaidIn(List<Integer> values) {
             addCriterion("paid in", values, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidNotIn(List<Byte> values) {
+        public Criteria andPaidNotIn(List<Integer> values) {
             addCriterion("paid not in", values, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidBetween(Byte value1, Byte value2) {
+        public Criteria andPaidBetween(Integer value1, Integer value2) {
             addCriterion("paid between", value1, value2, "paid");
             return (Criteria) this;
         }
 
-        public Criteria andPaidNotBetween(Byte value1, Byte value2) {
+        public Criteria andPaidNotBetween(Integer value1, Integer value2) {
             addCriterion("paid not between", value1, value2, "paid");
             return (Criteria) this;
         }
@@ -815,52 +815,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(Byte value) {
+        public Criteria andStatusEqualTo(Integer value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(Byte value) {
+        public Criteria andStatusNotEqualTo(Integer value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(Byte value) {
+        public Criteria andStatusGreaterThan(Integer value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(Byte value) {
+        public Criteria andStatusLessThan(Integer value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(Byte value) {
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<Byte> values) {
+        public Criteria andStatusIn(List<Integer> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<Byte> values) {
+        public Criteria andStatusNotIn(List<Integer> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(Byte value1, Byte value2) {
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
@@ -875,52 +875,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andTypeEqualTo(Byte value) {
+        public Criteria andTypeEqualTo(Integer value) {
             addCriterion("type =", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotEqualTo(Byte value) {
+        public Criteria andTypeNotEqualTo(Integer value) {
             addCriterion("type <>", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThan(Byte value) {
+        public Criteria andTypeGreaterThan(Integer value) {
             addCriterion("type >", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeGreaterThanOrEqualTo(Byte value) {
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
             addCriterion("type >=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThan(Byte value) {
+        public Criteria andTypeLessThan(Integer value) {
             addCriterion("type <", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeLessThanOrEqualTo(Byte value) {
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
             addCriterion("type <=", value, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeIn(List<Byte> values) {
+        public Criteria andTypeIn(List<Integer> values) {
             addCriterion("type in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotIn(List<Byte> values) {
+        public Criteria andTypeNotIn(List<Integer> values) {
             addCriterion("type not in", values, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeBetween(Byte value1, Byte value2) {
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
             addCriterion("type between", value1, value2, "type");
             return (Criteria) this;
         }
 
-        public Criteria andTypeNotBetween(Byte value1, Byte value2) {
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
@@ -1265,52 +1265,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyEqualTo(Float value) {
+        public Criteria andDmoneyEqualTo(BigDecimal value) {
             addCriterion("dmoney =", value, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyNotEqualTo(Float value) {
+        public Criteria andDmoneyNotEqualTo(BigDecimal value) {
             addCriterion("dmoney <>", value, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyGreaterThan(Float value) {
+        public Criteria andDmoneyGreaterThan(BigDecimal value) {
             addCriterion("dmoney >", value, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyGreaterThanOrEqualTo(Float value) {
+        public Criteria andDmoneyGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("dmoney >=", value, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyLessThan(Float value) {
+        public Criteria andDmoneyLessThan(BigDecimal value) {
             addCriterion("dmoney <", value, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyLessThanOrEqualTo(Float value) {
+        public Criteria andDmoneyLessThanOrEqualTo(BigDecimal value) {
             addCriterion("dmoney <=", value, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyIn(List<Float> values) {
+        public Criteria andDmoneyIn(List<BigDecimal> values) {
             addCriterion("dmoney in", values, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyNotIn(List<Float> values) {
+        public Criteria andDmoneyNotIn(List<BigDecimal> values) {
             addCriterion("dmoney not in", values, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyBetween(Float value1, Float value2) {
+        public Criteria andDmoneyBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("dmoney between", value1, value2, "dmoney");
             return (Criteria) this;
         }
 
-        public Criteria andDmoneyNotBetween(Float value1, Float value2) {
+        public Criteria andDmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("dmoney not between", value1, value2, "dmoney");
             return (Criteria) this;
         }
@@ -1385,52 +1385,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andModelEqualTo(Byte value) {
+        public Criteria andModelEqualTo(Integer value) {
             addCriterion("model =", value, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelNotEqualTo(Byte value) {
+        public Criteria andModelNotEqualTo(Integer value) {
             addCriterion("model <>", value, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelGreaterThan(Byte value) {
+        public Criteria andModelGreaterThan(Integer value) {
             addCriterion("model >", value, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelGreaterThanOrEqualTo(Byte value) {
+        public Criteria andModelGreaterThanOrEqualTo(Integer value) {
             addCriterion("model >=", value, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelLessThan(Byte value) {
+        public Criteria andModelLessThan(Integer value) {
             addCriterion("model <", value, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelLessThanOrEqualTo(Byte value) {
+        public Criteria andModelLessThanOrEqualTo(Integer value) {
             addCriterion("model <=", value, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelIn(List<Byte> values) {
+        public Criteria andModelIn(List<Integer> values) {
             addCriterion("model in", values, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelNotIn(List<Byte> values) {
+        public Criteria andModelNotIn(List<Integer> values) {
             addCriterion("model not in", values, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelBetween(Byte value1, Byte value2) {
+        public Criteria andModelBetween(Integer value1, Integer value2) {
             addCriterion("model between", value1, value2, "model");
             return (Criteria) this;
         }
 
-        public Criteria andModelNotBetween(Byte value1, Byte value2) {
+        public Criteria andModelNotBetween(Integer value1, Integer value2) {
             addCriterion("model not between", value1, value2, "model");
             return (Criteria) this;
         }
@@ -1445,52 +1445,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andRefundEqualTo(Byte value) {
+        public Criteria andRefundEqualTo(Integer value) {
             addCriterion("refund =", value, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNotEqualTo(Byte value) {
+        public Criteria andRefundNotEqualTo(Integer value) {
             addCriterion("refund <>", value, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundGreaterThan(Byte value) {
+        public Criteria andRefundGreaterThan(Integer value) {
             addCriterion("refund >", value, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundGreaterThanOrEqualTo(Byte value) {
+        public Criteria andRefundGreaterThanOrEqualTo(Integer value) {
             addCriterion("refund >=", value, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundLessThan(Byte value) {
+        public Criteria andRefundLessThan(Integer value) {
             addCriterion("refund <", value, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundLessThanOrEqualTo(Byte value) {
+        public Criteria andRefundLessThanOrEqualTo(Integer value) {
             addCriterion("refund <=", value, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundIn(List<Byte> values) {
+        public Criteria andRefundIn(List<Integer> values) {
             addCriterion("refund in", values, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNotIn(List<Byte> values) {
+        public Criteria andRefundNotIn(List<Integer> values) {
             addCriterion("refund not in", values, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundBetween(Byte value1, Byte value2) {
+        public Criteria andRefundBetween(Integer value1, Integer value2) {
             addCriterion("refund between", value1, value2, "refund");
             return (Criteria) this;
         }
 
-        public Criteria andRefundNotBetween(Byte value1, Byte value2) {
+        public Criteria andRefundNotBetween(Integer value1, Integer value2) {
             addCriterion("refund not between", value1, value2, "refund");
             return (Criteria) this;
         }
@@ -1815,52 +1815,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyEqualTo(Float value) {
+        public Criteria andFinalmoneyEqualTo(BigDecimal value) {
             addCriterion("finalmoney =", value, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyNotEqualTo(Float value) {
+        public Criteria andFinalmoneyNotEqualTo(BigDecimal value) {
             addCriterion("finalmoney <>", value, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyGreaterThan(Float value) {
+        public Criteria andFinalmoneyGreaterThan(BigDecimal value) {
             addCriterion("finalmoney >", value, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyGreaterThanOrEqualTo(Float value) {
+        public Criteria andFinalmoneyGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("finalmoney >=", value, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyLessThan(Float value) {
+        public Criteria andFinalmoneyLessThan(BigDecimal value) {
             addCriterion("finalmoney <", value, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyLessThanOrEqualTo(Float value) {
+        public Criteria andFinalmoneyLessThanOrEqualTo(BigDecimal value) {
             addCriterion("finalmoney <=", value, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyIn(List<Float> values) {
+        public Criteria andFinalmoneyIn(List<BigDecimal> values) {
             addCriterion("finalmoney in", values, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyNotIn(List<Float> values) {
+        public Criteria andFinalmoneyNotIn(List<BigDecimal> values) {
             addCriterion("finalmoney not in", values, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyBetween(Float value1, Float value2) {
+        public Criteria andFinalmoneyBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("finalmoney between", value1, value2, "finalmoney");
             return (Criteria) this;
         }
 
-        public Criteria andFinalmoneyNotBetween(Float value1, Float value2) {
+        public Criteria andFinalmoneyNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("finalmoney not between", value1, value2, "finalmoney");
             return (Criteria) this;
         }
@@ -1875,52 +1875,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andSpaidEqualTo(Byte value) {
+        public Criteria andSpaidEqualTo(Integer value) {
             addCriterion("spaid =", value, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidNotEqualTo(Byte value) {
+        public Criteria andSpaidNotEqualTo(Integer value) {
             addCriterion("spaid <>", value, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidGreaterThan(Byte value) {
+        public Criteria andSpaidGreaterThan(Integer value) {
             addCriterion("spaid >", value, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidGreaterThanOrEqualTo(Byte value) {
+        public Criteria andSpaidGreaterThanOrEqualTo(Integer value) {
             addCriterion("spaid >=", value, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidLessThan(Byte value) {
+        public Criteria andSpaidLessThan(Integer value) {
             addCriterion("spaid <", value, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidLessThanOrEqualTo(Byte value) {
+        public Criteria andSpaidLessThanOrEqualTo(Integer value) {
             addCriterion("spaid <=", value, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidIn(List<Byte> values) {
+        public Criteria andSpaidIn(List<Integer> values) {
             addCriterion("spaid in", values, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidNotIn(List<Byte> values) {
+        public Criteria andSpaidNotIn(List<Integer> values) {
             addCriterion("spaid not in", values, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidBetween(Byte value1, Byte value2) {
+        public Criteria andSpaidBetween(Integer value1, Integer value2) {
             addCriterion("spaid between", value1, value2, "spaid");
             return (Criteria) this;
         }
 
-        public Criteria andSpaidNotBetween(Byte value1, Byte value2) {
+        public Criteria andSpaidNotBetween(Integer value1, Integer value2) {
             addCriterion("spaid not between", value1, value2, "spaid");
             return (Criteria) this;
         }
@@ -2582,6 +2582,66 @@ public class OrderExample {
 
         public Criteria andContentNameNotBetween(String value1, String value2) {
             addCriterion("content_name not between", value1, value2, "contentName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeIsNull() {
+            addCriterion("updatetime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeIsNotNull() {
+            addCriterion("updatetime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeEqualTo(Integer value) {
+            addCriterion("updatetime =", value, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeNotEqualTo(Integer value) {
+            addCriterion("updatetime <>", value, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeGreaterThan(Integer value) {
+            addCriterion("updatetime >", value, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("updatetime >=", value, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeLessThan(Integer value) {
+            addCriterion("updatetime <", value, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeLessThanOrEqualTo(Integer value) {
+            addCriterion("updatetime <=", value, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeIn(List<Integer> values) {
+            addCriterion("updatetime in", values, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeNotIn(List<Integer> values) {
+            addCriterion("updatetime not in", values, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeBetween(Integer value1, Integer value2) {
+            addCriterion("updatetime between", value1, value2, "updatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatetimeNotBetween(Integer value1, Integer value2) {
+            addCriterion("updatetime not between", value1, value2, "updatetime");
             return (Criteria) this;
         }
     }

@@ -21,18 +21,18 @@ public class Order implements Serializable {
 
     private String orderid;
 
-    private Float money;
+    private BigDecimal money;
 
     private Integer paytime;
 
     @ApiModelProperty(value = "创建时间")
     private Integer createtime;
 
-    private Byte paid;
+    private Integer paid;
 
-    private Byte status;
+    private Integer status;
 
-    private Byte type;
+    private Integer type;
 
     private String address;
 
@@ -44,13 +44,13 @@ public class Order implements Serializable {
 
     private Integer sendtime;
 
-    private Float dmoney;
+    private BigDecimal dmoney;
 
     private Integer couponid;
 
-    private Byte model;
+    private Integer model;
 
-    private Byte refund;
+    private Integer refund;
 
     private Integer pid;
 
@@ -64,9 +64,9 @@ public class Order implements Serializable {
     @ApiModelProperty(value = "纬度")
     private BigDecimal lng;
 
-    private Float finalmoney;
+    private BigDecimal finalmoney;
 
-    private Byte spaid;
+    private Integer spaid;
 
     @ApiModelProperty(value = "技师图片(冗余)")
     private String noteAvatarUrl;
@@ -97,6 +97,9 @@ public class Order implements Serializable {
 
     @ApiModelProperty(value = "服务项目名字")
     private String contentName;
+
+    @ApiModelProperty(value = "更新时间")
+    private Integer updatetime;
 
     private static final long serialVersionUID = 1L;
 
@@ -156,11 +159,11 @@ public class Order implements Serializable {
         this.orderid = orderid;
     }
 
-    public Float getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
-    public void setMoney(Float money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
     }
 
@@ -180,27 +183,27 @@ public class Order implements Serializable {
         this.createtime = createtime;
     }
 
-    public Byte getPaid() {
+    public Integer getPaid() {
         return paid;
     }
 
-    public void setPaid(Byte paid) {
+    public void setPaid(Integer paid) {
         this.paid = paid;
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -244,11 +247,11 @@ public class Order implements Serializable {
         this.sendtime = sendtime;
     }
 
-    public Float getDmoney() {
+    public BigDecimal getDmoney() {
         return dmoney;
     }
 
-    public void setDmoney(Float dmoney) {
+    public void setDmoney(BigDecimal dmoney) {
         this.dmoney = dmoney;
     }
 
@@ -260,19 +263,19 @@ public class Order implements Serializable {
         this.couponid = couponid;
     }
 
-    public Byte getModel() {
+    public Integer getModel() {
         return model;
     }
 
-    public void setModel(Byte model) {
+    public void setModel(Integer model) {
         this.model = model;
     }
 
-    public Byte getRefund() {
+    public Integer getRefund() {
         return refund;
     }
 
-    public void setRefund(Byte refund) {
+    public void setRefund(Integer refund) {
         this.refund = refund;
     }
 
@@ -316,19 +319,19 @@ public class Order implements Serializable {
         this.lng = lng;
     }
 
-    public Float getFinalmoney() {
+    public BigDecimal getFinalmoney() {
         return finalmoney;
     }
 
-    public void setFinalmoney(Float finalmoney) {
+    public void setFinalmoney(BigDecimal finalmoney) {
         this.finalmoney = finalmoney;
     }
 
-    public Byte getSpaid() {
+    public Integer getSpaid() {
         return spaid;
     }
 
-    public void setSpaid(Byte spaid) {
+    public void setSpaid(Integer spaid) {
         this.spaid = spaid;
     }
 
@@ -412,6 +415,14 @@ public class Order implements Serializable {
         this.contentName = contentName;
     }
 
+    public Integer getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Integer updatetime) {
+        this.updatetime = updatetime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -457,6 +468,7 @@ public class Order implements Serializable {
         sb.append(", trafficPrice=").append(trafficPrice);
         sb.append(", daddress=").append(daddress);
         sb.append(", contentName=").append(contentName);
+        sb.append(", updatetime=").append(updatetime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
