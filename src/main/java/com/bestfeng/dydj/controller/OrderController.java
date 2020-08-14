@@ -1,8 +1,6 @@
 package com.bestfeng.dydj.controller;
 
-import com.bestfeng.dydj.annotation.RepeatLock;
 import com.bestfeng.dydj.annotation.SignValidated;
-import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.enums.UserEnums;
 import com.bestfeng.dydj.mbg.model.Order;
@@ -15,7 +13,10 @@ import org.aurochsframework.boot.commons.service.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author bsetfeng
@@ -42,6 +43,7 @@ public class OrderController implements GeneralCrudController<Order> {
     public CommonResult<Void> saveOrder(@RequestBody OrderDto orderDto){
         Assert.notNull(orderDto,"订单参数不能为空");
         Assert.notNull(orderDto.getContentId(),"项目Id不能为空");
+        Assert.notNull(orderDto.getUid(),"用户Id不能为空");
         Assert.notNull(orderDto.getNoteid(),"技师Id不能为空");
         Assert.notNull(orderDto.getMoney(),"项目金额不能为空");
         Assert.notNull(orderDto.getFinalmoney(),"总金额不能为空");
