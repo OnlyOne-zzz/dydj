@@ -2,9 +2,9 @@ package com.bestfeng.dydj.aspect;
 
 
 import com.bestfeng.dydj.annotation.RepeatLock;
+import com.bestfeng.dydj.utils.SpelUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.LRUMap;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -42,9 +42,9 @@ public class LruRepeatLockAspect {
         MethodSignature methodSignature = (MethodSignature)signature;
         Method method = methodSignature.getMethod();
         RepeatLock repeatLock = method.getAnnotation(RepeatLock.class);
+        String name = repeatLock.name();
         String key = repeatLock.key();
-        String value = repeatLock.value();
-        String lockKey = String.format(key,value);
+        String lockKey = String.format(name, SpelUtil.parse(key, method, point.getArgs()));
         // 锁当前方法
         synchronized (method){
             if(reqCache.containsKey(lockKey)){
@@ -53,10 +53,12 @@ public class LruRepeatLockAspect {
             reqCache.put(lockKey,System.currentTimeMillis());
         }
         try {
+            /**执行目标方法*/
            point.proceed();
         }catch (Exception e){
             throw e;
         }finally {
+            /**释放锁*/
             reqCache.remove(lockKey);
         }
     }
