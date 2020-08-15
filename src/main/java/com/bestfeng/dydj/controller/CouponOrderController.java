@@ -12,6 +12,7 @@ import org.aurochsframework.boot.commons.controller.GeneralCrudController;
 import org.aurochsframework.boot.commons.service.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,7 +39,7 @@ public class CouponOrderController implements GeneralCrudController<CouponOrder>
 
     @PostMapping("/receive")
     @ApiOperation("新增订单优惠券")
-    public CommonResult<Object> receive(CouponOrderReceiveRequest receiveRequest) {
+    public CommonResult<Object> receive(@RequestBody CouponOrderReceiveRequest receiveRequest) {
         couponOrderService.receive(receiveRequest.getType(), receiveRequest.getUid());
         return CommonResult.success("操作成功");
     }
