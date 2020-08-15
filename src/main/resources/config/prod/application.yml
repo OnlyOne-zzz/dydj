@@ -39,7 +39,7 @@ spring:
     static-locations: file:./ui/,file:./static/,/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/resources/,classpath:/static/, classpath:/ui/
     redis:
       database: 1
-      host: 47.108.133.178
+      host: 127.0.0.1
       password: '12345'
       port: 6379
       timeout: 3000ms
