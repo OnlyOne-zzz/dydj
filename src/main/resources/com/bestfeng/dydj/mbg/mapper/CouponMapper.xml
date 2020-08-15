@@ -12,6 +12,7 @@
     <result column="thumb" jdbcType="VARCHAR" property="thumb" />
     <result column="money" jdbcType="REAL" property="money" />
     <result column="allmoney" jdbcType="REAL" property="allmoney" />
+    <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bestfeng.dydj.mbg.model.Coupon">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -75,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, uniacid, title, createtime, sort, hits, status, thumb, money, allmoney
+    id, uniacid, title, createtime, sort, hits, status, thumb, money, allmoney, type
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -132,11 +133,13 @@
     insert into ims_weixinmao_jz_coupon (id, uniacid, title, 
       createtime, sort, hits, 
       status, thumb, money, 
-      allmoney, content)
+      allmoney, type, content
+      )
     values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{hits,jdbcType=INTEGER}, 
       #{status,jdbcType=TINYINT}, #{thumb,jdbcType=VARCHAR}, #{money,jdbcType=REAL}, 
-      #{allmoney,jdbcType=REAL}, #{content,jdbcType=LONGVARCHAR})
+      #{allmoney,jdbcType=REAL}, #{type,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Coupon">
     insert into ims_weixinmao_jz_coupon
@@ -170,6 +173,9 @@
       </if>
       <if test="allmoney != null">
         allmoney,
+      </if>
+      <if test="type != null">
+        type,
       </if>
       <if test="content != null">
         content,
@@ -205,6 +211,9 @@
       </if>
       <if test="allmoney != null">
         #{allmoney,jdbcType=REAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -250,6 +259,9 @@
       <if test="record.allmoney != null">
         allmoney = #{record.allmoney,jdbcType=REAL},
       </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -270,6 +282,7 @@
       thumb = #{record.thumb,jdbcType=VARCHAR},
       money = #{record.money,jdbcType=REAL},
       allmoney = #{record.allmoney,jdbcType=REAL},
+      type = #{record.type,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -286,7 +299,8 @@
       status = #{record.status,jdbcType=TINYINT},
       thumb = #{record.thumb,jdbcType=VARCHAR},
       money = #{record.money,jdbcType=REAL},
-      allmoney = #{record.allmoney,jdbcType=REAL}
+      allmoney = #{record.allmoney,jdbcType=REAL},
+      type = #{record.type,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -321,6 +335,9 @@
       <if test="allmoney != null">
         allmoney = #{allmoney,jdbcType=REAL},
       </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -338,6 +355,7 @@
       thumb = #{thumb,jdbcType=VARCHAR},
       money = #{money,jdbcType=REAL},
       allmoney = #{allmoney,jdbcType=REAL},
+      type = #{type,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -351,7 +369,8 @@
       status = #{status,jdbcType=TINYINT},
       thumb = #{thumb,jdbcType=VARCHAR},
       money = #{money,jdbcType=REAL},
-      allmoney = #{allmoney,jdbcType=REAL}
+      allmoney = #{allmoney,jdbcType=REAL},
+      type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
