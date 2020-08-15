@@ -3,7 +3,7 @@ package com.bestfeng.dydj.aspect;
 
 import com.bestfeng.dydj.annotation.RedisLock;
 import com.bestfeng.dydj.utils.RedisDistributedLock;
-import com.bestfeng.dydj.utils.RedisUtils;
+import com.bestfeng.dydj.utils.RedisUtil;
 import com.bestfeng.dydj.utils.SpelUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.LRUMap;
@@ -30,7 +30,8 @@ public class RedisLockAspect {
     private static LRUMap<String, Object> reqCache = new LRUMap<>(100);
 
     @Autowired
-    private RedisDistributedLock distributedLock;
+    private RedisUtil redisUtil;
+
     /**
      * 切点 RepeatLock注解
      */
@@ -47,8 +48,9 @@ public class RedisLockAspect {
         String name = redisLock.name();
         String key = redisLock.key();
         String lockKey = String.format(name, SpelUtil.parse(key, method, point.getArgs()));
-        boolean lock = distributedLock.lock(lockKey, redisLock.keepMillis(), redisLock.retryTimes(),redisLock.sleepMillis());
-        if (!lock) {
+        RedisDistributedLock redisDistributedLock = new RedisDistributedLock(redisUtil.getRedisTemplate()
+                , lockKey);
+        if (!redisDistributedLock.lock()) {
             log.error("lock failed : " + key);
             throw new BusinessException("lock failed");
         }
@@ -59,8 +61,7 @@ public class RedisLockAspect {
             log.error("execute locked method exception : {} {}", key,e.getMessage());
             throw e;
         } finally {
-            boolean unResult = distributedLock.unLock(key);
-            log.debug("unlock : " + key + (unResult ? " success" : " failed"));
+            redisDistributedLock.unlock();
         }
     }
 

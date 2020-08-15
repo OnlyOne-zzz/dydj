@@ -1,122 +1,192 @@
 package com.bestfeng.dydj.utils;
 
-import com.google.common.base.Charsets;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.connection.RedisStringCommands;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.types.Expiration;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
-
 /**
- * redis实现的分布式锁
- *
- * @author zh
- */
+* @ClassName: RedisDistributedLock  
+* @Description: 分布式锁
+* @author tianguangfu
+* @date 2018年4月16日
+*/
 @Slf4j
 public class RedisDistributedLock {
 
 
-    private RedisTemplate<String, Object> redisTemplate;
+	private static final int DEFAULT_ACQUIRY_RESOLUTION_MILLIS = 100;
 
-    private ThreadLocal<String> lockFlag = new ThreadLocal<String>();
+	// 锁的名称
+	private String lockKey;
 
-    private static final StringRedisSerializer stringRedisSerializer = new StringRedisSerializer(Charsets.UTF_8);
+	// 锁超时时间，防止线程在入锁以后，无限的执行等待
+	private int expireMsecs = 60 * 1000;
 
-    public static final String UNLOCK_LUA = "local current = redis.call('get', KEYS[1]) if current == ARGV[1] then redis.call('del', KEYS[1]) return '1' end return '0'";
+	// 锁等待时间，防止线程饥饿
+	private int timeoutMsecs = 10 * 1000;
 
-    public RedisDistributedLock(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+	private volatile boolean locked = false;
 
-    /**
-     * 获取分布式锁
-     *
-     * @param key         锁的资源标识
-     * @param keepMillis  已获取锁后自动释放时间（默认30秒）
-     * @param retryTimes  获取锁失败重试次数（默认3次）
-     * @param sleepMillis 重试的间隔时间（默认1秒）
-     * @return true成功, false失败
-     */
-    public boolean lock(String key, long keepMillis, int retryTimes, long sleepMillis) {
-        boolean result = setRedis(key, keepMillis);
-        // 如果获取锁失败，按照传入的重试次数进行重试
-        while ((!result) && retryTimes-- > 0) {
-            try {
-                log.warn("lock failed {}, retrying... {}", key, retryTimes);
-                Thread.sleep(sleepMillis);
-            } catch (InterruptedException e) {
-                return false;
-            }
-            result = setRedis(key, keepMillis);
-        }
-        return result;
-    }
+	private StringRedisTemplate stringRedisTemplate;
 
-    /**
-     * 获取锁 如果获取
-     *
-     * @param key
-     * @return
-     */
-    public boolean lock(String key) {
-        // 如果获取锁失败，按照传入的重试次数进行重试
-        int retryTimes = 0;
-        long sleepMillis = 0;
-        long keepMillis = 30;
-        return lock(key, keepMillis, retryTimes, sleepMillis);
-    }
+	/**
+	 * Detailed constructor with default acquire timeout 10000 msecs and lock
+	 * expiration of 60000 msecs.
+	 *
+	 * @param lockKey 锁的名称
+	 * @throws InterruptedException 
+	 */
+	public RedisDistributedLock(StringRedisTemplate stringRedisTemplate, String lockKey) {
+		this.stringRedisTemplate = stringRedisTemplate;
+		this.lockKey = lockKey + "_lock";
+	}
 
-    /**
-     * 释放分布式锁
-     *
-     * @param key 锁的资源标识
-     * @return true成功, false失败
-     */
-    public boolean unLock(String key) {
-        try {
-            // 封装参数
-            List<String> keys = new ArrayList<>();
-            keys.add(key);// 锁资源标识
-            //keys.add(lockFlag.get());// 锁的拥有者标记，每个线程释放锁的时候只能释放自己的锁
+	/**
+	 * Detailed constructor with default lock expiration of 60000 msecs.
+	 * @throws InterruptedException 
+	 *
+	 */
+	public RedisDistributedLock(StringRedisTemplate stringRedisTemplate, String lockKey, int timeoutMsecs) {
+		this(stringRedisTemplate, lockKey);
+		this.timeoutMsecs = timeoutMsecs;
+	}
 
-            // 释放锁的时候，有可能因为持锁之后业务方法执行时间大于锁的有效期，此时有可能已经被另外一个线程持有锁，所以不能直接删除
-            // 通过Lua脚本来达到释放锁的原子操作，删除redis中匹配value的key，可以避免由于方法执行时间过长而redis锁自动过期失效的时候误删其他线程的锁
-            DefaultRedisScript<String> lockScript = new DefaultRedisScript<>();
-            lockScript.setScriptText(UNLOCK_LUA);
-            lockScript.setResultType(String.class);
-            String result = redisTemplate.execute(lockScript, stringRedisSerializer, stringRedisSerializer, keys, lockFlag.get());
-            return "1".equals(result) ? true : false;
-        } catch (Exception e) {
-            log.error("release lock occured an exception {}", key, e);
-        } finally {
-            lockFlag.remove();
-        }
-        return false;
-    }
+	/**
+	 * Detailed constructor.
+	 * @throws InterruptedException 
+	 *
+	 */
+	public RedisDistributedLock(StringRedisTemplate stringRedisTemplate, String lockKey, int timeoutMsecs, int expireMsecs) {
+		this(stringRedisTemplate, lockKey, timeoutMsecs);
+		this.expireMsecs = expireMsecs;
+	}
 
+	/**
+	 * @return lock key
+	 */
+	public String getLockKey() {
+		return lockKey;
+	}
 
-    private boolean setRedis(String key, long keepMillis) {
-        try {
-            // 需要保证设置Redis值和过期时间的原子性，避免两次Redis操作期间出现意外而导致的锁不能释放的问题
-            // 通过RedisConnection操作多条命令保证原子性
-            // 锁必须要有一个拥有者的标记，每个线程释放锁的时候只能释放自己的锁
-            String value = UUID.randomUUID().toString().replaceAll("-", "");
-            lockFlag.set(value);
-            //NX:表示只有当锁定资源不存在的时候才能SET成功。利用Redis的原子性，保证了只有第一个请求线程才能获得锁，而之后的所有线程在锁未被释放之前都不能获得锁
-            //EX:expire表示锁定的资源的自动过期时间，单位是毫秒
-            return redisTemplate.execute(connection -> connection.set(key.getBytes(), value.getBytes(), Expiration.from(keepMillis, TimeUnit.MILLISECONDS), RedisStringCommands.SetOption.ifAbsent()), true);
-        } catch (Exception e) {
-            log.error("set redis occured an exception {}", key, e);
-        }
-        return false;
-    }
+	private String get(final String key) {
+		Object obj = null;
+		try {
+			obj = stringRedisTemplate.execute(new RedisCallback<Object>() {
+				@Override
+				public Object doInRedis(RedisConnection connection) throws DataAccessException {
+					StringRedisSerializer serializer = new StringRedisSerializer();
+					byte[] data = connection.get(serializer.serialize(key));
+					connection.close();
+					if (data == null) {
+						return null;
+					}
+					return serializer.deserialize(data);
+				}
+			});
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return obj != null ? obj.toString() : null;
+	}
+
+	private boolean setNX(final String key, final String value) {
+		Object obj = null;
+		try {
+			obj = stringRedisTemplate.execute(new RedisCallback<Object>() {
+				@Override
+				public Object doInRedis(RedisConnection connection) throws DataAccessException {
+					StringRedisSerializer serializer = new StringRedisSerializer();
+					Boolean success = connection.setNX(serializer.serialize(key), serializer.serialize(value));
+					connection.close();
+					return success;
+				}
+			});
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return obj != null ? (Boolean) obj : false;
+	}
+
+	private String getSet(final String key, final String value) {
+		Object obj = null;
+		try {
+			obj = stringRedisTemplate.execute(new RedisCallback<Object>() {
+				@Override
+				public Object doInRedis(RedisConnection connection) throws DataAccessException {
+					StringRedisSerializer serializer = new StringRedisSerializer();
+					byte[] ret = connection.getSet(serializer.serialize(key), serializer.serialize(value));
+					connection.close();
+					return serializer.deserialize(ret);
+				}
+			});
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return obj != null ? (String) obj : null;
+	}
+
+	/**
+	 * 获取锁 
+	 * 
+	 * 实现思路: 主要是使用了redis的setnx命令,缓存了锁. reids缓存的key是锁的key,所有的共享,value是锁的到期时间(注意:这里把过期时间放在value了,没有时间上设置其超时时间) 
+	 * 执行过程:
+	 * 1.通过setnx尝试设置某个key的值,成功(当前没有这个锁)则返回,成功获得锁
+	 * 2.锁已经存在则获取锁的到期时间,和当前时间比较,超时的话,则设置新的值
+	 * @return true if lock is acquired, false acquire timeouted
+	 * @throws InterruptedException in case of thread interruption
+	 */
+	public synchronized boolean lock() throws InterruptedException {
+		int timeout = timeoutMsecs;
+		while (timeout >= 0) {
+			long expires = System.currentTimeMillis() + expireMsecs + 1;
+			String expiresStr = String.valueOf(expires); // 锁到期时间
+			if (this.setNX(lockKey, expiresStr)) {
+				// lock acquired
+				locked = true;
+				return true;
+			}
+
+			String currentValueStr = this.get(lockKey); // redis里的时间
+			if (currentValueStr != null && Long.parseLong(currentValueStr) < System.currentTimeMillis()) {
+				// 判断是否为空，不为空的情况下，如果被其他线程设置了值，则第二个条件判断是过不去的
+				// lock is expired
+
+				String oldValueStr = this.getSet(lockKey, expiresStr);
+				// 获取上一个锁到期时间，并设置现在的锁到期时间，
+				// 只有一个线程才能获取上一个线上的设置时间，因为jedis.getSet是同步的
+				if (oldValueStr != null && oldValueStr.equals(currentValueStr)) {
+					// 防止误删（覆盖，因为key是相同的）了他人的锁——这里达不到效果，这里值会被覆盖，但是因为什么相差了很少的时间，所以可以接受
+
+					// [分布式的情况下]:如过这个时候，多个线程恰好都到了这里，但是只有一个线程的设置值和当前值相同，他才有权利获取锁
+					// lock acquired
+					locked = true;
+					return true;
+				}
+			}
+			timeout -= DEFAULT_ACQUIRY_RESOLUTION_MILLIS;
+
+			/*
+			 * 延迟100 毫秒, 这里使用随机时间可能会好一点,可以防止饥饿进程的出现,即,当同时到达多个进程,
+			 * 只会有一个进程获得锁,其他的都用同样的频率进行尝试,后面有来了一些进行,也以同样的频率申请锁,这将可能导致前面来的锁得不到满足.
+			 * 使用随机的等待时间可以一定程度上保证公平性
+			 */
+			Thread.sleep(DEFAULT_ACQUIRY_RESOLUTION_MILLIS);
+
+		}
+		return false;
+	}
+
+	/**
+	 * 释放锁
+	 */
+	public synchronized void unlock() {
+		if (locked) {
+			stringRedisTemplate.delete(lockKey);
+			locked = false;
+		}
+	}
+	
 }
