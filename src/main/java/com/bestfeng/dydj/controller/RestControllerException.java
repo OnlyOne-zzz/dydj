@@ -25,10 +25,10 @@ public class RestControllerException {
     @ExceptionHandler(value = Throwable.class)
     @ResponseBody
     public CommonResult<Void> handleException(HttpServletRequest request, HttpServletResponse response, Exception exception) {
+        log.error("controller 统一异常 msg={}",exception.getMessage());
         ApiErrorCodeEnums responseCode = ApiErrorCodeEnums.INTERNAL_SERVER_ERROR;
         Integer code = responseCode.getCode();
         String text = responseCode.getText();
-        exception.printStackTrace();
         if (exception instanceof BusinessException) {
             BusinessException businessException = (BusinessException) exception;
             return CommonResult.custom(businessException.getStatus(), businessException.getMessage(), null);
