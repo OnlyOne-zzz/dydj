@@ -1,6 +1,7 @@
 package com.bestfeng.dydj.utils;
 
 import com.google.common.base.Charsets;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisStringCommands;
@@ -19,11 +20,10 @@ import java.util.concurrent.TimeUnit;
  * redis实现的分布式锁
  *
  * @author zh
- * @date 2019年12月26日
  */
+@Slf4j
 public class RedisDistributedLock {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedisDistributedLock.class);
 
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -51,7 +51,7 @@ public class RedisDistributedLock {
         // 如果获取锁失败，按照传入的重试次数进行重试
         while ((!result) && retryTimes-- > 0) {
             try {
-                logger.warn("lock failed {}, retrying... {}", key, retryTimes);
+                log.warn("lock failed {}, retrying... {}", key, retryTimes);
                 Thread.sleep(sleepMillis);
             } catch (InterruptedException e) {
                 return false;
@@ -96,7 +96,7 @@ public class RedisDistributedLock {
             String result = redisTemplate.execute(lockScript, stringRedisSerializer, stringRedisSerializer, keys, lockFlag.get());
             return "1".equals(result) ? true : false;
         } catch (Exception e) {
-            logger.error("release lock occured an exception {}", key, e);
+            log.error("release lock occured an exception {}", key, e);
         } finally {
             lockFlag.remove();
         }
@@ -115,7 +115,7 @@ public class RedisDistributedLock {
             //EX:expire表示锁定的资源的自动过期时间，单位是毫秒
             return redisTemplate.execute(connection -> connection.set(key.getBytes(), value.getBytes(), Expiration.from(keepMillis, TimeUnit.MILLISECONDS), RedisStringCommands.SetOption.ifAbsent()), true);
         } catch (Exception e) {
-            logger.error("set redis occured an exception {}", key, e);
+            log.error("set redis occured an exception {}", key, e);
         }
         return false;
     }

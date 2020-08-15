@@ -1,6 +1,6 @@
 package com.bestfeng.dydj.service.impl;
 
-import com.bestfeng.dydj.annotation.RepeatLock;
+import com.bestfeng.dydj.annotation.RedisLock;
 import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.enums.OrderEnums;
@@ -67,7 +67,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      * @param orderDto
      */
     @Override
-    @RepeatLock(name = Constants.SAVE_ORDER_LOCK_KEY,key = "orderDto.uid")
+    @RedisLock(name = Constants.SAVE_ORDER_LOCK_KEY,key = "orderDto.uid")
     public void saveOrder(OrderDto orderDto) {
         Integer contentId = orderDto.getContentId();
         Integer noteid = orderDto.getNoteid();
