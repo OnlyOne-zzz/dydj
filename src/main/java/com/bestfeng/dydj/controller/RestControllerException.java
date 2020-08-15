@@ -26,6 +26,7 @@ public class RestControllerException {
     @ResponseBody
     public CommonResult<Void> handleException(HttpServletRequest request, HttpServletResponse response, Exception exception) {
         log.error("controller 统一异常 msg={}",exception.getMessage());
+        exception.printStackTrace();
         ApiErrorCodeEnums responseCode = ApiErrorCodeEnums.INTERNAL_SERVER_ERROR;
         Integer code = responseCode.getCode();
         String text = responseCode.getText();
