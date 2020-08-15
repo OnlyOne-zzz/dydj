@@ -14,12 +14,12 @@ class DydjApplicationTests {
     @Autowired
     private RedisUtil redisUtil;
 
-    @Test
-    public void dataSourceTest(){
-        com.bestfeng.dydj.mbg.model.Test test = testMapper.selectByPrimaryKey(1);
-    }
-
-    public void redisTest(){
-        redisUtil.set("test","1");
-    }
+//    @Test
+//    public void dataSourceTest(){
+//        com.bestfeng.dydj.mbg.model.Test test = testMapper.selectByPrimaryKey(1);
+//    }
+//
+//    public void redisTest(){
+//        redisUtil.set("test","1");
+//    }
 }

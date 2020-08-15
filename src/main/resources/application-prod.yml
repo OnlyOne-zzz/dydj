@@ -6,10 +6,10 @@ spring:
 
 logging:
   level:
-    com.bestfeng.dydj.*: warn
+    com.bestfeng.dydj.*: debug
     org.springframework: warn
-    org.aurochsframework.boot.*: warn
-    log4j.logger.com.ibatis: warn
+    org.aurochsframework.boot.*: debug
+    log4j.logger.com.ibatis: debug
     #system: debug
 
 
