@@ -10,4 +10,14 @@ import org.aurochsframework.boot.commons.service.GeneralService;
  * @since 1.0
  **/
 public interface CouponOrderService extends GeneralService<CouponOrder> {
+
+
+    /**
+     * 优惠券赠送
+     *
+     * @param type 优惠券
+     * @param uid  用户ID
+     */
+    void receive(int type, int uid);
+
 }

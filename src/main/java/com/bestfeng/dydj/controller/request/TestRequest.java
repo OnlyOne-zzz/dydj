@@ -1,4 +1,4 @@
-package com.bestfeng.dydj.configuration.request;
+package com.bestfeng.dydj.controller.request;
 
 import lombok.Getter;
 import lombok.Setter;

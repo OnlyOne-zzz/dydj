@@ -14,4 +14,7 @@ public class Constants {
 
     /**修改订单重复提交锁*/
     public static final String UPDATE_ORDER_LOCK_KEY = "update:order:lock:key:%s";
+
+    /**公众号PID*/
+    public static final int WECHAT_PID = 3;
 }

@@ -1,6 +1,6 @@
 package com.bestfeng.dydj.manager.request;
 
-import com.bestfeng.dydj.configuration.request.BasicRequest;
+import com.bestfeng.dydj.controller.request.BasicRequest;
 
 /**
  * @author bsetfeng

@@ -1,13 +1,10 @@
 package com.bestfeng.dydj.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.bestfeng.dydj.configuration.request.BasicRequest;
+import com.bestfeng.dydj.controller.request.BasicRequest;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
