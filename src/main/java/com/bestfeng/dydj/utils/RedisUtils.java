@@ -1,5 +1,6 @@
 package com.bestfeng.dydj.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.HashOperations;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @ConditionalOnProperty(prefix = "spring.redis", name = { "host", "port" })
+@Slf4j
 public class RedisUtils {
 
 	@Autowired
