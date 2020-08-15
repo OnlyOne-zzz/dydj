@@ -1,7 +1,7 @@
 package com.bestfeng.dydj.controller;
 
 import com.bestfeng.dydj.annotation.SignValidated;
-import com.bestfeng.dydj.configuration.request.TestRequest;
+import com.bestfeng.dydj.controller.request.TestRequest;
 import com.bestfeng.dydj.manager.request.SignVerifySupport;
 import com.bestfeng.dydj.utils.FastJsons;
 import lombok.extern.slf4j.Slf4j;
