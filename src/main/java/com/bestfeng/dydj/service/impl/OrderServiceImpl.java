@@ -18,6 +18,7 @@ import org.aurochsframework.boot.core.exceptions.BusinessException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.math.BigDecimal;
@@ -68,6 +69,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      */
     @Override
     @RedisLock(name = Constants.SAVE_ORDER_LOCK_KEY,key = "#orderDto.uid")
+    @Transactional(rollbackFor = Exception.class)
     public void saveOrder(OrderDto orderDto) {
         Integer contentId = orderDto.getContentId();
         Integer noteid = orderDto.getNoteid();
@@ -97,6 +99,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      * @param orderDto
      */
     @Override
+    @RedisLock(name = Constants.REFUND_ORDER_LOCK_KEY,key = "#orderDto.uid")
     public void userRefund(OrderDto orderDto) {
        Order order = this.checkOrderExist(orderDto.getId());
        //todo 退款业务
@@ -107,6 +110,8 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      * @param orderDto
      */
     @Override
+    @RedisLock(name = Constants.UPDATE_ORDER_LOCK_KEY,key = "#orderDto.uid")
+    @Transactional(rollbackFor = Exception.class)
     public void operationOrder(OrderDto orderDto) {
         OrderEnums.OrderStatusEnum updateStatusEnum = orderDto.getOrderStatusEnum();
         Order order = this.checkOrderExist(orderDto.getId());
