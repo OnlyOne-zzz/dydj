@@ -2,6 +2,7 @@ package com.bestfeng.dydj.aspect;
 
 
 import com.bestfeng.dydj.annotation.RepeatLock;
+import com.bestfeng.dydj.utils.RedisUtils;
 import com.bestfeng.dydj.utils.SpelUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.LRUMap;
@@ -12,6 +13,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,9 @@ import java.lang.reflect.Method;
 public class LruRepeatLockAspect {
 
     private static LRUMap<String, Object> reqCache = new LRUMap<>(100);
+
+    @Autowired
+    private RedisUtils redisUtils;
     /**
      * 切点 RepeatLock注解
      */
