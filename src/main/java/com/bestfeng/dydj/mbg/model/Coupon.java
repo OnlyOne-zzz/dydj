@@ -27,6 +27,9 @@ public class Coupon implements Serializable {
 
     private Float allmoney;
 
+    @ApiModelProperty(value = "1注册")
+    private Integer type;
+
     @ApiModelProperty(value = "文章内容")
     private String content;
 
@@ -112,6 +115,14 @@ public class Coupon implements Serializable {
         this.allmoney = allmoney;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public String getContent() {
         return content;
     }
@@ -136,6 +147,7 @@ public class Coupon implements Serializable {
         sb.append(", thumb=").append(thumb);
         sb.append(", money=").append(money);
         sb.append(", allmoney=").append(allmoney);
+        sb.append(", type=").append(type);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
