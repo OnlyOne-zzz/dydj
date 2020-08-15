@@ -91,6 +91,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         order.setContentThumb(content.getThumb());
         order.setContentName(content.getTitle());
         order.setNoteName(note.getShopname());
+        order.setCreatetime((int)(System.currentTimeMillis()/1000));
         orderMapper.insert(order);
         //todo weixinmao_jz_msgidlist （删除超过7天的就删除记录） ims_weixinmao_jz_order_detail
     }
