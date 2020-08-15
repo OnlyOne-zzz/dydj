@@ -67,7 +67,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      * @param orderDto
      */
     @Override
-    @RedisLock(name = Constants.SAVE_ORDER_LOCK_KEY,key = "orderDto.uid")
+    @RedisLock(name = Constants.SAVE_ORDER_LOCK_KEY,key = "#orderDto.uid")
     public void saveOrder(OrderDto orderDto) {
         Integer contentId = orderDto.getContentId();
         Integer noteid = orderDto.getNoteid();
