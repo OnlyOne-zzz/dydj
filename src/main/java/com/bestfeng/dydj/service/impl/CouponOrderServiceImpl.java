@@ -60,7 +60,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
 
     protected CouponOrder saveCouponOrder(Coupon coupon, int uid, String tel) {
         CouponOrder couponOrder = new CouponOrder();
-        couponOrder.setCreatetime((int) System.currentTimeMillis() / 1000);
+        couponOrder.setCreatetime( (int) (System.currentTimeMillis() / 1000));
         couponOrder.setMoney(coupon.getMoney().toString());
         couponOrder.setName(coupon.getTitle());
         couponOrder.setOrderid(IDGenerator.SNOW_FLAKE_STRING.generate());
@@ -71,6 +71,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
         couponOrder.setTel(tel);
         couponOrder.setStatus((byte) 0);
         couponOrder.setPaid((byte) 0);
+        mapper.insert(couponOrder);
         return couponOrder;
     }
 }
