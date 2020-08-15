@@ -5,6 +5,7 @@ import com.bestfeng.dydj.mbg.mapper.UserInfoMapper;
 import com.bestfeng.dydj.mbg.model.UserInfo;
 import com.bestfeng.dydj.mbg.model.UserInfoExample;
 import com.bestfeng.dydj.service.UserInfoService;
+import org.aurochsframework.boot.commons.param.QueryParam;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class UserInfoServiceImpl extends AbstractGeneralService<UserInfo> implem
     }
 
     @Override
-    public UserInfo selectById(Integer id) {
-        UserInfo userInfo = mapper.selectByPrimaryKey(id);
+    public UserInfo selectByUId(Integer uid) {
+        UserInfo userInfo = fetchOne(QueryParam.createQueryParam().and("uid", uid));
         if (userInfo == null) {
             throw ApiErrorCodeEnums.businessException(ApiErrorCodeEnums.USER_NOT_FOUND);
         }

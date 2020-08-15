@@ -9,5 +9,5 @@ import org.aurochsframework.boot.commons.service.GeneralService;
  **/
 public interface UserInfoService extends GeneralService<UserInfo> {
 
-    UserInfo selectById(Integer id);
+    UserInfo selectByUId(Integer uid);
 }

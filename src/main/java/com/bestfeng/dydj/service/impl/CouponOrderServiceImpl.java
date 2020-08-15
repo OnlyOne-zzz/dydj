@@ -48,7 +48,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
 
     @Override
     public void receive(int type, int uid) {
-        UserInfo userInfo = userInfoService.selectById(uid);
+        UserInfo userInfo = userInfoService.selectByUId(uid);
         List<Coupon> coupons = couponService.fetch(QueryParam.createQueryParam().and("type", type));
         if (CollectionUtils.isEmpty(coupons)) {
             log.warn("类型{}优惠券列表为空", type);
