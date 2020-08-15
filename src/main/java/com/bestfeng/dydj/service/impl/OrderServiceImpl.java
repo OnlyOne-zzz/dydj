@@ -87,11 +87,12 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         Order order = new Order();
         BeanUtils.copyProperties(orderDto,order);
         order.setOrderid(orderId);
-        order.setUniacid(3);
+        order.setUniacid(Constants.WECHAT_PID);
         order.setContentThumb(content.getThumb());
         order.setContentName(content.getTitle());
         order.setNoteName(note.getShopname());
         orderMapper.insert(order);
+        //todo weixinmao_jz_msgidlist （删除超过7天的就删除记录） ims_weixinmao_jz_order_detail
     }
 
     /**

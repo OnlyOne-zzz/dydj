@@ -28,6 +28,7 @@ public class RestControllerException {
         ApiErrorCodeEnums responseCode = ApiErrorCodeEnums.INTERNAL_SERVER_ERROR;
         Integer code = responseCode.getCode();
         String text = responseCode.getText();
+        exception.printStackTrace();
         if (exception instanceof BusinessException) {
             BusinessException businessException = (BusinessException) exception;
             return CommonResult.custom(businessException.getStatus(), businessException.getMessage(), null);
