@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bestfeng.dydj.mbg.mapper.CouponMapper">
+  <resultMap id="BaseResultMap" type="com.bestfeng.dydj.mbg.model.Coupon">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uniacid" jdbcType="INTEGER" property="uniacid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="createtime" jdbcType="INTEGER" property="createtime" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="hits" jdbcType="INTEGER" property="hits" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="thumb" jdbcType="VARCHAR" property="thumb" />
+    <result column="money" jdbcType="REAL" property="money" />
+    <result column="allmoney" jdbcType="REAL" property="allmoney" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bestfeng.dydj.mbg.model.Coupon">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, uniacid, title, createtime, sort, hits, status, thumb, money, allmoney
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.bestfeng.dydj.mbg.model.CouponExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ims_weixinmao_jz_coupon
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.bestfeng.dydj.mbg.model.CouponExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ims_weixinmao_jz_coupon
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ims_weixinmao_jz_coupon
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ims_weixinmao_jz_coupon
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bestfeng.dydj.mbg.model.CouponExample">
+    delete from ims_weixinmao_jz_coupon
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bestfeng.dydj.mbg.model.Coupon">
+    insert into ims_weixinmao_jz_coupon (id, uniacid, title, 
+      createtime, sort, hits, 
+      status, thumb, money, 
+      allmoney, content)
+    values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{hits,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{thumb,jdbcType=VARCHAR}, #{money,jdbcType=REAL}, 
+      #{allmoney,jdbcType=REAL}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Coupon">
+    insert into ims_weixinmao_jz_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uniacid != null">
+        uniacid,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="hits != null">
+        hits,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="thumb != null">
+        thumb,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="allmoney != null">
+        allmoney,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uniacid != null">
+        #{uniacid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="hits != null">
+        #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="thumb != null">
+        #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="allmoney != null">
+        #{allmoney,jdbcType=REAL},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bestfeng.dydj.mbg.model.CouponExample" resultType="java.lang.Long">
+    select count(*) from ims_weixinmao_jz_coupon
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ims_weixinmao_jz_coupon
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uniacid != null">
+        uniacid = #{record.uniacid,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=INTEGER},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
+      <if test="record.hits != null">
+        hits = #{record.hits,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.thumb != null">
+        thumb = #{record.thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null">
+        money = #{record.money,jdbcType=REAL},
+      </if>
+      <if test="record.allmoney != null">
+        allmoney = #{record.allmoney,jdbcType=REAL},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update ims_weixinmao_jz_coupon
+    set id = #{record.id,jdbcType=INTEGER},
+      uniacid = #{record.uniacid,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=INTEGER},
+      sort = #{record.sort,jdbcType=INTEGER},
+      hits = #{record.hits,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      thumb = #{record.thumb,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=REAL},
+      allmoney = #{record.allmoney,jdbcType=REAL},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ims_weixinmao_jz_coupon
+    set id = #{record.id,jdbcType=INTEGER},
+      uniacid = #{record.uniacid,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=INTEGER},
+      sort = #{record.sort,jdbcType=INTEGER},
+      hits = #{record.hits,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      thumb = #{record.thumb,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=REAL},
+      allmoney = #{record.allmoney,jdbcType=REAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bestfeng.dydj.mbg.model.Coupon">
+    update ims_weixinmao_jz_coupon
+    <set>
+      <if test="uniacid != null">
+        uniacid = #{uniacid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="hits != null">
+        hits = #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="thumb != null">
+        thumb = #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=REAL},
+      </if>
+      <if test="allmoney != null">
+        allmoney = #{allmoney,jdbcType=REAL},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bestfeng.dydj.mbg.model.Coupon">
+    update ims_weixinmao_jz_coupon
+    set uniacid = #{uniacid,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      hits = #{hits,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      money = #{money,jdbcType=REAL},
+      allmoney = #{allmoney,jdbcType=REAL},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bestfeng.dydj.mbg.model.Coupon">
+    update ims_weixinmao_jz_coupon
+    set uniacid = #{uniacid,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER},
+      hits = #{hits,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      money = #{money,jdbcType=REAL},
+      allmoney = #{allmoney,jdbcType=REAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

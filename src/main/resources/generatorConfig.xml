@@ -40,7 +40,11 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.bestfeng.dydj.mbg.mapper"
                              targetProject="./src/main/java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="ims_weixinmao_jz_companyaccount" domainObjectName="CompanyAccount"></table>
+
+
+        <table tableName="ims_weixinmao_jz_coupon" domainObjectName="Coupon"></table>
+        <table tableName="ims_weixinmao_jz_couponrecord" domainObjectName="CouponRecord"></table>
+        <table tableName="ims_weixinmao_jz_coupon_order" domainObjectName="CouponOrder"></table>
 <!--        <table tableName="ims_weixinmao_jz_order" domainObjectName="Order"></table>-->
 <!--        <table tableName="ims_weixinmao_jz_category" domainObjectName="Category"></table>-->
 <!--        <table tableName="ims_weixinmao_jz_note" domainObjectName="Note"></table>-->
