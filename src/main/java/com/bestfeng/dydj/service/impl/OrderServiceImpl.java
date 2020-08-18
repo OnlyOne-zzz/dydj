@@ -5,13 +5,12 @@ import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.enums.OrderEnums;
 import com.bestfeng.dydj.enums.UserEnums;
-import com.bestfeng.dydj.mbg.mapper.CompanyAccountMapper;
-import com.bestfeng.dydj.mbg.mapper.ContentMapper;
-import com.bestfeng.dydj.mbg.mapper.NoteMapper;
-import com.bestfeng.dydj.mbg.mapper.OrderMapper;
+import com.bestfeng.dydj.mbg.mapper.*;
 import com.bestfeng.dydj.mbg.model.*;
+import com.bestfeng.dydj.service.CouponOrderService;
 import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.utils.IDUtils;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
@@ -42,6 +41,8 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
     private NoteMapper noteMapper;
     @Autowired
     private CompanyAccountMapper companyAccountMapper;
+    @Autowired
+    private CouponOrderMapper couponOrderMapper;
 
     @Override
     public Object getMapper() {
@@ -73,6 +74,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
     public void saveOrder(OrderDto orderDto) {
         Integer contentId = orderDto.getContentId();
         Integer noteid = orderDto.getNoteid();
+        Integer couponId = orderDto.getCouponid();
         Content content = contentMapper.selectByPrimaryKey(contentId);
         Assert.notNull(content,"服务项目不存在");
         Note note = noteMapper.selectByPrimaryKey(noteid);
@@ -81,8 +83,16 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         Float money = content.getMoney();
         /**上门交通费用*/
         BigDecimal trafficPrice = orderDto.getTrafficPrice();
+        /**卡券金额*/
+        BigDecimal couponPrice = new BigDecimal("0");
+        if(null!=couponId && 0!=couponId){
+            //todo 查询具体的卡券表
+            CouponOrder couponOrder = couponOrderMapper.selectByPrimaryKey(contentId);
+            String couponMoney = couponOrder.getMoney();
+            couponPrice = new BigDecimal(couponMoney);
+        }
         //todo 总金额
-        BigDecimal totalMoney = new BigDecimal(String.valueOf(money)).add(trafficPrice);
+        BigDecimal totalMoney = new BigDecimal(String.valueOf(money)).add(trafficPrice).subtract(couponPrice);
         String orderId = IDUtils.getId(Constants.ORDER_NO_PRE);
         Order order = new Order();
         BeanUtils.copyProperties(orderDto,order);

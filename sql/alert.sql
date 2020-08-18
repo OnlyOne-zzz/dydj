@@ -15,4 +15,5 @@ ADD COLUMN `traffic_type` int(10) DEFAULT 0 COMMENT '交通方式0:出租 1:公�
 ADD COLUMN `traffic_reckon_mile` decimal(10,2) null COMMENT '估算公里数',
 ADD COLUMN `traffic_price` decimal(10,2) null  COMMENT '交通费用',
 ADD COLUMN `daddress` varchar(100) null  COMMENT '详细地址',
-ADD COLUMN `updatetime` int(10) null  COMMENT '更新时间';
+ADD COLUMN `updatetime` int(10) null  COMMENT '更新时间',
+ADD COLUMN `address_detail` varchar(200) null  COMMENT '精准地址(如门牌号)';
