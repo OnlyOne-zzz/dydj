@@ -25,8 +25,8 @@ import java.util.Map;
  * @author bsetfeng
  * @since 1.0
  **/
-@Configuration
-@EnableCaching
+//@Configuration
+//@EnableCaching
 public class SimpleCacheConfig  {
 
     /**
