@@ -69,7 +69,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      * @param orderDto
      */
     @Override
-    @RedisLock(name = Constants.SAVE_ORDER_LOCK_KEY,key = "#orderDto.uid")
+//    @RedisLock(name = Constants.SAVE_ORDER_LOCK_KEY,key = "#orderDto.uid")
     @Transactional(rollbackFor = Exception.class)
     public void saveOrder(OrderDto orderDto) {
         Integer contentId = orderDto.getContentId();
@@ -111,7 +111,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      * @param orderDto
      */
     @Override
-    @RedisLock(name = Constants.REFUND_ORDER_LOCK_KEY,key = "#orderDto.uid")
+//    @RedisLock(name = Constants.REFUND_ORDER_LOCK_KEY,key = "#orderDto.uid")
     public void userRefund(OrderDto orderDto) {
        Order order = this.checkOrderExist(orderDto.getId());
        //todo 退款业务
@@ -122,7 +122,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      * @param orderDto
      */
     @Override
-    @RedisLock(name = Constants.UPDATE_ORDER_LOCK_KEY,key = "#orderDto.uid")
+//    @RedisLock(name = Constants.UPDATE_ORDER_LOCK_KEY,key = "#orderDto.uid")
     @Transactional(rollbackFor = Exception.class)
     public void operationOrder(OrderDto orderDto) {
         OrderEnums.OrderStatusEnum updateStatusEnum = orderDto.getOrderStatusEnum();
