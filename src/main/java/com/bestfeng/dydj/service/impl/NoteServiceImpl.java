@@ -1,9 +1,14 @@
 package com.bestfeng.dydj.service.impl;
 
+import com.bestfeng.dydj.controller.request.NoteListRequest;
+import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
 import com.bestfeng.dydj.mbg.mapper.NoteMapper;
 import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.mbg.model.NoteExample;
 import com.bestfeng.dydj.service.NoteService;
+import org.aurochsframework.boot.commons.api.CommonPage;
+import org.aurochsframework.boot.commons.param.QueryParam;
+import org.aurochsframework.boot.commons.param.Sort;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +31,24 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     @Override
     public Object getExample() {
         return new NoteExample();
+    }
+
+
+    @Override
+    public CommonPage<Note> paging(NoteListRequest request) {
+        QueryParam queryParam = QueryParam.createQueryParam();
+        queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()));
+        Sort sort = new Sort();
+        sort.setName(request.getOrderColumn());
+        sort.setOrder(request.getOrderType());
+        queryParam.orderBy(sort);
+        return paging(queryParam);
+    }
+
+    @Override
+    public CommonPage<Note> pagingByName(String name) {
+        QueryParam queryParam = QueryParam.createQueryParam();
+        queryParam.and("name", "%".concat(name).concat("%"));
+        return paging(queryParam);
     }
 }
