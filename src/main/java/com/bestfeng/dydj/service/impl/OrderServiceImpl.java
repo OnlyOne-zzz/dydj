@@ -1,6 +1,5 @@
 package com.bestfeng.dydj.service.impl;
 
-import com.bestfeng.dydj.annotation.RedisLock;
 import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.enums.OrderEnums;
@@ -9,12 +8,9 @@ import com.bestfeng.dydj.enums.UserEnums;
 import com.bestfeng.dydj.manager.travel.TravelServiceSupport;
 import com.bestfeng.dydj.mbg.mapper.*;
 import com.bestfeng.dydj.mbg.model.*;
-import com.bestfeng.dydj.service.CouponOrderService;
 import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.utils.IDUtils;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Not;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
 import org.springframework.beans.BeanUtils;
@@ -91,7 +87,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         /**项目价格*/
         Float contentMoney = goodItems.getMoney();
         Integer msgContentPid = goodItems.getPid();
-        MsgContent content = msgContentMapper.selectByPrimaryKey(contentId);
+        MsgContent content = msgContentMapper.selectByPrimaryKey(msgContentPid);
         Assert.notNull(content,"服务项目不存在");
         /**技师*/
         Note note = noteMapper.selectByPrimaryKey(noteId);
