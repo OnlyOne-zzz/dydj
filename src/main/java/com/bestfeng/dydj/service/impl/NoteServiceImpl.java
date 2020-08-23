@@ -12,6 +12,7 @@ import org.aurochsframework.boot.commons.param.Sort;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @author bsetfeng
@@ -37,7 +38,9 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     @Override
     public CommonPage<Note> paging(NoteListRequest request) {
         QueryParam queryParam = QueryParam.createQueryParam();
-        queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()));
+        if (request.getServiceStatus() != 0){
+            queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()));
+        }
         Sort sort = new Sort();
         sort.setName(request.getOrderColumn());
         sort.setOrder(request.getOrderType());
@@ -48,7 +51,9 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     @Override
     public CommonPage<Note> pagingByName(String name) {
         QueryParam queryParam = QueryParam.createQueryParam();
-        queryParam.and("name", "%".concat(name).concat("%"));
+        if (StringUtils.hasText(name)){
+            queryParam.and("name", "%".concat(name).concat("%"));
+        }
         return paging(queryParam);
     }
 }
