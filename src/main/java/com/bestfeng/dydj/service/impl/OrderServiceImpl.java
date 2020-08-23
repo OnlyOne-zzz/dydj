@@ -4,7 +4,9 @@ import com.bestfeng.dydj.annotation.RedisLock;
 import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.enums.OrderEnums;
+import com.bestfeng.dydj.enums.TravelTypeEnums;
 import com.bestfeng.dydj.enums.UserEnums;
+import com.bestfeng.dydj.manager.travel.TravelServiceSupport;
 import com.bestfeng.dydj.mbg.mapper.*;
 import com.bestfeng.dydj.mbg.model.*;
 import com.bestfeng.dydj.service.CouponOrderService;
@@ -12,6 +14,7 @@ import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.utils.IDUtils;
 import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Not;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
 import org.springframework.beans.BeanUtils;
@@ -34,15 +37,23 @@ import java.util.Optional;
 public class OrderServiceImpl extends AbstractGeneralService<Order> implements OrderService {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private NoteOrderMapper orderMapper;
     @Autowired
-    private ContentMapper contentMapper;
+    private MsgContentMapper msgContentMapper;
     @Autowired
     private NoteMapper noteMapper;
     @Autowired
     private CompanyAccountMapper companyAccountMapper;
     @Autowired
     private CouponOrderMapper couponOrderMapper;
+    @Autowired
+    private TravelServiceSupport travelServiceSupport;
+    @Autowired
+    private ContentGoodItemsMapper goodItemsMapper;
+    @Autowired
+    private OrderDetailMapper orderDetailMapper;
+    @Autowired
+    private MsgIdListMapper msgIdListMapper;
 
     @Override
     public Object getMapper() {
@@ -71,39 +82,67 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
     @Override
 //    @RedisLock(name = Constants.SAVE_ORDER_LOCK_KEY,key = "#orderDto.uid")
     @Transactional(rollbackFor = Exception.class)
-    public void saveOrder(OrderDto orderDto) {
-        Integer contentId = orderDto.getContentId();
-        Integer noteid = orderDto.getNoteid();
+    public OrderDto saveOrder(OrderDto orderDto) {
+        Integer uid = orderDto.getUid();
+        Integer contentId = orderDto.getCurrentid();
+        Integer noteId = orderDto.getShopid();
         Integer couponId = orderDto.getCouponid();
-        Content content = contentMapper.selectByPrimaryKey(contentId);
+        MsgContent content = msgContentMapper.selectByPrimaryKey(contentId);
         Assert.notNull(content,"服务项目不存在");
-        Note note = noteMapper.selectByPrimaryKey(noteid);
-        Assert.notNull(note,"技师不存在");
+        ContentGoodItems goodItems = goodItemsMapper.selectByPrimaryKey(contentId);
         /**项目价格*/
-        Float money = content.getMoney();
+        Float contentMoney = goodItems.getMoney();
+        Integer msgContentPid = goodItems.getPid();
+        /**技师*/
+        Note note = noteMapper.selectByPrimaryKey(noteId);
+        Assert.notNull(note,"技师不存在");
+        Integer trafficType = orderDto.getTrafficType();
+        BigDecimal trafficReckonMile = orderDto.getTrafficReckonMile();
         /**上门交通费用*/
-        BigDecimal trafficPrice = orderDto.getTrafficPrice();
+        Double trafficMoneyDouble =travelServiceSupport.travelFare(TravelTypeEnums.ofValue(trafficType),String.valueOf(trafficReckonMile));
+        BigDecimal trafficMoney= BigDecimal.valueOf(trafficMoneyDouble);
         /**卡券金额*/
         BigDecimal couponPrice = new BigDecimal("0");
         if(null!=couponId && 0!=couponId){
             //todo 查询具体的卡券表
-            CouponOrder couponOrder = couponOrderMapper.selectByPrimaryKey(contentId);
+            CouponOrder couponOrder = couponOrderMapper.selectByPrimaryKey(couponId);
             String couponMoney = couponOrder.getMoney();
             couponPrice = new BigDecimal(couponMoney);
         }
         //todo 总金额
-        BigDecimal totalMoney = new BigDecimal(String.valueOf(money)).add(trafficPrice).subtract(couponPrice);
+        BigDecimal totalMoney = new BigDecimal(String.valueOf(contentMoney)).add(trafficMoney).subtract(couponPrice);
         String orderId = IDUtils.getId(Constants.ORDER_NO_PRE);
-        Order order = new Order();
+        NoteOrder order = new NoteOrder();
         BeanUtils.copyProperties(orderDto,order);
         order.setOrderid(orderId);
+        order.setPaid(uid);
+        order.setPid(msgContentPid);
+        order.setShopid(noteId);
+        order.setCurrentid(contentId);
+        order.setMoney(totalMoney);
         order.setUniacid(Constants.WECHAT_PID);
         order.setContentThumb(content.getThumb());
         order.setContentName(content.getTitle());
         order.setNoteName(note.getShopname());
         order.setCreatetime((int)(System.currentTimeMillis()/1000));
         orderMapper.insert(order);
-        //todo weixinmao_jz_msgidlist （删除超过7天的就删除记录） ims_weixinmao_jz_order_detail
+        OrderDto responseOrder = new OrderDto();
+        responseOrder.setOrderid(orderId);
+
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOrderid(orderId);
+        orderDetail.setUid(uid);
+        orderDetail.setUniacid(Constants.WECHAT_PID);
+        orderDetail.setPid(order.getId());
+        orderDetailMapper.insert(orderDetail);
+
+        MsgIdList msgIdList = new MsgIdList();
+        msgIdList.setUid(uid);
+        msgIdList.setUniacid(Constants.WECHAT_PID);
+        msgIdList.setCreatetime((int)System.currentTimeMillis()/1000);
+//        msgIdList.setFormId();
+        msgIdListMapper.insert(msgIdList);
+        return responseOrder;
     }
 
     /**
@@ -113,7 +152,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
     @Override
 //    @RedisLock(name = Constants.REFUND_ORDER_LOCK_KEY,key = "#orderDto.uid")
     public void userRefund(OrderDto orderDto) {
-       Order order = this.checkOrderExist(orderDto.getId());
+       NoteOrder order = this.checkOrderExist(orderDto.getId());
        //todo 退款业务
     }
 
@@ -126,12 +165,12 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
     @Transactional(rollbackFor = Exception.class)
     public void operationOrder(OrderDto orderDto) {
         OrderEnums.OrderStatusEnum updateStatusEnum = orderDto.getOrderStatusEnum();
-        Order order = this.checkOrderExist(orderDto.getId());
-        Integer status = order.getStatus();
+        NoteOrder order = this.checkOrderExist(orderDto.getId());
+        Integer status = order.getPaid();
         OrderEnums.OrderStatusEnum orderStatusEnum = OrderEnums.OrderStatusEnum.getNameByCode(status);
         this.checkUserIdentity(order.getUid(),orderDto.getUserIdentityEnum());
         this.checkOrderStatus(orderStatusEnum,updateStatusEnum,orderDto.getUserIdentityEnum());
-        order.setStatus(updateStatusEnum.getCode());
+        order.setPaid(updateStatusEnum.getCode());
         order.setUpdatetime((int)(System.currentTimeMillis()/1000));
         orderMapper.updateByPrimaryKeySelective(order);
     }
@@ -142,13 +181,13 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      */
     @Override
     public void userEvaluateCallBack(Integer orderId) {
-        Order order = this.checkOrderExist(orderId);
-        Integer orderStatus = order.getStatus();
+        NoteOrder order = this.checkOrderExist(orderId);
+        Integer orderStatus = order.getPaid();
         if(OrderEnums.OrderStatusEnum.WAIT_EVALUATE.getCode()!=orderStatus){
              throw new BusinessException("订单非待评价状态不可评价成功修改");
         }
-        order.setStatus(OrderEnums.OrderStatusEnum.EVALUATE_SUCCESS.getCode());
-        orderMapper.updateByPrimaryKeySelective(order);
+        order.setPaid(OrderEnums.OrderStatusEnum.EVALUATE_SUCCESS.getCode());
+//        orderMapper.updateByPrimaryKeySelective(order);
     }
 
     /**
@@ -211,8 +250,8 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
      * @param id
      * @return
      */
-    private Order checkOrderExist(Integer id){
-        Order order = orderMapper.selectByPrimaryKey(id);
+    private NoteOrder checkOrderExist(Integer id){
+        NoteOrder order = orderMapper.selectByPrimaryKey(id);
         Optional.ofNullable(order).orElseThrow(()->new BusinessException("订单不存在"));
         return order;
     }

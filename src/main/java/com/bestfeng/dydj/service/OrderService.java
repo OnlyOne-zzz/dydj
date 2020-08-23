@@ -11,7 +11,7 @@ import org.aurochsframework.boot.commons.service.GeneralService;
 public interface OrderService extends GeneralService<Order> {
 
     /**订单创建*/
-    void saveOrder(OrderDto orderDto);
+    OrderDto saveOrder(OrderDto orderDto);
     /**订单退款*/
     void userRefund(OrderDto orderDto);
 

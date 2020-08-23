@@ -42,17 +42,17 @@ public class OrderController implements GeneralCrudController<Order> {
     @ApiOperation(value = "创建订单")
     public CommonResult<Void> saveOrder(@RequestBody OrderDto orderDto){
         Assert.notNull(orderDto,"订单参数不能为空");
-        Assert.notNull(orderDto.getContentId(),"项目Id不能为空");
+        Assert.notNull(orderDto.getCurrentid(),"项目Id不能为空");
         Assert.notNull(orderDto.getUid(),"用户Id不能为空");
-        Assert.notNull(orderDto.getNoteid(),"技师Id不能为空");
-        Assert.notNull(orderDto.getMoney(),"项目金额不能为空");
-        Assert.notNull(orderDto.getFinalmoney(),"总金额不能为空");
+        Assert.notNull(orderDto.getShopid(),"技师Id不能为空");
         Assert.notNull(orderDto.getTrafficType(),"出行类型不能为空");
+        Assert.notNull(orderDto.getTrafficReckonMile(),"出行估算公里数不能为空");
         Assert.notNull(orderDto.getLat(),"维度不能为空");
         Assert.notNull(orderDto.getLng(),"经度不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getName()),"用户名不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getTel()),"手机号不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getAddress()),"地址不能为空");
+        Assert.isTrue(!StringUtils.isEmpty(orderDto.getAddressId()),"地址ID不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getDaddress()),"详细地址不能为空");
         orderService.saveOrder(orderDto);
         return CommonResult.success();

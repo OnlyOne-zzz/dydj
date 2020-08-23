@@ -14,8 +14,8 @@ import org.aurochsframework.boot.core.enums.EnumDict;
 @Slf4j
 public enum TravelTypeEnums implements EnumDict<Integer> {
 
-    TAXI(1, "出租车"),
-    SUBWAY(2, "公交地铁");
+    TAXI(0, "出租车"),
+    SUBWAY(1, "公交地铁");
 
     private Integer value;
 
