@@ -168,7 +168,7 @@
       #{daddress,jdbcType=VARCHAR}, #{contentName,jdbcType=VARCHAR}, #{updatetime,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Order">
+  <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Order" useGeneratedKeys="true" keyProperty="id">
     insert into ims_weixinmao_jz_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
