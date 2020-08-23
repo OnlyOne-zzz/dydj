@@ -120,6 +120,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         order.setContentThumb(content.getThumb());
         order.setContentName(content.getTitle());
         order.setNoteName(note.getShopname());
+        order.setNoteAvatarUrl(note.getAvatarurl());
         order.setCreatetime((int)(System.currentTimeMillis()/1000));
         orderMapper.insertSelective(order);
         OrderDto responseOrder = new OrderDto();
