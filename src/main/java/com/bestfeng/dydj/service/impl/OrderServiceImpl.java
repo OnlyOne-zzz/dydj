@@ -128,7 +128,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         orderMapper.insert(order);
         OrderDto responseOrder = new OrderDto();
         responseOrder.setOrderid(orderId);
-        //todo weixinmao_jz_msgidlist （删除超过7天的就删除记录） ims_weixinmao_jz_order_detail
+
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrderid(orderId);
         orderDetail.setUid(uid);
