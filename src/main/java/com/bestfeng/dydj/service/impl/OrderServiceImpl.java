@@ -111,7 +111,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         NoteOrder order = new NoteOrder();
         BeanUtils.copyProperties(orderDto,order);
         order.setOrderid(orderId);
-        order.setPaid(uid);
+        order.setPaid(OrderEnums.OrderStatusEnum.PAY_OFF.getCode());
         order.setPid(msgContentPid);
         order.setShopid(noteId);
         order.setCurrentid(contentId);
@@ -121,6 +121,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         order.setContentName(content.getTitle());
         order.setNoteName(note.getShopname());
         order.setNoteAvatarUrl(note.getAvatarurl());
+        order.setTrafficMoney(trafficMoney);
         order.setCreatetime((int)(System.currentTimeMillis()/1000));
         orderMapper.insertSelective(order);
         OrderDto responseOrder = new OrderDto();
