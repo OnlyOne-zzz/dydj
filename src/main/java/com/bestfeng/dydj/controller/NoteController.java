@@ -2,6 +2,7 @@ package com.bestfeng.dydj.controller;
 
 import com.bestfeng.dydj.annotation.SignValidated;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
+import com.bestfeng.dydj.controller.request.NoteListSearchNameRequest;
 import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.service.NoteService;
 import io.swagger.annotations.Api;
@@ -31,9 +32,9 @@ public class NoteController{
         return CommonResult.success(noteService.paging(request));
     }
 
-    @GetMapping("/name-search/{name}")
+    @GetMapping("/name-search")
     @ApiOperation("根据名称搜索")
-    public CommonResult<CommonPage<Note>> pagingByName(@PathVariable String name) {
-        return CommonResult.success(noteService.pagingByName(name));
+    public CommonResult<CommonPage<Note>> pagingByName(NoteListSearchNameRequest request) {
+        return CommonResult.success(noteService.pagingByName(request.getName()));
     }
 }
