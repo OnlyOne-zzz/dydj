@@ -31,6 +31,10 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="shopname" jdbcType="VARCHAR" property="shopname" />
     <result column="cityid" jdbcType="INTEGER" property="cityid" />
+    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="lng" jdbcType="VARCHAR" property="lng" />
+    <result column="views" jdbcType="INTEGER" property="views" />
+    <result column="service_status" jdbcType="INTEGER" property="serviceStatus" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bestfeng.dydj.mbg.model.Note">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -96,7 +100,8 @@
   <sql id="Base_Column_List">
     id, uniacid, uid, jobtitle, name, sex, tel, birthday, education, express, address, 
     place, currentstatus, card, special, money, areaid, createtime, status, avatarUrl, 
-    refreshtime, thumb_url, loginid, sort, isrecommand, isgood, username, shopname, cityid
+    refreshtime, thumb_url, loginid, sort, isrecommand, isgood, username, shopname, cityid, 
+    lat, lng, views, service_status
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -159,8 +164,9 @@
       status, avatarUrl, refreshtime, 
       thumb_url, loginid, sort, 
       isrecommand, isgood, username, 
-      shopname, cityid, content
-      )
+      shopname, cityid, lat, 
+      lng, views, service_status, 
+      content)
     values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{jobtitle,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
       #{tel,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
@@ -170,8 +176,9 @@
       #{status,jdbcType=TINYINT}, #{avatarurl,jdbcType=VARCHAR}, #{refreshtime,jdbcType=INTEGER}, 
       #{thumbUrl,jdbcType=VARCHAR}, #{loginid,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
       #{isrecommand,jdbcType=TINYINT}, #{isgood,jdbcType=TINYINT}, #{username,jdbcType=VARCHAR}, 
-      #{shopname,jdbcType=VARCHAR}, #{cityid,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
-      )
+      #{shopname,jdbcType=VARCHAR}, #{cityid,jdbcType=INTEGER}, #{lat,jdbcType=VARCHAR}, 
+      #{lng,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, #{serviceStatus,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Note">
     insert into ims_weixinmao_jz_note
@@ -262,6 +269,18 @@
       </if>
       <if test="cityid != null">
         cityid,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="views != null">
+        views,
+      </if>
+      <if test="serviceStatus != null">
+        service_status,
       </if>
       <if test="content != null">
         content,
@@ -354,6 +373,18 @@
       </if>
       <if test="cityid != null">
         #{cityid,jdbcType=INTEGER},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null">
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="serviceStatus != null">
+        #{serviceStatus,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -456,6 +487,18 @@
       <if test="record.cityid != null">
         cityid = #{record.cityid,jdbcType=INTEGER},
       </if>
+      <if test="record.lat != null">
+        lat = #{record.lat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lng != null">
+        lng = #{record.lng,jdbcType=VARCHAR},
+      </if>
+      <if test="record.views != null">
+        views = #{record.views,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceStatus != null">
+        service_status = #{record.serviceStatus,jdbcType=INTEGER},
+      </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -495,6 +538,10 @@
       username = #{record.username,jdbcType=VARCHAR},
       shopname = #{record.shopname,jdbcType=VARCHAR},
       cityid = #{record.cityid,jdbcType=INTEGER},
+      lat = #{record.lat,jdbcType=VARCHAR},
+      lng = #{record.lng,jdbcType=VARCHAR},
+      views = #{record.views,jdbcType=INTEGER},
+      service_status = #{record.serviceStatus,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -530,7 +577,11 @@
       isgood = #{record.isgood,jdbcType=TINYINT},
       username = #{record.username,jdbcType=VARCHAR},
       shopname = #{record.shopname,jdbcType=VARCHAR},
-      cityid = #{record.cityid,jdbcType=INTEGER}
+      cityid = #{record.cityid,jdbcType=INTEGER},
+      lat = #{record.lat,jdbcType=VARCHAR},
+      lng = #{record.lng,jdbcType=VARCHAR},
+      views = #{record.views,jdbcType=INTEGER},
+      service_status = #{record.serviceStatus,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -622,6 +673,18 @@
       <if test="cityid != null">
         cityid = #{cityid,jdbcType=INTEGER},
       </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        lng = #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null">
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="serviceStatus != null">
+        service_status = #{serviceStatus,jdbcType=INTEGER},
+      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -658,6 +721,10 @@
       username = #{username,jdbcType=VARCHAR},
       shopname = #{shopname,jdbcType=VARCHAR},
       cityid = #{cityid,jdbcType=INTEGER},
+      lat = #{lat,jdbcType=VARCHAR},
+      lng = #{lng,jdbcType=VARCHAR},
+      views = #{views,jdbcType=INTEGER},
+      service_status = #{serviceStatus,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -690,7 +757,11 @@
       isgood = #{isgood,jdbcType=TINYINT},
       username = #{username,jdbcType=VARCHAR},
       shopname = #{shopname,jdbcType=VARCHAR},
-      cityid = #{cityid,jdbcType=INTEGER}
+      cityid = #{cityid,jdbcType=INTEGER},
+      lat = #{lat,jdbcType=VARCHAR},
+      lng = #{lng,jdbcType=VARCHAR},
+      views = #{views,jdbcType=INTEGER},
+      service_status = #{serviceStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -65,6 +65,18 @@ public class Note implements Serializable {
 
     private Integer cityid;
 
+    @ApiModelProperty(value = "纬度")
+    private String lat;
+
+    @ApiModelProperty(value = "经度")
+    private String lng;
+
+    @ApiModelProperty(value = "浏览量")
+    private Integer views;
+
+    @ApiModelProperty(value = "服务状态")
+    private Integer serviceStatus;
+
     private String content;
 
     private static final long serialVersionUID = 1L;
@@ -301,6 +313,38 @@ public class Note implements Serializable {
         this.cityid = cityid;
     }
 
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public Integer getViews() {
+        return views;
+    }
+
+    public void setViews(Integer views) {
+        this.views = views;
+    }
+
+    public Integer getServiceStatus() {
+        return serviceStatus;
+    }
+
+    public void setServiceStatus(Integer serviceStatus) {
+        this.serviceStatus = serviceStatus;
+    }
+
     public String getContent() {
         return content;
     }
@@ -344,6 +388,10 @@ public class Note implements Serializable {
         sb.append(", username=").append(username);
         sb.append(", shopname=").append(shopname);
         sb.append(", cityid=").append(cityid);
+        sb.append(", lat=").append(lat);
+        sb.append(", lng=").append(lng);
+        sb.append(", views=").append(views);
+        sb.append(", serviceStatus=").append(serviceStatus);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
