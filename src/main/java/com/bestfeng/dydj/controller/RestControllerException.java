@@ -22,8 +22,8 @@ public class RestControllerException {
 //        return CommonResult.custom(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), exception.getCode());
 //    }
 
-    @ExceptionHandler(value = Throwable.class)
-    @ResponseBody
+//    @ExceptionHandler(value = Throwable.class)
+//    @ResponseBody
     public CommonResult<Void> handleException(HttpServletRequest request, HttpServletResponse response, Exception exception) {
         log.error("controller 统一异常 msg={}",exception.getMessage());
         exception.printStackTrace();
