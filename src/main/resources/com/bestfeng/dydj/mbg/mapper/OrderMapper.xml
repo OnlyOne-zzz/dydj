@@ -138,7 +138,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.bestfeng.dydj.mbg.model.Order">
+  <insert id="insert" parameterType="com.bestfeng.dydj.mbg.model.Order" useGeneratedKeys="true" keyProperty="id">
     insert into ims_weixinmao_jz_order (id, uniacid, uid, 
       name, tel, msgtime, 
       orderid, money, paytime, 
