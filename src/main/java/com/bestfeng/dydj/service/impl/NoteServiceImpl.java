@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Comparator;
+import java.util.stream.Collectors;
+
 /**
  * @author bsetfeng
  * @since 1.0
@@ -38,24 +41,26 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     @Override
     public CommonPage<Note> paging(NoteListRequest request) {
         QueryParam queryParam = QueryParam.createQueryParam();
-        if (request.getServiceStatus() != 0){
+        if (request.getServiceStatus() != 0) {
             queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()));
         }
         Sort sort = new Sort();
-        if (StringUtils.hasText(request.getOrderColumn())){
+        if (StringUtils.hasText(request.getOrderColumn())) {
             sort.setName(request.getOrderColumn());
             sort.setOrder(request.getOrderType());
+            queryParam.orderBy(sort);
         }
-        queryParam.orderBy(sort);
-        return paging(queryParam);
+        CommonPage<Note> pages = paging(queryParam);
+        return CommonPage.restPage(pages, () -> pages.getList().stream().sorted(Comparator.comparingInt(Note::getServiceStatus)).collect(Collectors.toList()));
     }
 
     @Override
     public CommonPage<Note> pagingByName(String name) {
         QueryParam queryParam = QueryParam.createQueryParam();
-        if (StringUtils.hasText(name)){
+        if (StringUtils.hasText(name)) {
             queryParam.and("name", "%".concat(name).concat("%"));
         }
-        return paging(queryParam);
+        CommonPage<Note> pages = paging(queryParam);
+        return CommonPage.restPage(pages, () -> pages.getList().stream().sorted(Comparator.comparingInt(Note::getServiceStatus)).collect(Collectors.toList()));
     }
 }
