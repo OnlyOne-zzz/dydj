@@ -87,12 +87,12 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         Integer contentId = orderDto.getCurrentid();
         Integer noteId = orderDto.getShopid();
         Integer couponId = orderDto.getCouponid();
-        MsgContent content = msgContentMapper.selectByPrimaryKey(contentId);
-        Assert.notNull(content,"服务项目不存在");
         ContentGoodItems goodItems = goodItemsMapper.selectByPrimaryKey(contentId);
         /**项目价格*/
         Float contentMoney = goodItems.getMoney();
         Integer msgContentPid = goodItems.getPid();
+        MsgContent content = msgContentMapper.selectByPrimaryKey(contentId);
+        Assert.notNull(content,"服务项目不存在");
         /**技师*/
         Note note = noteMapper.selectByPrimaryKey(noteId);
         Assert.notNull(note,"技师不存在");
