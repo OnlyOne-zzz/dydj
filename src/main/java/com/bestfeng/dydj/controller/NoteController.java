@@ -2,15 +2,13 @@ package com.bestfeng.dydj.controller;
 
 import com.bestfeng.dydj.annotation.SignValidated;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
+import com.bestfeng.dydj.controller.request.NoteListSearchNameRequest;
 import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.service.NoteService;
-import com.bestfeng.dydj.utils.FastJsons;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.aurochsframework.boot.commons.api.CommonPage;
 import org.aurochsframework.boot.commons.api.CommonResult;
-import org.aurochsframework.boot.commons.controller.GeneralCrudController;
-import org.aurochsframework.boot.commons.service.GeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,9 +32,9 @@ public class NoteController{
         return CommonResult.success(noteService.paging(request));
     }
 
-    @PostMapping("/name-search/{name}")
+    @GetMapping("/name-search")
     @ApiOperation("根据名称搜索")
-    public CommonResult<CommonPage<Note>> pagingByName(@PathVariable String name) {
-        return CommonResult.success(noteService.pagingByName(name));
+    public CommonResult<CommonPage<Note>> pagingByName(NoteListSearchNameRequest request) {
+        return CommonResult.success(noteService.pagingByName(request.getName()));
     }
 }
