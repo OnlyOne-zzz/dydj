@@ -47,8 +47,8 @@ public class OrderController implements GeneralCrudController<Order> {
         Assert.notNull(orderDto.getShopid(),"技师Id不能为空");
         Assert.notNull(orderDto.getTrafficType(),"出行类型不能为空");
         Assert.notNull(orderDto.getTrafficReckonMile(),"出行估算公里数不能为空");
-        Assert.notNull(orderDto.getLat(),"维度不能为空");
-        Assert.notNull(orderDto.getLng(),"经度不能为空");
+//        Assert.notNull(orderDto.getLat(),"维度不能为空");
+//        Assert.notNull(orderDto.getLng(),"经度不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getName()),"用户名不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getTel()),"手机号不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getAddress()),"地址不能为空");
