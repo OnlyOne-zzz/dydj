@@ -32,7 +32,7 @@ public class NoteController{
         return CommonResult.success(noteService.paging(request));
     }
 
-    @GetMapping("/name-search")
+    @PostMapping("/name-search")
     @ApiOperation("根据名称搜索")
     public CommonResult<CommonPage<Note>> pagingByName(NoteListSearchNameRequest request) {
         return CommonResult.success(noteService.pagingByName(request.getName()));
