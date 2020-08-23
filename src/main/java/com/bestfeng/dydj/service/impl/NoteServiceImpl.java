@@ -42,8 +42,10 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
             queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()));
         }
         Sort sort = new Sort();
-        sort.setName(request.getOrderColumn());
-        sort.setOrder(request.getOrderType());
+        if (StringUtils.hasText(request.getOrderColumn())){
+            sort.setName(request.getOrderColumn());
+            sort.setOrder(request.getOrderType());
+        }
         queryParam.orderBy(sort);
         return paging(queryParam);
     }
