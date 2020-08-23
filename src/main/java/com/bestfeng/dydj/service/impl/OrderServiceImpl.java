@@ -121,7 +121,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         order.setContentName(content.getTitle());
         order.setNoteName(note.getShopname());
         order.setCreatetime((int)(System.currentTimeMillis()/1000));
-        orderMapper.insert(order);
+        orderMapper.insertSelective(order);
         OrderDto responseOrder = new OrderDto();
         responseOrder.setOrderid(orderId);
 
@@ -130,14 +130,14 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         orderDetail.setUid(uid);
         orderDetail.setUniacid(Constants.WECHAT_PID);
         orderDetail.setPid(order.getId());
-        orderDetailMapper.insert(orderDetail);
+        orderDetailMapper.insertSelective(orderDetail);
 
         MsgIdList msgIdList = new MsgIdList();
         msgIdList.setUid(uid);
         msgIdList.setUniacid(Constants.WECHAT_PID);
         msgIdList.setCreatetime((int)System.currentTimeMillis()/1000);
 //        msgIdList.setFormId();
-        msgIdListMapper.insert(msgIdList);
+        msgIdListMapper.insertSelective(msgIdList);
         return responseOrder;
     }
 
