@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/order")
 @Api(tags = "OrderController", description = "订单管理")
-@SignValidated
+//@SignValidated
 public class OrderController implements GeneralCrudController<Order> {
 
 
@@ -40,7 +40,7 @@ public class OrderController implements GeneralCrudController<Order> {
 
     @PostMapping("/saveOrder")
     @ApiOperation(value = "创建订单")
-    public CommonResult<Void> saveOrder(@RequestBody OrderDto orderDto){
+    public CommonResult<OrderDto> saveOrder(@RequestBody OrderDto orderDto){
         Assert.notNull(orderDto,"订单参数不能为空");
         Assert.notNull(orderDto.getCurrentid(),"项目Id不能为空");
         Assert.notNull(orderDto.getUid(),"用户Id不能为空");
@@ -54,8 +54,7 @@ public class OrderController implements GeneralCrudController<Order> {
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getAddress()),"地址不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getAddressId()),"地址ID不能为空");
         Assert.isTrue(!StringUtils.isEmpty(orderDto.getDaddress()),"详细地址不能为空");
-        orderService.saveOrder(orderDto);
-        return CommonResult.success();
+        return CommonResult.success(orderService.saveOrder(orderDto));
     }
 
     @PostMapping("/userRefund")
