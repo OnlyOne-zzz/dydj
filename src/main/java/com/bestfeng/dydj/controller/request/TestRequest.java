@@ -14,4 +14,5 @@ public class TestRequest extends BasicRequest {
     private String username;
 
     private String password;
+    private Integer type;
 }
