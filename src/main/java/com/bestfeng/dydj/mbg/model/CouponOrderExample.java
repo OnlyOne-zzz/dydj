@@ -933,6 +933,186 @@ public class CouponOrderExample {
             addCriterion("title not between", value1, value2, "title");
             return (Criteria) this;
         }
+
+        public Criteria andTypeIsNull() {
+            addCriterion("type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIsNotNull() {
+            addCriterion("type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeEqualTo(Integer value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotEqualTo(Integer value) {
+            addCriterion("type <>", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThan(Integer value) {
+            addCriterion("type >", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("type >=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThan(Integer value) {
+            addCriterion("type <", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("type <=", value, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeIn(List<Integer> values) {
+            addCriterion("type in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotIn(List<Integer> values) {
+            addCriterion("type not in", values, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeBetween(Integer value1, Integer value2) {
+            addCriterion("type between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("type not between", value1, value2, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodIsNull() {
+            addCriterion("validity_period is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodIsNotNull() {
+            addCriterion("validity_period is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodEqualTo(Integer value) {
+            addCriterion("validity_period =", value, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodNotEqualTo(Integer value) {
+            addCriterion("validity_period <>", value, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodGreaterThan(Integer value) {
+            addCriterion("validity_period >", value, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodGreaterThanOrEqualTo(Integer value) {
+            addCriterion("validity_period >=", value, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodLessThan(Integer value) {
+            addCriterion("validity_period <", value, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodLessThanOrEqualTo(Integer value) {
+            addCriterion("validity_period <=", value, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodIn(List<Integer> values) {
+            addCriterion("validity_period in", values, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodNotIn(List<Integer> values) {
+            addCriterion("validity_period not in", values, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodBetween(Integer value1, Integer value2) {
+            addCriterion("validity_period between", value1, value2, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andValidityPeriodNotBetween(Integer value1, Integer value2) {
+            addCriterion("validity_period not between", value1, value2, "validityPeriod");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyIsNull() {
+            addCriterion("allmoney is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyIsNotNull() {
+            addCriterion("allmoney is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyEqualTo(Float value) {
+            addCriterion("allmoney =", value, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyNotEqualTo(Float value) {
+            addCriterion("allmoney <>", value, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyGreaterThan(Float value) {
+            addCriterion("allmoney >", value, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyGreaterThanOrEqualTo(Float value) {
+            addCriterion("allmoney >=", value, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyLessThan(Float value) {
+            addCriterion("allmoney <", value, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyLessThanOrEqualTo(Float value) {
+            addCriterion("allmoney <=", value, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyIn(List<Float> values) {
+            addCriterion("allmoney in", values, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyNotIn(List<Float> values) {
+            addCriterion("allmoney not in", values, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyBetween(Float value1, Float value2) {
+            addCriterion("allmoney between", value1, value2, "allmoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllmoneyNotBetween(Float value1, Float value2) {
+            addCriterion("allmoney not between", value1, value2, "allmoney");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

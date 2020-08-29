@@ -33,6 +33,14 @@ public class CouponOrder implements Serializable {
 
     private String title;
 
+    @ApiModelProperty(value = "1=注册")
+    private Integer type;
+
+    @ApiModelProperty(value = "有效期")
+    private Integer validityPeriod;
+
+    private Float allmoney;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -139,6 +147,30 @@ public class CouponOrder implements Serializable {
         this.title = title;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getValidityPeriod() {
+        return validityPeriod;
+    }
+
+    public void setValidityPeriod(Integer validityPeriod) {
+        this.validityPeriod = validityPeriod;
+    }
+
+    public Float getAllmoney() {
+        return allmoney;
+    }
+
+    public void setAllmoney(Float allmoney) {
+        this.allmoney = allmoney;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -158,6 +190,9 @@ public class CouponOrder implements Serializable {
         sb.append(", paid=").append(paid);
         sb.append(", status=").append(status);
         sb.append(", title=").append(title);
+        sb.append(", type=").append(type);
+        sb.append(", validityPeriod=").append(validityPeriod);
+        sb.append(", allmoney=").append(allmoney);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
