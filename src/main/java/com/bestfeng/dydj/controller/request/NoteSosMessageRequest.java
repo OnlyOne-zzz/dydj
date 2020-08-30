@@ -10,7 +10,7 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
-public class NoteSosMessageRequest extends BasicRequest{
+public class NoteSosMessageRequest extends BasicRequest {
 
     private int noteId;
 
@@ -19,4 +19,7 @@ public class NoteSosMessageRequest extends BasicRequest{
 
     @ApiModelProperty("经度")
     private String lng;
+
+    @ApiModelProperty("地址")
+    private String address;
 }
