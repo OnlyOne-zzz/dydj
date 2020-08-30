@@ -2,6 +2,7 @@ package com.bestfeng.dydj.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -12,6 +13,11 @@ import java.util.concurrent.ScheduledExecutorService;
  **/
 @Configuration
 public class CommonConfiguration {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     @Bean
     public ScheduledExecutorService scheduledExecutorService() {

@@ -2,15 +2,12 @@ package com.bestfeng.dydj.vo;
 
 import com.alibaba.fastjson.JSON;
 import com.bestfeng.dydj.mbg.model.CouponOrder;
+import com.bestfeng.dydj.utils.TimeUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 /**
  * @author bsetfeng
@@ -59,22 +56,10 @@ public class CouponOrderVo implements Serializable {
 
     public static CouponOrderVo of(CouponOrder couponOrder) {
         CouponOrderVo vo = JSON.parseObject(JSON.toJSONString(couponOrder), CouponOrderVo.class);
-        vo.setCreatetime(timeStampToStr(couponOrder.getCreatetime()));
-        vo.setValidityPeriod(timeStampToStr(couponOrder.getValidityPeriod()));
+        vo.setCreatetime(TimeUtils.timeStampToStr(((long) couponOrder.getCreatetime()) * 1000));
+        vo.setValidityPeriod(TimeUtils.timeStampToStr(((long) couponOrder.getValidityPeriod()) * 1000));
         return vo;
     }
 
-
-    public static String timeStampToStr(int time) {
-        return timeStampToStr((long) (time) * 1000, "yyyy-MM-dd HH:mm:ss");
-    }
-
-    public static String timeStampToStr(Long time, String pattern) {
-        if (time == null) {
-            return null;
-        }
-        DateTimeFormatter ftf = DateTimeFormatter.ofPattern(pattern);
-        return ftf.format(LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault()));
-    }
 
 }

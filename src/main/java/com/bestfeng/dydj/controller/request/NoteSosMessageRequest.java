@@ -22,4 +22,7 @@ public class NoteSosMessageRequest extends BasicRequest{
 
     @ApiModelProperty("地址")
     private String address;
+
+    @ApiModelProperty("订单号")
+    private String orderId;
 }
