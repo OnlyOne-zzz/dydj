@@ -14,6 +14,7 @@ import org.aurochsframework.boot.core.enums.EnumDict;
 @Slf4j
 public enum NoteServiceStatusEnums implements EnumDict<Integer> {
 
+    ALL(0, "全部"),
     SERVICEABLE(1, "可服务"),
     IN_SERVICE(2, "服务中");
 
