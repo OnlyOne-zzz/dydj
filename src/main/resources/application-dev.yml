@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://rm-uf686an1j5gkw1886ao.mysql.rds.aliyuncs.com/uni?zeroDateTimeBehavior=convertToNull
-    username: 'testuni'
-    password: '!QAZ2wsx3edc'
+    url: jdbc:mysql://47.108.196.40/dydj?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
+    username: 'root'
+    password: 'm123'
 
 logging:
   level:
