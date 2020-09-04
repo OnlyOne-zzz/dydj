@@ -12,4 +12,6 @@ logging:
     log4j.logger.com.ibatis: debug
     #system: debug
 
-
+wechat:
+  appId: 'wx3a064f24347b34d2'
+  appSecret: '2fe25c657f2c7ab751e09f249c04b7c7'
