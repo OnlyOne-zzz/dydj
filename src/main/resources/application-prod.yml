@@ -11,5 +11,8 @@ logging:
     org.aurochsframework.boot.*: debug
     log4j.logger.com.ibatis: debug
     #system: debug
+wechat:
+  appId:
+  appSecret:
 
 

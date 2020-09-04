@@ -27,4 +27,6 @@ public interface NoteOrderMapper {
     int updateByPrimaryKeySelective(NoteOrder record);
 
     int updateByPrimaryKey(NoteOrder record);
+
+    NoteOrder selectObjByOrderNo(String orderNo);
 }

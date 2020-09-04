@@ -649,4 +649,13 @@
       updatetime = #{updatetime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="selectObjByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from ims_weixinmao_jz_noteorder
+    where orderid=#{orderNo}
+  </select>
+
 </mapper>
