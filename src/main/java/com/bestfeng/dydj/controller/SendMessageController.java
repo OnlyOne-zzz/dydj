@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author zh
  **/
 @RestController("/sendMessage")
-@SignValidated
+//@SignValidated
 public class SendMessageController {
 
 

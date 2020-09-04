@@ -29,7 +29,7 @@ public class SendMessageImpl implements SendMessageService {
 
     @Override
     public void sendMessage(SmallSendMessageReq smallSendMessageReq) throws Exception {
-        log.info("小程序订阅消息发送 req={}", FastJsons.convertObjectToJSONObject(smallSendMessageReq));
+        log.info("小程序订阅消息发送 req={}", FastJsons.convertObjectToJSON(smallSendMessageReq));
         Assert.notNull(smallSendMessageReq,"小程序订阅消息发送参数实体不能为空");
         String orderNo = smallSendMessageReq.getOrderNo();
         String templateId = smallSendMessageReq.getTemplateId();
@@ -42,7 +42,7 @@ public class SendMessageImpl implements SendMessageService {
         sendMessageDto.setTemplate_id(templateId);
         sendMessageDto.setTouser(userInfo.getOpenid());
         sendMessageDto.setMiniprogram_state("developer");//开发版发布
-        sendMessageDto.setData(String.format(SendMessageDataTemplateConstant.ORDER_TEMPLATE,orderNo,noteOrder.getStatus()));
+        sendMessageDto.setData(SendMessageDataTemplateConstant.ORDER_TEMPLATE.replace("{orderNo}",orderNo).replace("{name}",String.valueOf(noteOrder.getStatus())));
         weChatService.sendMessage(sendMessageDto);
     }
 }

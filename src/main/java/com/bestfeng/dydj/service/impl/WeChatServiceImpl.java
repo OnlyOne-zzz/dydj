@@ -52,8 +52,9 @@ public class WeChatServiceImpl implements WeChatService {
             throw new BusinessException("小程序订阅消息发送 失败");
         }
         JSONObject jsonObject = FastJsons.convertObjectToJSONObject(response);
-        if(jsonObject.getIntValue("errCode") != 0){
-            throw new BusinessException("小程序订阅消息发送 失败");
+        Integer code = jsonObject.getInteger("errcode");
+        if(0 != code.intValue() ){
+            throw new BusinessException("小程序订阅消息发送失败".concat(jsonObject.getString("errmsg")));
         }
     }
 }
