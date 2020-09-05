@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class CouponOrderReceiveRequest extends BasicRequest {
 
-    private int type;
+    private Integer type;
 
-    private int uid;
+    private Integer uid;
 }
