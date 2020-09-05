@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class NoteSosMessageRequest extends BasicRequest{
 
-    private int noteId;
+    private Integer noteId;
 
     @ApiModelProperty("纬度")
     private String lat;

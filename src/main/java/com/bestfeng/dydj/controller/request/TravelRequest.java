@@ -9,7 +9,7 @@ import lombok.Setter;
 public class TravelRequest extends BasicRequest{
 
     @ApiModelProperty("出行方式")
-    private int type;
+    private Integer type;
 
     @ApiModelProperty("间隔距离")
     private String distance;

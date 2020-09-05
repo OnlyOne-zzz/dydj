@@ -1,6 +1,9 @@
 package com.bestfeng.dydj.manager.request;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bestfeng.dydj.controller.request.BasicRequest;
+import com.bestfeng.dydj.controller.request.CouponOrderReceiveRequest;
 import com.bestfeng.dydj.enums.ApiErrorCodeEnums;
 import com.bestfeng.dydj.utils.FastJsons;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +52,9 @@ public class DefaultSignVerify implements SignVerifySupport {
 
 
     protected String getCompleteSignParams(String singParams) {
-        return singParams.concat("key=").concat(SIGN_KEY);
+        String completeSignParams = singParams.concat("key=").concat(SIGN_KEY);
+        log.warn("验签参数:{}", completeSignParams);
+        return completeSignParams;
     }
 
     protected String getMd5Sign(String completeSign) {

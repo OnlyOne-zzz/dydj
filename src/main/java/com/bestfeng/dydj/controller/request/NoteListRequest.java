@@ -17,5 +17,5 @@ public class NoteListRequest extends BasicRequest{
     private String orderType;
 
     @ApiModelProperty("技师状态")
-    private int serviceStatus;
+    private Integer serviceStatus;
 }
