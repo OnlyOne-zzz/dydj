@@ -2,6 +2,7 @@ package com.bestfeng.dydj.configuration;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bestfeng.dydj.constants.Constants;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Order(2)
 public class AccessTokenManagerCenter implements SchedulingConfigurer, CommandLineRunner {
 
-    public final static String ACCESS_TOKEN_REQUEST_URL = "https://api.weixin.qq.com/cgi-bin/token";
 
     @Getter
     @Value("${wechat.appId:wx3a064f24347b34d2}")
@@ -54,7 +54,7 @@ public class AccessTokenManagerCenter implements SchedulingConfigurer, CommandLi
 
 
     public void refreshAccessToken() {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(ACCESS_TOKEN_REQUEST_URL)
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Constants.ACCESS_TOKEN_REQUEST_URL)
                 .queryParam("grant_type", "client_credential")
                 .queryParam("appid", appId)
                 .queryParam("secret", appSecret);

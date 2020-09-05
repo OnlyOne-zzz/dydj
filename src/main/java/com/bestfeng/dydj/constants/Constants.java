@@ -20,4 +20,6 @@ public class Constants {
 
     /**公众号PID*/
     public static final int WECHAT_PID = 3;
+
+    public final static String ACCESS_TOKEN_REQUEST_URL = "https://api.weixin.qq.com/cgi-bin/token";
 }

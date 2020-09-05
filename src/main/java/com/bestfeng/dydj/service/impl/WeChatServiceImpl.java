@@ -1,10 +1,13 @@
 package com.bestfeng.dydj.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bestfeng.dydj.configuration.AccessTokenManagerCenter;
+import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.SendMessageDto;
 import com.bestfeng.dydj.service.WeChatService;
 import com.bestfeng.dydj.utils.FastJsons;
+import com.bestfeng.dydj.utils.RedisUtil;
 import com.bestfeng.dydj.utils.httpclient.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
@@ -25,14 +28,19 @@ import java.util.Optional;
 @Slf4j
 public class WeChatServiceImpl implements WeChatService {
 
-    @Value("${wechat.appId}")
+    @Value("${wechat.small.appId}")
     private String appId;
 
-    @Value("${wechat.appSecret}")
+    @Value("${wechat.small.appSecret}")
     private String appSecret;
 
     @Autowired
     private AccessTokenManagerCenter managerCenter;
+
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private RedisUtil redisUtil;
 
     private static final String SEND_MESSAGE_URI = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send";
 
@@ -56,5 +64,25 @@ public class WeChatServiceImpl implements WeChatService {
         if(0 != code.intValue() ){
             throw new BusinessException("小程序订阅消息发送失败".concat(jsonObject.getString("errmsg")));
         }
+    }
+
+    @Override
+    public String getAccessToken()throws Exception{
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Constants.ACCESS_TOKEN_REQUEST_URL)
+                .queryParam("grant_type", "client_credential")
+                .queryParam("appid", appId)
+                .queryParam("secret", appSecret);
+        String response = restTemplate.getForObject(builder.build().toUri().toString(), String.class);
+        JSONObject result = JSON.parseObject(response);
+        String token = "";
+        if (!result.containsKey("access_token")) {
+            log.error("获取access_token失败,response:{}", response);
+            throw new BusinessException("获取accessToken异常");
+        } else {
+            token = result.getString("access_token");
+            log.info("一次access-token刷新成功，token:{}", token);
+        }
+
+        return token;
     }
 }
