@@ -53,7 +53,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
     }
 
     @Override
-    public void receive(int type, int uid) {
+    public void receive(Integer type, Integer uid) {
         UserInfo userInfo = userInfoService.selectByUId(uid);
         List<Coupon> coupons = couponService.fetch(QueryParam.createQueryParam().and("type", type));
         if (CollectionUtils.isEmpty(coupons)) {
@@ -64,7 +64,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
 
     }
 
-    protected CouponOrder saveCouponOrder(Coupon coupon, int uid, String tel) {
+    protected CouponOrder saveCouponOrder(Coupon coupon, Integer uid, String tel) {
         CouponOrder couponOrder = new CouponOrder();
         couponOrder.setCreatetime((int) (System.currentTimeMillis() / 1000));
         //有效时间15天
@@ -91,9 +91,9 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
      * @return
      */
     @Override
-    public List<CouponOrder> userCouponList(int uid, int status) {
-        return fetch(QueryParam.createQueryParam().and("uid", (byte)uid)
-                .and("status", status)
+    public List<CouponOrder> userCouponList(Integer uid, Integer status) {
+        return fetch(QueryParam.createQueryParam().and("uid", uid)
+                .and("status", status.byteValue())
         );
     }
 
@@ -103,7 +103,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
      * @param couponOrderId 优惠券ID
      */
     @Override
-    public void use(int couponOrderId) {
+    public void use(Integer couponOrderId) {
         CouponOrder couponOrder = new CouponOrder();
         couponOrder.setId(couponOrderId);
         couponOrder.setStatus(CouponTypeEnums.USED.getValue());
@@ -118,7 +118,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
      * @return
      */
     @Override
-    public List<CouponOrder> availableCouponList(int contentId, int uid) {
+    public List<CouponOrder> availableCouponList(Integer contentId, Integer uid) {
         Content content = contentService.fetchOne(QueryParam.createQueryParam().and("id", contentId));
         Float money = content.getMoney();
         return fetch(QueryParam.createQueryParam()

@@ -20,7 +20,7 @@ public interface CouponOrderService extends GeneralService<CouponOrder> {
      * @param type 优惠券
      * @param uid  用户ID
      */
-    void receive(int type, int uid);
+    void receive(Integer type, Integer uid);
 
     /**
      * 用户优惠券列表
@@ -28,7 +28,7 @@ public interface CouponOrderService extends GeneralService<CouponOrder> {
      * @param uid
      * @return
      */
-    List<CouponOrder> userCouponList(int uid, int status);
+    List<CouponOrder> userCouponList(Integer uid, Integer status);
 
 
     /**
@@ -36,7 +36,7 @@ public interface CouponOrderService extends GeneralService<CouponOrder> {
      *
      * @param couponOrderId 优惠券ID
      */
-    void use(int couponOrderId);
+    void use(Integer couponOrderId);
 
     /**
      * 根据项目ID查询用户可使用的优惠券列表
@@ -45,6 +45,6 @@ public interface CouponOrderService extends GeneralService<CouponOrder> {
      * @param uid       用户ID
      * @return
      */
-    List<CouponOrder> availableCouponList(int contentId, int uid);
+    List<CouponOrder> availableCouponList(Integer contentId, Integer uid);
 
 }

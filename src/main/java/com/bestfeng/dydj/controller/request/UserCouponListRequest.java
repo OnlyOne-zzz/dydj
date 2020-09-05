@@ -13,5 +13,5 @@ public class UserCouponListRequest extends BasicRequest {
 
     private Integer uid;
 
-    private Integer status;
+    private Integer state;
 }
