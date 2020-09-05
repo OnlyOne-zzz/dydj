@@ -12,4 +12,6 @@ import lombok.Setter;
 public class UserCouponListRequest extends BasicRequest {
 
     private int uid;
+
+    private int status;
 }

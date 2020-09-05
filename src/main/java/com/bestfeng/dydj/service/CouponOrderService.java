@@ -28,7 +28,7 @@ public interface CouponOrderService extends GeneralService<CouponOrder> {
      * @param uid
      * @return
      */
-    List<CouponOrder> userCouponList(int uid);
+    List<CouponOrder> userCouponList(int uid, int status);
 
 
     /**

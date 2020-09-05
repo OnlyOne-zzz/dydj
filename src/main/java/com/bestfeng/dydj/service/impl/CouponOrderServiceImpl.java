@@ -91,9 +91,9 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
      * @return
      */
     @Override
-    public List<CouponOrder> userCouponList(int uid) {
-        return fetch(QueryParam.createQueryParam().and("uid", uid)
-                .and("status", TermType.NOT, CouponTypeEnums.USED.getValue())
+    public List<CouponOrder> userCouponList(int uid, int status) {
+        return fetch(QueryParam.createQueryParam().and("uid", (byte)uid)
+                .and("status", status)
         );
     }
 

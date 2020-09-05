@@ -43,7 +43,7 @@ public class CouponOrderController {
     @PostMapping("/_user/list")
     @ApiOperation("用户优惠券列表")
     public CommonResult<List<CouponOrderVo>> userCouponList(@RequestBody UserCouponListRequest request) {
-        return CommonResult.success(couponOrderService.userCouponList(request.getUid())
+        return CommonResult.success(couponOrderService.userCouponList(request.getUid(), request.getStatus())
                 .stream()
                 .map(CouponOrderVo::of)
                 .collect(Collectors.toList())

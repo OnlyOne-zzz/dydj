@@ -22,7 +22,7 @@ public enum CouponTypeEnums implements EnumDict<Byte> {
 
     private String text;
 
-    public static CouponTypeEnums ofValue(int value) {
+    public static CouponTypeEnums ofValue(byte value) {
         return EnumDict.findByValue(CouponTypeEnums.class, value)
                 .orElseGet(() -> {
                     log.warn("未找到优惠券类型:{}", value);
