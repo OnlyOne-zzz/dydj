@@ -91,6 +91,9 @@ public class NoteOrder implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private Integer updatetime;
 
+    @ApiModelProperty(value = "0现金支付1:余额支付")
+    private Integer payType;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
