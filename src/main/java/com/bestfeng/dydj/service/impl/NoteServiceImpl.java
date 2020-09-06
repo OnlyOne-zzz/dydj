@@ -42,7 +42,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     public CommonPage<Note> paging(NoteListRequest request) {
         QueryParam queryParam = QueryParam.createQueryParam();
         if (request.getServiceStatus() != 0) {
-            queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()));
+            queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()).getValue());
         }
         Sort sort = new Sort();
         if (StringUtils.hasText(request.getOrderColumn())) {
