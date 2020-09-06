@@ -75,6 +75,22 @@ public class OrderEnums {
         }
     }
 
+    /**
+     * 订单的状态枚举
+     */
+    @Getter
+    public enum  OrderPayStatusEnum{
 
+        PAY_OFF(0,"待支付"),
+        PAY_SUCCESS(1,"支付成功");
+
+        private Integer code;
+        private String name;
+
+        OrderPayStatusEnum(Integer code,String name){
+            this.code=code;
+            this.name=name;
+        }
+    }
 
 }

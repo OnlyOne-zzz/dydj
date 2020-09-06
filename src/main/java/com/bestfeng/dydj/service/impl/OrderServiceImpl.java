@@ -61,15 +61,15 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         return new OrderExample();
     }
 
-    private static List<Integer> ARTIFICER_DO_STATUS =new ArrayList<>();
-    private static List<Integer> USER_DO_STATUS =new ArrayList<>();
-    static {
-        ARTIFICER_DO_STATUS.add(OrderEnums.OrderStatusEnum.PAY_SUCCESS.getCode());
-        ARTIFICER_DO_STATUS.add(OrderEnums.OrderStatusEnum.DOOR_ARRIVE.getCode());
-        ARTIFICER_DO_STATUS.add(OrderEnums.OrderStatusEnum.SERVICE_START.getCode());
-
-        USER_DO_STATUS.add(OrderEnums.OrderStatusEnum.WAIT_EVALUATE.getCode());
-    }
+//    private static List<Integer> ARTIFICER_DO_STATUS =new ArrayList<>();
+//    private static List<Integer> USER_DO_STATUS =new ArrayList<>();
+//    static {
+//        ARTIFICER_DO_STATUS.add(OrderEnums.OrderStatusEnum.PAY_SUCCESS.getCode());
+//        ARTIFICER_DO_STATUS.add(OrderEnums.OrderStatusEnum.DOOR_ARRIVE.getCode());
+//        ARTIFICER_DO_STATUS.add(OrderEnums.OrderStatusEnum.SERVICE_START.getCode());
+//
+//        USER_DO_STATUS.add(OrderEnums.OrderStatusEnum.WAIT_EVALUATE.getCode());
+//    }
 
     /**
      * 下订单
@@ -111,7 +111,7 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         NoteOrder order = new NoteOrder();
         BeanUtils.copyProperties(orderDto,order);
         order.setOrderid(orderId);
-        order.setPaid(OrderEnums.OrderStatusEnum.PAY_OFF.getCode());
+        order.setPaid(OrderEnums.OrderPayStatusEnum.PAY_OFF.getCode());
         order.setPid(msgContentPid);
         order.setShopid(noteId);
         order.setCurrentid(contentId);
@@ -181,10 +181,10 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
     public void userEvaluateCallBack(Integer orderId) {
         NoteOrder order = this.checkOrderExist(orderId);
         Integer orderStatus = order.getPaid();
-        if(OrderEnums.OrderStatusEnum.WAIT_EVALUATE.getCode()!=orderStatus){
-             throw new BusinessException("订单非待评价状态不可评价成功修改");
-        }
-        order.setPaid(OrderEnums.OrderStatusEnum.EVALUATE_SUCCESS.getCode());
+//        if(OrderEnums.OrderStatusEnum.WAIT_EVALUATE.getCode()!=orderStatus){
+//             throw new BusinessException("订单非待评价状态不可评价成功修改");
+//        }
+//        order.setPaid(OrderEnums.OrderStatusEnum.EVALUATE_SUCCESS.getCode());
 //        orderMapper.updateByPrimaryKeySelective(order);
     }
 
@@ -220,24 +220,24 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
         Integer updateOrderStatus= updateStatusEnum.getCode();
         switch (identityEnum){
             case ARTIFICER:
-                if(!ARTIFICER_DO_STATUS.contains(orderStatus)){
-                    throw new BusinessException("非技师可操作的订单状态");
-                }
-                /**应该去掉支付成功状态,但是不影响整个校验,暂时不处理*/
-                if(!ARTIFICER_DO_STATUS.contains(updateOrderStatus)){
-                    throw new BusinessException("技师操作超出可变更为的订单状态");
-                }
+//                if(!ARTIFICER_DO_STATUS.contains(orderStatus)){
+//                    throw new BusinessException("非技师可操作的订单状态");
+//                }
+//                /**应该去掉支付成功状态,但是不影响整个校验,暂时不处理*/
+//                if(!ARTIFICER_DO_STATUS.contains(updateOrderStatus)){
+//                    throw new BusinessException("技师操作超出可变更为的订单状态");
+//                }
                 if(updateOrderStatus-orderStatus!=1){
                     throw new BusinessException("技师操作的订单状态异常");
                 }
                 break;
             case USER:
-                if(!USER_DO_STATUS.contains(orderStatus)){
-                    throw new BusinessException("非普通用户可操作的订单状态");
-                }
-                if(OrderEnums.OrderStatusEnum.EVALUATE_SUCCESS != updateStatusEnum){
-                    throw new BusinessException("普通用户只可以操作为已评价订单状态");
-                }
+//                if(!USER_DO_STATUS.contains(orderStatus)){
+//                    throw new BusinessException("非普通用户可操作的订单状态");
+//                }
+//                if(OrderEnums.OrderStatusEnum.EVALUATE_SUCCESS != updateStatusEnum){
+//                    throw new BusinessException("普通用户只可以操作为已评价订单状态");
+//                }
             default:
                 throw new BusinessException("身份异常");
         }
