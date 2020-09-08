@@ -20,6 +20,11 @@ public class CommonConfiguration {
     }
 
     @Bean
+    public LocalAccessConfig localAccessConfig() {
+        return new LocalAccessConfig();
+    }
+
+    @Bean
     public ScheduledExecutorService scheduledExecutorService() {
         return Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
     }
