@@ -3,6 +3,7 @@ package com.bestfeng.dydj.controller;
 import com.bestfeng.dydj.annotation.SignValidated;
 import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.enums.UserEnums;
+import com.bestfeng.dydj.mbg.model.NoteOrder;
 import com.bestfeng.dydj.mbg.model.Order;
 import com.bestfeng.dydj.service.OrderService;
 import io.swagger.annotations.Api;
@@ -25,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/order")
 @Api(tags = "OrderController", description = "订单管理")
-//@SignValidated
-public class OrderController implements GeneralCrudController<Order> {
+@SignValidated
+public class OrderController implements GeneralCrudController<NoteOrder> {
 
 
     @Autowired
@@ -34,7 +35,7 @@ public class OrderController implements GeneralCrudController<Order> {
 
 
     @Override
-    public GeneralService<Order> getService() {
+    public GeneralService<NoteOrder> getService() {
         return orderService;
     }
 
