@@ -202,7 +202,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
     public Map<Integer, Long> endOrderGroup() {
         Map<Integer,Long> noteOrderMap = new HashMap<>();
                 List<NoteOrder> noteOrders = orderMapper.selectListNoteComplete();
-        if(CollectionUtils.isEmpty(noteOrders)){
+        if(!CollectionUtils.isEmpty(noteOrders)){
             noteOrderMap = noteOrders.stream().collect(Collectors.groupingBy(NoteOrder::getShopid,Collectors.counting()));
         }
         return noteOrderMap;
