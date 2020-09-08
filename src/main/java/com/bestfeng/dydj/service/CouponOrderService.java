@@ -39,6 +39,14 @@ public interface CouponOrderService extends GeneralService<CouponOrder> {
     void use(Integer couponOrderId);
 
     /**
+     * 取消优惠券使用
+     *
+     * @param couponOrderId 优惠券ID
+     */
+    void cancelUse(Integer couponOrderId);
+
+
+    /**
      * 根据项目ID查询用户可使用的优惠券列表
      *
      * @param contentId 项目内容ID
