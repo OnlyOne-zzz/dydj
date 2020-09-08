@@ -4,10 +4,7 @@ import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.enums.CouponTypeEnums;
 import com.bestfeng.dydj.mbg.mapper.CouponOrderMapper;
 import com.bestfeng.dydj.mbg.model.*;
-import com.bestfeng.dydj.service.ContentService;
-import com.bestfeng.dydj.service.CouponOrderService;
-import com.bestfeng.dydj.service.CouponService;
-import com.bestfeng.dydj.service.UserInfoService;
+import com.bestfeng.dydj.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.commons.param.QueryParam;
 import org.aurochsframework.boot.commons.param.TermType;
@@ -38,6 +35,9 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
 
     @Autowired
     private ContentService contentService;
+
+    @Autowired
+    private GoodItemsService goodItemsService;
 
     @Autowired
     private UserInfoService userInfoService;
@@ -132,8 +132,8 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
      */
     @Override
     public List<CouponOrder> availableCouponList(Integer contentId, Integer uid) {
-        Content content = contentService.fetchOne(QueryParam.createQueryParam().and("id", contentId));
-        Float money = content.getMoney();
+        GoodItems goodItems = goodItemsService.fetchOne(QueryParam.createQueryParam().and("id", contentId));
+        Float money = goodItems.getMoney();
         return fetch(QueryParam.createQueryParam()
                 .and("allmoney", TermType.GTE, money)
                 .and("status", CouponTypeEnums.NOT_USED.getValue())
