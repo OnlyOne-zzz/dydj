@@ -30,7 +30,7 @@ import java.util.Optional;
  **/
 @Service
 @Slf4j
-public class OrderServiceImpl extends AbstractGeneralService<Order> implements OrderService {
+public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implements OrderService {
 
     @Autowired
     private NoteOrderMapper orderMapper;
@@ -186,6 +186,16 @@ public class OrderServiceImpl extends AbstractGeneralService<Order> implements O
 //        }
 //        order.setPaid(OrderEnums.OrderStatusEnum.EVALUATE_SUCCESS.getCode());
 //        orderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    /***
+     * 通过技师id查询已完成订单的数量
+     * @param noteId
+     * @return
+     */
+    @Override
+    public Integer getOrderNumByNoteId(Integer noteId) {
+        return orderMapper.selectListByNoteId(noteId);
     }
 
     /**

@@ -20,12 +20,11 @@ public class OrderEnums {
         JS_SET_OUT(2,"技师出发"),
         JS_ARRIVE(3,"技师到达"),
         JS_SERVICE_START(4,"开始服务"),
-        JS_SERVICE_END(5,"服务完成"),
-        USER_WAIT_EVALUATE(6,"用户待评价"),
-        USER_EVALUATE_SUCCESS(7,"已评价"),
-        USER_REFUND_ING(8,"退款中"),
-        USER_REFUND_SUCCESS(9,"退款成功"),
-        USER_CLOSE(10,"订单已关闭");
+        JS_SERVICE_END(5,"服务完成"),//用户待评价
+        USER_EVALUATE_SUCCESS(6,"已评价"),
+        USER_REFUND_ING(7,"退款中"),
+        USER_REFUND_SUCCESS(8,"退款成功"),
+        USER_CLOSE(9,"订单已关闭");
 
         private Integer code;
         private String name;

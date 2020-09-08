@@ -29,4 +29,6 @@ public interface NoteOrderMapper {
     int updateByPrimaryKey(NoteOrder record);
 
     NoteOrder selectObjByOrderNo(String orderNo);
+
+    Integer selectListByNoteId(Integer noteId);
 }

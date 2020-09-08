@@ -673,4 +673,11 @@
     where orderid=#{orderNo}
   </select>
 
+  <select id="selectListByNoteId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+    count(1)
+    from ims_weixinmao_jz_noteorder
+    where shopid=#{noteId} and paid=1 and status>4
+  </select>
+
 </mapper>
