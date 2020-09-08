@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,12 +22,6 @@ public class DelayQueueManager implements CommandLineRunner {
 
     // 延时队列
     private DelayQueue<DelayedTask<?>> delayQueue = new DelayQueue<>();
-
-
-    public DelayQueueManager() {
-        executorService = Executors.newFixedThreadPool(16);
-        init();
-    }
 
     /**
      * 初始化
