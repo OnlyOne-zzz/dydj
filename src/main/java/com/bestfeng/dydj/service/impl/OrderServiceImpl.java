@@ -22,6 +22,7 @@ import org.springframework.util.Assert;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -196,6 +197,12 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
     @Override
     public Integer getOrderNumByNoteId(Integer noteId) {
         return orderMapper.selectListByNoteId(noteId);
+    }
+
+    @Override
+    public Map<Integer, Integer> endOrderGroup() {
+        // TODO: 2020/9/8 查询所有已完成的订单，并按技师ID分组统计数量
+        return null;
     }
 
     /**

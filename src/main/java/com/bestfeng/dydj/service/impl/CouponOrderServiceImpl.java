@@ -111,6 +111,19 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
     }
 
     /**
+     * 取消优惠券使用
+     *
+     * @param couponOrderId 优惠券ID
+     */
+    @Override
+    public void cancelUse(Integer couponOrderId) {
+        CouponOrder couponOrder = new CouponOrder();
+        couponOrder.setId(couponOrderId);
+        couponOrder.setStatus(CouponTypeEnums.NOT_USED.getValue());
+        mapper.updateByPrimaryKeySelective(couponOrder);
+    }
+
+    /**
      * 根据项目ID查询用户可使用的优惠券列表
      *
      * @param contentId 项目内容ID

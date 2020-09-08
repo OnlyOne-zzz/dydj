@@ -1,5 +1,6 @@
 package com.bestfeng.dydj.service.impl;
 
+import com.bestfeng.dydj.configuration.LocalAccessConfig;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
 import com.bestfeng.dydj.mbg.mapper.NoteMapper;
@@ -27,6 +28,9 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     @Autowired
     private NoteMapper mapper;
 
+    @Autowired
+    private LocalAccessConfig localAccessConfig;
+
     @Override
     public Object getMapper() {
         return mapper;
@@ -51,7 +55,11 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
             queryParam.orderBy(sort);
         }
         CommonPage<Note> pages = paging(queryParam);
-        return CommonPage.restPage(pages, () -> pages.getList().stream().sorted(Comparator.comparingInt(Note::getServiceStatus)).collect(Collectors.toList()));
+        return CommonPage.restPage(pages, () -> pages.getList().stream()
+                .peek(note -> note.setAvatarurl(localAccessConfig.getUri().concat(note.getAvatarurl())))
+                .sorted(Comparator.comparingInt(Note::getServiceStatus))
+                .collect(Collectors.toList())
+        );
     }
 
     @Override
@@ -61,6 +69,9 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
             queryParam.and("name", "%".concat(name).concat("%"));
         }
         CommonPage<Note> pages = paging(queryParam);
-        return CommonPage.restPage(pages, () -> pages.getList().stream().sorted(Comparator.comparingInt(Note::getServiceStatus)).collect(Collectors.toList()));
+        return CommonPage.restPage(pages, () -> pages.getList().stream()
+                .peek(note -> note.setAvatarurl(localAccessConfig.getUri().concat(note.getAvatarurl())))
+                .sorted(Comparator.comparingInt(Note::getServiceStatus))
+                .collect(Collectors.toList()));
     }
 }

@@ -15,5 +15,8 @@ wechat:
   small:
     appId: 'wxfee9e92111e44d0b'
     appSecret: 'beac8aa28b94156394432b9e32596c40'
+local:
+  access:
+    uri: https://dydj.gotod.cn/attachment/
 
 
