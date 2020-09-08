@@ -29,5 +29,5 @@ public interface OrderService extends GeneralService<NoteOrder> {
      * 技师（已完成）订单分组组
      * @return
      */
-    Map<Integer, Integer> endOrderGroup();
+    Map<Integer, Long> endOrderGroup();
 }

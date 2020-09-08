@@ -31,4 +31,5 @@ public interface NoteOrderMapper {
     NoteOrder selectObjByOrderNo(String orderNo);
 
     Integer selectListByNoteId(Integer noteId);
+    List<NoteOrder> selectListNoteComplete();
 }
