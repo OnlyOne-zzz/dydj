@@ -3,6 +3,7 @@ package com.bestfeng.dydj.service;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.mbg.model.Order;
+import com.bestfeng.dydj.vo.NoteVo;
 import org.aurochsframework.boot.commons.api.CommonPage;
 import org.aurochsframework.boot.commons.service.GeneralService;
 
@@ -18,7 +19,7 @@ public interface NoteService extends GeneralService<Note> {
      * @param request
      * @return
      */
-    CommonPage<Note> paging(NoteListRequest request);
+    CommonPage<NoteVo> paging(NoteListRequest request);
 
 
     /**
@@ -26,7 +27,7 @@ public interface NoteService extends GeneralService<Note> {
      * @param name
      * @return
      */
-    CommonPage<Note> pagingByName(String name);
+    CommonPage<NoteVo> pagingByName(String name);
 
 
 }
