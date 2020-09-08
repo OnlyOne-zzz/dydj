@@ -59,8 +59,10 @@ public class DelayQueueManager implements CommandLineRunner {
      * @param delayedTime 延时时间
      * @param unit        时间单位
      */
-    public void put(Runnable task, long delayedTime, TimeUnit unit) {
-        delayQueue.put(new DelayedTask<>(task, delayedTime, unit));
+    public DelayedTask<?> put(Runnable task, long delayedTime, TimeUnit unit) {
+        DelayedTask<?> delayedTask = new DelayedTask<>(task, delayedTime, unit);
+        delayQueue.put(delayedTask);
+        return delayedTask;
     }
 
     /**
