@@ -1,6 +1,7 @@
 package com.bestfeng.dydj.service;
 
 import com.bestfeng.dydj.dto.OrderDto;
+import com.bestfeng.dydj.enums.CouponTypeEnums;
 import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
 import com.bestfeng.dydj.mbg.model.NoteOrder;
 import com.bestfeng.dydj.mbg.model.Order;
@@ -33,4 +34,6 @@ public interface OrderService extends GeneralService<NoteOrder> {
     Map<Integer, Long> endOrderGroup();
 
     void noteServiceStatusHandel(Integer noteId,NoteServiceStatusEnums serviceStatusEnums);
+
+    void couponUseStatusHandel(Integer couponId);
 }

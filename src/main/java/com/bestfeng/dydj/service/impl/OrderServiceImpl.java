@@ -8,6 +8,7 @@ import com.bestfeng.dydj.manager.queue.delayed.DelayQueueManager;
 import com.bestfeng.dydj.manager.travel.TravelServiceSupport;
 import com.bestfeng.dydj.mbg.mapper.*;
 import com.bestfeng.dydj.mbg.model.*;
+import com.bestfeng.dydj.service.CouponOrderService;
 import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.utils.IDUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,9 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
     private MsgIdListMapper msgIdListMapper;
     @Autowired
     private DelayQueueManager delayQueueManager;
+    @Autowired
+    private CouponOrderService couponOrderService;
+
 
     @Override
     public Object getMapper() {
@@ -145,8 +149,11 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         msgIdList.setUid(uid);
         msgIdList.setUniacid(Constants.WECHAT_PID);
         msgIdList.setCreatetime((int)System.currentTimeMillis()/1000);
-//        msgIdList.setFormId();
         msgIdListMapper.insertSelective(msgIdList);
+        /**维护卡券*/
+        if(null!=couponId && 0!=couponId){
+            this.couponUseStatusHandel(noteId);
+        }
         /**维护技师的状态*/
         this.noteServiceStatusHandel(noteId,NoteServiceStatusEnums.IN_SERVICE);
         /**订单延迟队列*/
@@ -227,6 +234,11 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         note.setId(noteId);
         note.setServiceStatus(serviceStatusEnums.getValue());
         noteMapper.updateByPrimaryKeySelective(note);
+    }
+
+    @Override
+    public void couponUseStatusHandel(Integer couponId) {
+        couponOrderService.use(couponId);
     }
 
     /**
