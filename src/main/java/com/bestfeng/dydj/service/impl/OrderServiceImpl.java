@@ -2,9 +2,7 @@ package com.bestfeng.dydj.service.impl;
 
 import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.OrderDto;
-import com.bestfeng.dydj.enums.OrderEnums;
-import com.bestfeng.dydj.enums.TravelTypeEnums;
-import com.bestfeng.dydj.enums.UserEnums;
+import com.bestfeng.dydj.enums.*;
 import com.bestfeng.dydj.manager.travel.TravelServiceSupport;
 import com.bestfeng.dydj.mbg.mapper.*;
 import com.bestfeng.dydj.mbg.model.*;
@@ -92,6 +90,10 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         /**技师*/
         Note note = noteMapper.selectByPrimaryKey(noteId);
         Assert.notNull(note,"技师不存在");
+        Integer serviceStatus = note.getServiceStatus();
+        if(NoteServiceStatusEnums.SERVICEABLE.getValue()!=serviceStatus){
+            throw new BusinessException(String.format(ApiErrorCodeEnums.NOTE_CAN_NOT_SERVICE_ERROR.getText(),note.getShopname()));
+        }
         Integer trafficType = orderDto.getTrafficType();
         BigDecimal trafficReckonMile = orderDto.getTrafficReckonMile();
         /**上门交通费用*/
