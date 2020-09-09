@@ -135,7 +135,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
         GoodItems goodItems = goodItemsService.fetchOne(QueryParam.createQueryParam().and("id", contentId));
         Float money = goodItems.getMoney();
         return fetch(QueryParam.createQueryParam()
-                .and("allmoney", TermType.GTE, money)
+                .and("allmoney", TermType.LTE, money)
                 .and("status", CouponTypeEnums.NOT_USED.getValue())
                 .and("uid", uid)
         );
