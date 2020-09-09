@@ -1,8 +1,10 @@
 package com.bestfeng.dydj.service.impl;
 
+import com.bestfeng.dydj.DelayTask.OrderUnPayDelayTask;
 import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.OrderDto;
 import com.bestfeng.dydj.enums.*;
+import com.bestfeng.dydj.manager.queue.delayed.DelayQueueManager;
 import com.bestfeng.dydj.manager.travel.TravelServiceSupport;
 import com.bestfeng.dydj.mbg.mapper.*;
 import com.bestfeng.dydj.mbg.model.*;
@@ -20,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -48,6 +51,8 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
     private OrderDetailMapper orderDetailMapper;
     @Autowired
     private MsgIdListMapper msgIdListMapper;
+    @Autowired
+    private DelayQueueManager delayQueueManager;
 
     @Override
     public Object getMapper() {
@@ -142,6 +147,10 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         msgIdList.setCreatetime((int)System.currentTimeMillis()/1000);
 //        msgIdList.setFormId();
         msgIdListMapper.insertSelective(msgIdList);
+        /**维护技师的状态*/
+        this.noteServiceStatusHandel(noteId,NoteServiceStatusEnums.IN_SERVICE);
+        /**订单延迟队列*/
+        this.delayOrderUnPay(orderId);
         return responseOrder;
     }
 
@@ -210,6 +219,16 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         return noteOrderMap;
     }
 
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void noteServiceStatusHandel(Integer noteId,NoteServiceStatusEnums serviceStatusEnums) {
+        Note note = new Note();
+        note.setId(noteId);
+        note.setServiceStatus(serviceStatusEnums.getValue());
+        noteMapper.updateByPrimaryKeySelective(note);
+    }
+
     /**
      * 校验是否是对应的身份在操作订单
      * @param uid
@@ -274,5 +293,15 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         NoteOrder order = orderMapper.selectByPrimaryKey(id);
         Optional.ofNullable(order).orElseThrow(()->new BusinessException("订单不存在"));
         return order;
+    }
+
+    /**
+     * 订单发布延迟队列
+     *  5分钟
+     * @param orderNo
+     */
+    public void delayOrderUnPay(String orderNo){
+        OrderUnPayDelayTask task = new OrderUnPayDelayTask(orderNo);
+        delayQueueManager.put(task,5, TimeUnit.MINUTES);
     }
 }
