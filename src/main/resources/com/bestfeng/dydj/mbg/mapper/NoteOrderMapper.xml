@@ -680,7 +680,7 @@
     where shopid=#{noteId} and paid=1 and status>4
   </select>
 
-  <select id="selectListNoteComplete"  resultType="java.lang.Integer">
+  <select id="selectListNoteComplete"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from ims_weixinmao_jz_noteorder
