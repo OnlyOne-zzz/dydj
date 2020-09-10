@@ -65,10 +65,8 @@ public class Note implements Serializable {
 
     private Integer cityid;
 
-    @ApiModelProperty(value = "纬度")
     private String lat;
 
-    @ApiModelProperty(value = "经度")
     private String lng;
 
     @ApiModelProperty(value = "浏览量")

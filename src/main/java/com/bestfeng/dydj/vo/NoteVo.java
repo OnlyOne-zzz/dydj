@@ -77,6 +77,18 @@ public class NoteVo  implements Serializable {
 
     private Integer cityid;
 
+    private String lat;
+
+    private String lng;
+
+    @ApiModelProperty(value = "浏览量")
+    private Integer views;
+
+    @ApiModelProperty(value = "服务状态")
+    private Integer serviceStatus;
+
+    private String content;
+
     /**
      * 服务次数
      */
