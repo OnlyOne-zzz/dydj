@@ -16,11 +16,11 @@ class DydjApplicationTests {
 //    @Autowired
 //    private RedisUtil redisUtil;
 
-    @Test
-    public void dataSourceTest(){
-       orderService.delayOrderUnPay("JSAM355389453181075456");
-        System.out.println();
-    }
+//    @Test
+//    public void dataSourceTest(){
+//       orderService.delayOrderUnPay("JSAM355389453181075456");
+//        System.out.println();
+//    }
 
 //    public void redisTest(){
 //        redisUtil.set("test","1");
