@@ -43,7 +43,7 @@ public class SosTemplateMessageService {
 
     private TemplateWrapperEntity assemble(NoteSosMessageRequest request, String name, String phone) {
         TemplateValueWrapper first = new TemplateValueWrapper("兄弟们，我们的技师有危险！", "#173177");
-        TemplateValueWrapper keyword1 = new TemplateValueWrapper("订单号:".concat(request.getOrderId()), "#173177");
+        TemplateValueWrapper keyword1 = new TemplateValueWrapper("订单号:0000", "#173177");
         TemplateValueWrapper keyword2 = new TemplateValueWrapper(name.concat("-").concat(phone), "#173177");
         TemplateValueWrapper keyword3 = new TemplateValueWrapper(TimeUtils.timeStampToStr(System.currentTimeMillis()), "#173177");
         TemplateValueWrapper keyword4 = new TemplateValueWrapper(request.getAddress(), "#173177");
