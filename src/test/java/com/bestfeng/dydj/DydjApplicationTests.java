@@ -18,7 +18,7 @@ class DydjApplicationTests {
 
     @Test
     public void dataSourceTest(){
-       orderService.endOrderGroup();
+       orderService.delayOrderUnPay("JSAM355389453181075456");
         System.out.println();
     }
 

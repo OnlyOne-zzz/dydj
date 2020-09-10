@@ -7,6 +7,8 @@ import com.bestfeng.dydj.mbg.model.NoteOrder;
 import com.bestfeng.dydj.service.CouponOrderService;
 import com.bestfeng.dydj.service.OrderService;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Component
-@Data
 @Slf4j
 public class OrderUnPayDelayTask implements Runnable {
 
@@ -26,11 +27,9 @@ public class OrderUnPayDelayTask implements Runnable {
     @Autowired
     private CouponOrderService couponOrderService;
 
+    @Getter
+    @Setter
     private String orderNo;
-
-    public OrderUnPayDelayTask(String orderNo){
-        this.orderNo=orderNo;
-    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

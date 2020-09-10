@@ -313,7 +313,8 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
      * @param orderNo
      */
     public void delayOrderUnPay(String orderNo){
-        OrderUnPayDelayTask task = new OrderUnPayDelayTask(orderNo);
+        OrderUnPayDelayTask task = new OrderUnPayDelayTask();
+        task.setOrderNo(orderNo);
         delayQueueManager.put(task,5, TimeUnit.MINUTES);
     }
 }
