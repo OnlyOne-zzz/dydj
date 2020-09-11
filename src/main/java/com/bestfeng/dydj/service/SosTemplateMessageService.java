@@ -40,11 +40,10 @@ public class SosTemplateMessageService {
         sendNotifyService.sendNotify(assemble(request, note.getShopname(), note.getTel()), "100");
     }
 
-
     private TemplateWrapperEntity assemble(NoteSosMessageRequest request, String name, String phone) {
         TemplateValueWrapper first = new TemplateValueWrapper("兄弟们，我们的技师有危险！", "#173177");
-        TemplateValueWrapper keyword1 = new TemplateValueWrapper("订单号:0000", "#173177");
-        TemplateValueWrapper keyword2 = new TemplateValueWrapper(name.concat("-").concat(phone), "#173177");
+        TemplateValueWrapper keyword1 = new TemplateValueWrapper("技师姓名:".concat(name), "#173177");
+        TemplateValueWrapper keyword2 = new TemplateValueWrapper("联系电话:".concat(phone), "#173177");
         TemplateValueWrapper keyword3 = new TemplateValueWrapper(TimeUtils.timeStampToStr(System.currentTimeMillis()), "#173177");
         TemplateValueWrapper keyword4 = new TemplateValueWrapper(request.getAddress(), "#173177");
         TemplateValueWrapper remark = new TemplateValueWrapper("请尽快联系技师处理", "#173177");

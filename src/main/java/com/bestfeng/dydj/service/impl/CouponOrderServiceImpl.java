@@ -92,9 +92,22 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
      */
     @Override
     public List<CouponOrder> userCouponList(Integer uid, Integer status) {
-        return fetch(QueryParam.createQueryParam().and("uid", uid)
-                .and("status", status.byteValue())
-        );
+        QueryParam queryParam = QueryParam.createQueryParam();
+        queryParam.and("uid", uid);
+        switch (CouponTypeEnums.ofValue(status.byteValue())) {
+            case USED:
+                queryParam.and("status", status.byteValue());
+                break;
+            case NOT_USED:
+                queryParam.and("status", CouponTypeEnums.NOT_USED.getValue());
+                queryParam.and("validityPeriod", TermType.GT, (int) ((System.currentTimeMillis() / 1000)));
+                break;
+            case INVALID:
+                queryParam.and("status", CouponTypeEnums.NOT_USED.getValue());
+                queryParam.and("validityPeriod", TermType.LTE, (int) ((System.currentTimeMillis() / 1000)));
+                break;
+        }
+        return fetch(queryParam);
     }
 
     /**
@@ -137,6 +150,7 @@ public class CouponOrderServiceImpl extends AbstractGeneralService<CouponOrder> 
         return fetch(QueryParam.createQueryParam()
                 .and("allmoney", TermType.LTE, money)
                 .and("status", CouponTypeEnums.NOT_USED.getValue())
+                .and("validityPeriod", TermType.GT, (int) ((System.currentTimeMillis() / 1000)))
                 .and("uid", uid)
         );
     }
