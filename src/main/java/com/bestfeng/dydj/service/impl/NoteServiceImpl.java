@@ -83,8 +83,17 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         return CommonPage.restPage(pages, () -> pages.getList().stream()
                 .peek(note -> note.setAvatarurl(localAccessConfig.getUri().concat(note.getAvatarurl())))
                 .sorted(Comparator.comparingInt(Note::getServiceStatus))
-                .map(note -> NoteVo.of(note, orderGroup.getOrDefault(note.getId(), 10L), commentGroup.getOrDefault(note.getId(), 4.5D)))
+                .map(note -> NoteVo.of(note, getNoteServiceFrequency(orderGroup, note.getId(), note.getBasicServiceFrequency()),
+                        getNoteScore(commentGroup, note.getId())))
                 .collect(Collectors.toList()));
+    }
+
+    private Double getNoteScore(Map<Integer, Double> commentGroup, int noteId) {
+        return Math.max(commentGroup.getOrDefault(noteId, 4.5D), 4.5D);
+    }
+
+    private long getNoteServiceFrequency(Map<Integer, Long> orderGroup, int noteId, int basicServiceFrequency) {
+        return orderGroup.getOrDefault(noteId, 0L) + basicServiceFrequency;
     }
 
 }

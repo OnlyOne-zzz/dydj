@@ -2253,6 +2253,66 @@ public class NoteExample {
             addCriterion("service_status not between", value1, value2, "serviceStatus");
             return (Criteria) this;
         }
+
+        public Criteria andBasicServiceFrequencyIsNull() {
+            addCriterion("basic_service_frequency is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyIsNotNull() {
+            addCriterion("basic_service_frequency is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyEqualTo(Integer value) {
+            addCriterion("basic_service_frequency =", value, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyNotEqualTo(Integer value) {
+            addCriterion("basic_service_frequency <>", value, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyGreaterThan(Integer value) {
+            addCriterion("basic_service_frequency >", value, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyGreaterThanOrEqualTo(Integer value) {
+            addCriterion("basic_service_frequency >=", value, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyLessThan(Integer value) {
+            addCriterion("basic_service_frequency <", value, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyLessThanOrEqualTo(Integer value) {
+            addCriterion("basic_service_frequency <=", value, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyIn(List<Integer> values) {
+            addCriterion("basic_service_frequency in", values, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyNotIn(List<Integer> values) {
+            addCriterion("basic_service_frequency not in", values, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyBetween(Integer value1, Integer value2) {
+            addCriterion("basic_service_frequency between", value1, value2, "basicServiceFrequency");
+            return (Criteria) this;
+        }
+
+        public Criteria andBasicServiceFrequencyNotBetween(Integer value1, Integer value2) {
+            addCriterion("basic_service_frequency not between", value1, value2, "basicServiceFrequency");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

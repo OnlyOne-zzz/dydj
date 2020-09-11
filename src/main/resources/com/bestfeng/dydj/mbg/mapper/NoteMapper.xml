@@ -35,6 +35,7 @@
     <result column="lng" jdbcType="VARCHAR" property="lng" />
     <result column="views" jdbcType="INTEGER" property="views" />
     <result column="service_status" jdbcType="INTEGER" property="serviceStatus" />
+    <result column="basic_service_frequency" jdbcType="INTEGER" property="basicServiceFrequency" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bestfeng.dydj.mbg.model.Note">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -101,7 +102,7 @@
     id, uniacid, uid, jobtitle, name, sex, tel, birthday, education, express, address, 
     place, currentstatus, card, special, money, areaid, createtime, status, avatarUrl, 
     refreshtime, thumb_url, loginid, sort, isrecommand, isgood, username, shopname, cityid, 
-    lat, lng, views, service_status
+    lat, lng, views, service_status, basic_service_frequency
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -166,7 +167,7 @@
       isrecommand, isgood, username, 
       shopname, cityid, lat, 
       lng, views, service_status, 
-      content)
+      basic_service_frequency, content)
     values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{jobtitle,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
       #{tel,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
@@ -178,7 +179,7 @@
       #{isrecommand,jdbcType=TINYINT}, #{isgood,jdbcType=TINYINT}, #{username,jdbcType=VARCHAR}, 
       #{shopname,jdbcType=VARCHAR}, #{cityid,jdbcType=INTEGER}, #{lat,jdbcType=VARCHAR}, 
       #{lng,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, #{serviceStatus,jdbcType=INTEGER}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{basicServiceFrequency,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Note">
     insert into ims_weixinmao_jz_note
@@ -281,6 +282,9 @@
       </if>
       <if test="serviceStatus != null">
         service_status,
+      </if>
+      <if test="basicServiceFrequency != null">
+        basic_service_frequency,
       </if>
       <if test="content != null">
         content,
@@ -385,6 +389,9 @@
       </if>
       <if test="serviceStatus != null">
         #{serviceStatus,jdbcType=INTEGER},
+      </if>
+      <if test="basicServiceFrequency != null">
+        #{basicServiceFrequency,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -499,6 +506,9 @@
       <if test="record.serviceStatus != null">
         service_status = #{record.serviceStatus,jdbcType=INTEGER},
       </if>
+      <if test="record.basicServiceFrequency != null">
+        basic_service_frequency = #{record.basicServiceFrequency,jdbcType=INTEGER},
+      </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -542,6 +552,7 @@
       lng = #{record.lng,jdbcType=VARCHAR},
       views = #{record.views,jdbcType=INTEGER},
       service_status = #{record.serviceStatus,jdbcType=INTEGER},
+      basic_service_frequency = #{record.basicServiceFrequency,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -581,7 +592,8 @@
       lat = #{record.lat,jdbcType=VARCHAR},
       lng = #{record.lng,jdbcType=VARCHAR},
       views = #{record.views,jdbcType=INTEGER},
-      service_status = #{record.serviceStatus,jdbcType=INTEGER}
+      service_status = #{record.serviceStatus,jdbcType=INTEGER},
+      basic_service_frequency = #{record.basicServiceFrequency,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -685,6 +697,9 @@
       <if test="serviceStatus != null">
         service_status = #{serviceStatus,jdbcType=INTEGER},
       </if>
+      <if test="basicServiceFrequency != null">
+        basic_service_frequency = #{basicServiceFrequency,jdbcType=INTEGER},
+      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -725,6 +740,7 @@
       lng = #{lng,jdbcType=VARCHAR},
       views = #{views,jdbcType=INTEGER},
       service_status = #{serviceStatus,jdbcType=INTEGER},
+      basic_service_frequency = #{basicServiceFrequency,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -761,7 +777,8 @@
       lat = #{lat,jdbcType=VARCHAR},
       lng = #{lng,jdbcType=VARCHAR},
       views = #{views,jdbcType=INTEGER},
-      service_status = #{serviceStatus,jdbcType=INTEGER}
+      service_status = #{serviceStatus,jdbcType=INTEGER},
+      basic_service_frequency = #{basicServiceFrequency,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
