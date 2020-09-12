@@ -20,7 +20,7 @@ public enum ApiErrorCodeEnums implements EnumDict<String> {
     
     ILLEGAL_ARGUMENT_ERROR(502, "参数异常"),
 
-    NOTE_CAN_NOT_SERVICE_ERROR(602, "您好,技师:%s暂时不可预约,请您更换技师"),
+    NOTE_CAN_NOT_SERVICE_ERROR(601, "您好,技师:%s暂时不可预约,请您更换技师"),
 
 
     SIGN_ERR(10001, "验签失败"),
