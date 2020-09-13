@@ -144,7 +144,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         orderDetail.setOrderid(orderId);
         orderDetail.setUid(uid);
         orderDetail.setUniacid(Constants.WECHAT_PID);
-        orderDetail.setPid(order.getId());
+        orderDetail.setPid(msgContentPid);
         orderDetailMapper.insertSelective(orderDetail);
 
         MsgIdList msgIdList = new MsgIdList();
