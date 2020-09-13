@@ -10,6 +10,7 @@ import com.bestfeng.dydj.mbg.mapper.*;
 import com.bestfeng.dydj.mbg.model.*;
 import com.bestfeng.dydj.service.CouponOrderService;
 import com.bestfeng.dydj.service.OrderService;
+import com.bestfeng.dydj.utils.DateUtil;
 import com.bestfeng.dydj.utils.IDUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
@@ -118,7 +119,8 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         }
         //todo 总金额
         BigDecimal totalMoney = new BigDecimal(String.valueOf(contentMoney)).add(trafficMoney).subtract(couponPrice);
-        String orderId = IDUtils.getId(Constants.ORDER_NO_PRE);
+//        String orderId = IDUtils.getId(Constants.ORDER_NO_PRE);
+        String orderId = IDUtils.getId(DateUtil.getDate(DateUtil.getCurDate(), DateUtil.DATA_FORMAT_PRE));
         NoteOrder order = new NoteOrder();
         BeanUtils.copyProperties(orderDto,order);
         order.setOrderid(orderId);
