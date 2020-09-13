@@ -148,7 +148,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         MsgIdList msgIdList = new MsgIdList();
         msgIdList.setUid(uid);
         msgIdList.setUniacid(Constants.WECHAT_PID);
-        msgIdList.setCreatetime((int)System.currentTimeMillis()/1000);
+        msgIdList.setCreatetime((int)(System.currentTimeMillis()/1000));
         msgIdListMapper.insertSelective(msgIdList);
         /**维护卡券*/
         if(null!=couponId && 0!=couponId){
