@@ -1,4 +1,4 @@
-package com.bestfeng.dydj.DelayTask;
+package com.bestfeng.dydj.delay.task;
 
 import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
 import com.bestfeng.dydj.enums.OrderEnums;
@@ -34,7 +34,7 @@ public class OrderUnPayDelayTask implements Runnable {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void run() {
-        log.info("订单未支付订单关闭订单延迟消息消费 orderNo={}",orderNo);
+        log.info("订单未支付 关闭订单延迟消息消费 orderNo={}",orderNo);
         NoteOrder noteOrder = noteOrderMapper.selectObjByOrderNo(orderNo);
         Optional.ofNullable(noteOrder).filter(order->order.getPaid() == OrderEnums.OrderPayStatusEnum.PAY_OFF.getCode()).ifPresent(
                 order->{
@@ -48,7 +48,7 @@ public class OrderUnPayDelayTask implements Runnable {
                         //卡券
                         couponOrderService.cancelUse(couponId);
                     }
-                    log.info("订单未支付订单关闭订单延迟消息消费 orderNo={} 关闭成功",orderNo);
+                    log.info("订单未支付 关闭订单延迟消息消费 orderNo={} 关闭成功",orderNo);
                 }
         );
     }
