@@ -154,7 +154,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         msgIdListMapper.insertSelective(msgIdList);
         /**维护卡券*/
         if(null!=couponId && 0!=couponId){
-            this.couponUseStatusHandel(noteId);
+            this.couponUseStatusHandel(couponId);
         }
         /**维护技师的状态*/
         this.noteServiceStatusHandel(noteId,NoteServiceStatusEnums.IN_SERVICE);
