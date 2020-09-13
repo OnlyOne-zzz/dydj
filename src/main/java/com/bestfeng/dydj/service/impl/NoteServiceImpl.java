@@ -1,5 +1,6 @@
 package com.bestfeng.dydj.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.bestfeng.dydj.configuration.LocalAccessConfig;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
@@ -10,9 +11,11 @@ import com.bestfeng.dydj.service.CommentService;
 import com.bestfeng.dydj.service.NoteService;
 import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.vo.NoteVo;
+import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.commons.api.CommonPage;
 import org.aurochsframework.boot.commons.param.QueryParam;
 import org.aurochsframework.boot.commons.param.Sort;
+import org.aurochsframework.boot.commons.param.TermType;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
  * @since 1.0
  **/
 @Service
+@Slf4j
 public class NoteServiceImpl extends AbstractGeneralService<Note> implements NoteService {
 
     @Autowired
@@ -71,17 +75,18 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     public CommonPage<NoteVo> pagingByName(String name) {
         QueryParam queryParam = QueryParam.createQueryParam();
         if (StringUtils.hasText(name)) {
-            queryParam.and("name", "%".concat(name).concat("%"));
+            queryParam.and("shopname", TermType.LIKE, "%".concat(name).concat("%"));
         }
         return query(queryParam);
     }
 
     private CommonPage<NoteVo> query(QueryParam queryParam) {
+        queryParam.setPageSize(100);
         CommonPage<Note> pages = paging(queryParam);
         Map<Integer, Long> orderGroup = orderService.endOrderGroup();
         Map<Integer, Double> commentGroup = commentService.storeGroup();
         return CommonPage.restPage(pages, () -> pages.getList().stream()
-                .peek(note -> note.setAvatarurl(localAccessConfig.getUri().concat(note.getAvatarurl())))
+                .peek(note -> note.setAvatarurl(localAccessConfig.getUri() + note.getAvatarurl()))
                 .sorted(Comparator.comparingInt(Note::getServiceStatus))
                 .map(note -> NoteVo.of(note, getNoteServiceFrequency(orderGroup, note.getId(), note.getBasicServiceFrequency()),
                         getNoteScore(commentGroup, note.getId())))
