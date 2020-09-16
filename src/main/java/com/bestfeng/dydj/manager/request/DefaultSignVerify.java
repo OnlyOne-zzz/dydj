@@ -1,10 +1,6 @@
 package com.bestfeng.dydj.manager.request;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.bestfeng.dydj.controller.request.BasicRequest;
-import com.bestfeng.dydj.controller.request.CouponOrderReceiveRequest;
-import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.enums.ApiErrorCodeEnums;
 import com.bestfeng.dydj.utils.FastJsons;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +27,13 @@ public class DefaultSignVerify implements SignVerifySupport {
 
 
     public void check(String sign, Object params) {
-        String localSign = getMd5Sign(getCompleteSignParams(signParamsSplicing(params)));
+        log.warn("验签参数:{}", sign);
+        if (sign == null || sign.length() < 14) {
+            log.warn("签名格式异常。");
+            throw new BusinessException(ApiErrorCodeEnums.SIGN_ERR.getText(), ApiErrorCodeEnums.SIGN_ERR.getCode());
+        }
+        String timeMillis = sign.substring(0, 13);
+        String localSign = timeMillis.concat(getMd5Sign(timeMillis.concat(SIGN_KEY)));
         if (StringUtils.isEmpty(sign) || !localSign.equals(sign)) {
             log.warn("请求验签失败。");
             throw new BusinessException(ApiErrorCodeEnums.SIGN_ERR.getText(), ApiErrorCodeEnums.SIGN_ERR.getCode());
@@ -58,7 +60,7 @@ public class DefaultSignVerify implements SignVerifySupport {
         return completeSignParams;
     }
 
-    protected String getMd5Sign(String completeSign) {
+    protected static String getMd5Sign(String completeSign) {
         return DigestUtils.md5DigestAsHex(completeSign.getBytes(StandardCharsets.UTF_8));
     }
 
