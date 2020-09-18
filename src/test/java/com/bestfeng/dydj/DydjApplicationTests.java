@@ -23,27 +23,25 @@ class DydjApplicationTests {
 
     @Autowired
     private OrderServiceImpl orderService;
-//    @Autowired
-//    private RedisUtil redisUtil;
-
-//    @Test
-//    public void dataSourceTest(){
-//       orderService.delayOrderUnPay("JSAM355389453181075456");
-//        System.out.println();
-//    }
-
-//    public void redisTest(){
-//        redisUtil.set("test","1");
-//    }
+    @Autowired
+    private RedisUtil redisUtil;
     @Autowired
     private NoteOrderMapper noteOrderMapper;
-    @Autowired
-    private OrderService orderService;
     @Autowired
     private CouponOrderService couponOrderService;
 
     @Test
-    public void runTest(String orderNo) {
+    public void dataSourceTest(){
+       orderService.delayOrderUnPay("JSAM355389453181075456");
+        System.out.println();
+    }
+
+    public void redisTest(){
+        redisUtil.set("test","1");
+    }
+
+    @Test
+    public void delayTest(String orderNo) {
         NoteOrder noteOrder = noteOrderMapper.selectObjByOrderNo(orderNo);
         Optional.ofNullable(noteOrder).filter(order->order.getPaid() == OrderEnums.OrderPayStatusEnum.PAY_OFF.getCode()).ifPresent(
                 order->{
