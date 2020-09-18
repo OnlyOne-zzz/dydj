@@ -31,7 +31,6 @@ public class OrderUnPayDelayTask implements Runnable {
     private String orderNo;
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void run() {
         log.info("订单未支付订单 关闭订单延迟消息消费 orderNo={}",orderNo);
         NoteOrder noteOrder = noteOrderMapper.selectObjByOrderNo(orderNo);
