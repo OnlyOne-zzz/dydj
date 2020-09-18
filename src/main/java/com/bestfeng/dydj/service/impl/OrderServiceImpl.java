@@ -57,6 +57,8 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
     private DelayQueueManager delayQueueManager;
     @Autowired
     private CouponOrderService couponOrderService;
+    @Autowired
+    private OrderUnPayDelayTask task;
 
 
     @Override
@@ -78,6 +80,11 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
 //
 //        USER_DO_STATUS.add(OrderEnums.OrderStatusEnum.WAIT_EVALUATE.getCode());
 //    }
+
+    @Override
+    public NoteOrder selectObjByOrderNo(String orderNo) {
+        return orderMapper.selectObjByOrderNo(orderNo);
+    }
 
     /**
      * 下订单
@@ -315,7 +322,6 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
      * @param orderNo
      */
     public void delayOrderUnPay(String orderNo){
-        OrderUnPayDelayTask task = new OrderUnPayDelayTask();
         task.setOrderNo(orderNo);
         delayQueueManager.put(task,5, TimeUnit.MINUTES);
     }

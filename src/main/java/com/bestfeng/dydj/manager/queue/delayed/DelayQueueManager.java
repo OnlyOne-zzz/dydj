@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.DelayQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * @author bsetfeng
@@ -24,7 +22,7 @@ public class DelayQueueManager implements CommandLineRunner {
     private DelayQueue<DelayedTask<?>> delayQueue = new DelayQueue<>();
 
     /**
-     * 初始化
+     * 初始化、
      */
     public void init() {
         // 守护线程

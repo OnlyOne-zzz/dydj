@@ -7,7 +7,6 @@ import com.bestfeng.dydj.mbg.model.NoteOrder;
 import com.bestfeng.dydj.service.CouponOrderService;
 import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.utils.FastJsons;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,6 @@ public class OrderUnPayDelayTask implements Runnable {
     private OrderService orderService;
     @Autowired
     private CouponOrderService couponOrderService;
-
     @Getter
     @Setter
     private String orderNo;

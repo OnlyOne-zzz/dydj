@@ -15,6 +15,8 @@ import java.util.Map;
  **/
 public interface OrderService extends GeneralService<NoteOrder> {
 
+    NoteOrder selectObjByOrderNo(String orderNo);
+
     /**订单创建*/
     OrderDto saveOrder(OrderDto orderDto);
     /**订单退款*/
