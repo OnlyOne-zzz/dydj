@@ -35,7 +35,6 @@ public class OrderUnPayDelayTask implements Runnable {
     public void run() {
         log.info("订单未支付订单 关闭订单延迟消息消费 orderNo={}",orderNo);
         NoteOrder noteOrder = noteOrderMapper.selectObjByOrderNo(orderNo);
-        log.info("订单未支付订单 关闭订单延迟消息消费 查询出来的订单对象 obj={}", FastJsons.convertObjectToJSON(noteOrder));
         Optional.ofNullable(noteOrder).filter(order->order.getPaid() == OrderEnums.OrderPayStatusEnum.PAY_OFF.getCode()).ifPresent(
                 order->{
                     Integer couponId = noteOrder.getCouponid();
