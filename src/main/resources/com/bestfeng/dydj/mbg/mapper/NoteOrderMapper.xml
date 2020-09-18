@@ -687,4 +687,13 @@
     where  paid=1 and status>4
   </select>
 
+
+  <select id="selectListNoteOrder"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from ims_weixinmao_jz_noteorder
+    where  paid=0 and status=0
+  </select>
+
+
 </mapper>
