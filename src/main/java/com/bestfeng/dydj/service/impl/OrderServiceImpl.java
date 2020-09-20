@@ -139,6 +139,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         order.setUniacid(Constants.WECHAT_PID);
         order.setContentThumb(content.getThumb());
         order.setContentName(content.getTitle());
+        order.setContentMoney(new BigDecimal(contentMoney.toString()));
         order.setNoteName(note.getShopname());
         order.setNoteAvatarUrl(note.getAvatarurl());
         order.setTrafficMoney(trafficMoney);
