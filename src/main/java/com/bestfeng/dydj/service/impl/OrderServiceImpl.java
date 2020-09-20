@@ -322,7 +322,6 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
      * @param orderNo
      */
     public void delayOrderUnPay(String orderNo){
-        task.setOrderNo(orderNo);
-        delayQueueManager.put(task,5, TimeUnit.MINUTES);
+        delayQueueManager.put(()->{task.doTask(orderNo);},5, TimeUnit.MINUTES);
     }
 }
