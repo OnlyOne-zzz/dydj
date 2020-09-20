@@ -113,7 +113,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         }
         return Optional.ofNullable(idGroup.get(integer))
                 .map(list -> {
-                    if (CollectionUtils.isEmpty(list)) {
+                    if (!CollectionUtils.isEmpty(list)) {
                         return list.get(0).getName();
                     }
                     return DEFAULT_CATE_NAME;
