@@ -8,6 +8,10 @@ import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * @author bsetfeng
  * @since 1.0
@@ -26,5 +30,12 @@ public class CategoryServiceImpl extends AbstractGeneralService<Category> implem
     @Override
     public Object getExample() {
         return new CategoryExample();
+    }
+
+    @Override
+    public Map<Integer, List<Category>> idGroup() {
+        return fetchAll()
+                .stream()
+                .collect(Collectors.groupingBy(Category::getId, Collectors.toList()));
     }
 }

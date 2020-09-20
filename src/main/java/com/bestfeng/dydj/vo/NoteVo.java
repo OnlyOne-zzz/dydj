@@ -14,7 +14,7 @@ import java.io.Serializable;
  **/
 @Getter
 @Setter
-public class NoteVo  implements Serializable {
+public class NoteVo implements Serializable {
 
     @ApiModelProperty(value = "主键")
     private Integer id;
@@ -99,11 +99,14 @@ public class NoteVo  implements Serializable {
      */
     private Double score;
 
+    private String cateName;
 
-    public static NoteVo of(Note note, Long serviceFrequency, Double score){
+
+    public static NoteVo of(Note note, Long serviceFrequency, String cateName, Double score) {
         NoteVo vo = JSON.parseObject(JSON.toJSONString(note), NoteVo.class);
         vo.setServiceFrequency(serviceFrequency);
         vo.setScore(score);
+        vo.setCateName(cateName);
         return vo;
     }
 }

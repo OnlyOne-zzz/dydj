@@ -35,6 +35,7 @@
     <result column="lng" jdbcType="VARCHAR" property="lng" />
     <result column="views" jdbcType="INTEGER" property="views" />
     <result column="service_status" jdbcType="INTEGER" property="serviceStatus" />
+    <result column="induce" jdbcType="VARCHAR" property="induce" />
     <result column="basic_service_frequency" jdbcType="INTEGER" property="basicServiceFrequency" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.bestfeng.dydj.mbg.model.Note">
@@ -102,7 +103,7 @@
     id, uniacid, uid, jobtitle, name, sex, tel, birthday, education, express, address, 
     place, currentstatus, card, special, money, areaid, createtime, status, avatarUrl, 
     refreshtime, thumb_url, loginid, sort, isrecommand, isgood, username, shopname, cityid, 
-    lat, lng, views, service_status, basic_service_frequency
+    lat, lng, views, service_status, induce, basic_service_frequency
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -167,7 +168,8 @@
       isrecommand, isgood, username, 
       shopname, cityid, lat, 
       lng, views, service_status, 
-      basic_service_frequency, content)
+      induce, basic_service_frequency, content
+      )
     values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{jobtitle,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, 
       #{tel,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
@@ -179,7 +181,8 @@
       #{isrecommand,jdbcType=TINYINT}, #{isgood,jdbcType=TINYINT}, #{username,jdbcType=VARCHAR}, 
       #{shopname,jdbcType=VARCHAR}, #{cityid,jdbcType=INTEGER}, #{lat,jdbcType=VARCHAR}, 
       #{lng,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, #{serviceStatus,jdbcType=INTEGER}, 
-      #{basicServiceFrequency,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
+      #{induce,jdbcType=VARCHAR}, #{basicServiceFrequency,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.Note">
     insert into ims_weixinmao_jz_note
@@ -282,6 +285,9 @@
       </if>
       <if test="serviceStatus != null">
         service_status,
+      </if>
+      <if test="induce != null">
+        induce,
       </if>
       <if test="basicServiceFrequency != null">
         basic_service_frequency,
@@ -389,6 +395,9 @@
       </if>
       <if test="serviceStatus != null">
         #{serviceStatus,jdbcType=INTEGER},
+      </if>
+      <if test="induce != null">
+        #{induce,jdbcType=VARCHAR},
       </if>
       <if test="basicServiceFrequency != null">
         #{basicServiceFrequency,jdbcType=INTEGER},
@@ -506,6 +515,9 @@
       <if test="record.serviceStatus != null">
         service_status = #{record.serviceStatus,jdbcType=INTEGER},
       </if>
+      <if test="record.induce != null">
+        induce = #{record.induce,jdbcType=VARCHAR},
+      </if>
       <if test="record.basicServiceFrequency != null">
         basic_service_frequency = #{record.basicServiceFrequency,jdbcType=INTEGER},
       </if>
@@ -552,6 +564,7 @@
       lng = #{record.lng,jdbcType=VARCHAR},
       views = #{record.views,jdbcType=INTEGER},
       service_status = #{record.serviceStatus,jdbcType=INTEGER},
+      induce = #{record.induce,jdbcType=VARCHAR},
       basic_service_frequency = #{record.basicServiceFrequency,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
@@ -593,6 +606,7 @@
       lng = #{record.lng,jdbcType=VARCHAR},
       views = #{record.views,jdbcType=INTEGER},
       service_status = #{record.serviceStatus,jdbcType=INTEGER},
+      induce = #{record.induce,jdbcType=VARCHAR},
       basic_service_frequency = #{record.basicServiceFrequency,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -697,6 +711,9 @@
       <if test="serviceStatus != null">
         service_status = #{serviceStatus,jdbcType=INTEGER},
       </if>
+      <if test="induce != null">
+        induce = #{induce,jdbcType=VARCHAR},
+      </if>
       <if test="basicServiceFrequency != null">
         basic_service_frequency = #{basicServiceFrequency,jdbcType=INTEGER},
       </if>
@@ -740,6 +757,7 @@
       lng = #{lng,jdbcType=VARCHAR},
       views = #{views,jdbcType=INTEGER},
       service_status = #{serviceStatus,jdbcType=INTEGER},
+      induce = #{induce,jdbcType=VARCHAR},
       basic_service_frequency = #{basicServiceFrequency,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -778,6 +796,7 @@
       lng = #{lng,jdbcType=VARCHAR},
       views = #{views,jdbcType=INTEGER},
       service_status = #{serviceStatus,jdbcType=INTEGER},
+      induce = #{induce,jdbcType=VARCHAR},
       basic_service_frequency = #{basicServiceFrequency,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
