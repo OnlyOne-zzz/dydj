@@ -25,9 +25,9 @@ public class TravelServiceSupport implements BeanPostProcessor {
      * @param distance
      * @return
      */
-    public double travelFare(TravelTypeEnums typeEnums, String distance) {
+    public long travelFare(TravelTypeEnums typeEnums, String distance) {
         return Optional.ofNullable(travelServiceMap.get(typeEnums))
-                .map(travelService -> travelService.travelFare(distance))
+                .map(travelService -> Math.round(travelService.travelFare(distance)))
                 .orElseThrow(() -> new BusinessException("不支持:" + typeEnums.getText() + "类型的出行方式"));
     }
 

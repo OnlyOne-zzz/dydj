@@ -75,7 +75,9 @@ public class Note implements Serializable {
     @ApiModelProperty(value = "服务状态")
     private Integer serviceStatus;
 
-    @ApiModelProperty(value = "基础服务次数")
+    private String induce;
+
+    @ApiModelProperty(value = "基础服务单量")
     private Integer basicServiceFrequency;
 
     private String content;
@@ -346,6 +348,14 @@ public class Note implements Serializable {
         this.serviceStatus = serviceStatus;
     }
 
+    public String getInduce() {
+        return induce;
+    }
+
+    public void setInduce(String induce) {
+        this.induce = induce;
+    }
+
     public Integer getBasicServiceFrequency() {
         return basicServiceFrequency;
     }
@@ -401,6 +411,7 @@ public class Note implements Serializable {
         sb.append(", lng=").append(lng);
         sb.append(", views=").append(views);
         sb.append(", serviceStatus=").append(serviceStatus);
+        sb.append(", induce=").append(induce);
         sb.append(", basicServiceFrequency=").append(basicServiceFrequency);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);

@@ -49,12 +49,12 @@ public class TaxiTravelService implements TravelService {
         if (dte <= 3) {
             return 10D;
         }
-        if (dte > 3 && dte <= 8) {
-            //3公里后，每一公里+2块 + 误差费 2元
-            return 10 + (dte - 3) * 2 + 2;
-        }
+//        if (dte > 3 && dte <= 8) {
+//            //3公里后，每一公里+2块 + 误差费 2元
+//            return 10 + (dte - 3) * 2.3;
+//        }
         //3公里后，每一公里+2块 + 误差费 2元 + 堵车费用预估
-        return 10 + (dte - 3) * 2 + 2 + dte * 0.5;
+        return 10 + (dte - 3) * 2.3;
 
 
     }
@@ -71,11 +71,11 @@ public class TaxiTravelService implements TravelService {
         if (dte <= 3) {
             return 11D;
         }
-        if (dte > 3 && dte <= 8) {
-            //3公里后，每一公里+2.3块 + 误差费 2元
-            return 11 + (dte - 3) * 2 + 2;
-        }
-        //3公里后，每一公里+2.3块 + 误差费 2元 + 堵车费用预估
-        return 11 + (dte - 3) * 2 + 2 + dte * 0.6;
+//        if (dte > 3 && dte <= 8) {
+//            //3公里后，每一公里+2.3块 + 误差费 2元
+//            return 11 + (dte - 3) * 2 + 2;
+//        }
+        //3公里后，每一公里+2.6块
+        return 11 + (dte - 3) * 2.6;
     }
 }

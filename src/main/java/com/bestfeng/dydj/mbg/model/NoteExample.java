@@ -2254,6 +2254,76 @@ public class NoteExample {
             return (Criteria) this;
         }
 
+        public Criteria andInduceIsNull() {
+            addCriterion("induce is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceIsNotNull() {
+            addCriterion("induce is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceEqualTo(String value) {
+            addCriterion("induce =", value, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceNotEqualTo(String value) {
+            addCriterion("induce <>", value, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceGreaterThan(String value) {
+            addCriterion("induce >", value, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceGreaterThanOrEqualTo(String value) {
+            addCriterion("induce >=", value, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceLessThan(String value) {
+            addCriterion("induce <", value, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceLessThanOrEqualTo(String value) {
+            addCriterion("induce <=", value, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceLike(String value) {
+            addCriterion("induce like", value, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceNotLike(String value) {
+            addCriterion("induce not like", value, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceIn(List<String> values) {
+            addCriterion("induce in", values, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceNotIn(List<String> values) {
+            addCriterion("induce not in", values, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceBetween(String value1, String value2) {
+            addCriterion("induce between", value1, value2, "induce");
+            return (Criteria) this;
+        }
+
+        public Criteria andInduceNotBetween(String value1, String value2) {
+            addCriterion("induce not between", value1, value2, "induce");
+            return (Criteria) this;
+        }
+
         public Criteria andBasicServiceFrequencyIsNull() {
             addCriterion("basic_service_frequency is null");
             return (Criteria) this;

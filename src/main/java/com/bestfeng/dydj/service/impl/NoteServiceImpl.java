@@ -1,12 +1,13 @@
 package com.bestfeng.dydj.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.bestfeng.dydj.configuration.LocalAccessConfig;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
 import com.bestfeng.dydj.mbg.mapper.NoteMapper;
+import com.bestfeng.dydj.mbg.model.Category;
 import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.mbg.model.NoteExample;
+import com.bestfeng.dydj.service.CategoryService;
 import com.bestfeng.dydj.service.CommentService;
 import com.bestfeng.dydj.service.NoteService;
 import com.bestfeng.dydj.service.OrderService;
@@ -19,10 +20,13 @@ import org.aurochsframework.boot.commons.param.TermType;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -43,7 +47,12 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     private OrderService orderService;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private CommentService commentService;
+
+    private final static String DEFAULT_CATE_NAME = "暂无推荐";
 
     @Override
     public Object getMapper() {
@@ -85,12 +94,31 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         CommonPage<Note> pages = paging(queryParam);
         Map<Integer, Long> orderGroup = orderService.endOrderGroup();
         Map<Integer, Double> commentGroup = commentService.storeGroup();
+
+
         return CommonPage.restPage(pages, () -> pages.getList().stream()
                 .peek(note -> note.setAvatarurl(localAccessConfig.getUri() + note.getAvatarurl()))
                 .sorted(Comparator.comparingInt(Note::getServiceStatus))
-                .map(note -> NoteVo.of(note, getNoteServiceFrequency(orderGroup, note.getId(), note.getBasicServiceFrequency()),
+                .map(note -> NoteVo.of(note, getNoteServiceFrequency(orderGroup, note.getId(), note.getBasicServiceFrequency()), getCateName(categoryService.idGroup(), note.getSpecial()),
                         getNoteScore(commentGroup, note.getId())))
                 .collect(Collectors.toList()));
+    }
+
+    private String getCateName(Map<Integer, List<Category>> idGroup, String special) {
+        int integer;
+        try {
+            integer = Integer.parseInt(special);
+        } catch (NumberFormatException e) {
+            return DEFAULT_CATE_NAME;
+        }
+        return Optional.ofNullable(idGroup.get(integer))
+                .map(list -> {
+                    if (!CollectionUtils.isEmpty(list)) {
+                        return list.get(0).getName();
+                    }
+                    return DEFAULT_CATE_NAME;
+                }).orElse(DEFAULT_CATE_NAME);
+
     }
 
     private Double getNoteScore(Map<Integer, Double> commentGroup, int noteId) {

@@ -114,7 +114,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         Integer trafficType = orderDto.getTrafficType();
         BigDecimal trafficReckonMile = orderDto.getTrafficReckonMile();
         /**上门交通费用*/
-        Double trafficMoneyDouble =travelServiceSupport.travelFare(TravelTypeEnums.ofValue(trafficType),String.valueOf(trafficReckonMile));
+        long trafficMoneyDouble =travelServiceSupport.travelFare(TravelTypeEnums.ofValue(trafficType),String.valueOf(trafficReckonMile));
         BigDecimal trafficMoney= BigDecimal.valueOf(trafficMoneyDouble);
         /**卡券金额*/
         BigDecimal couponPrice = new BigDecimal("0");
