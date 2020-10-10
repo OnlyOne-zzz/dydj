@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://47.108.196.40:3360/dydj?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&autoReconnect=true
+    url: jdbc:mysql://localhost:3306/we7-house?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
     username: root
-    password: m123
+    password: abc.123
 
 logging:
   level:
@@ -14,3 +14,6 @@ logging:
 wechat:
   appId: 'wx3a064f24347b34d2'
   appSecret: '2fe25c657f2c7ab751e09f249c04b7c7'
+local:
+  access:
+    uri: https://www.diany.vip/attachment/
