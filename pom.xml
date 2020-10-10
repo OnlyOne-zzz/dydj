@@ -113,6 +113,15 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>test</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<project.active>src/main/resources/config/test</project.active>
+			</properties>
+		</profile>
+		<profile>
 			<id>prod</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
