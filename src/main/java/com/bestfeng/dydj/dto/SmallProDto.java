@@ -18,6 +18,7 @@ public class SmallProDto implements Serializable {
 
     private String encryptedDataPhone;
     private String ivPhone;
+    private String sessionKey;
 
     private Integer channel;
     private Integer type;

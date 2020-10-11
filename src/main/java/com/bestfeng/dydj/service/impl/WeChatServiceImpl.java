@@ -103,15 +103,16 @@ public class WeChatServiceImpl implements WeChatService {
      * @return
      * @throws Exception
      */
-    public String getWechatPhone(SmallProDto proDto)throws Exception{
-        String code =proDto.getCode();
+    public JSONObject getWechatInfo(SmallProDto proDto)throws Exception{
+//        String code =proDto.getCode();
         String iv =proDto.getIv();
         String encryptedData = proDto.getEncryptedData();
-        Map<String,Object> sessionKeyMap = this.code2session(code);
-        String sessionKey = MapUtils.getString(sessionKeyMap,"sessionKey");
+//        Map<String,Object> sessionKeyMap = this.code2session(code);
+//        String sessionKey = MapUtils.getString(sessionKeyMap,"sessionKey");
+        String sessionKey = proDto.getSessionKey();
         JSONObject jsonObject = this.getEncryptedDate(encryptedData,sessionKey,iv);
-        String     phone     = jsonObject.getString("purePhoneNumber");//小程序的手机号
-        return phone;
+//        String     phone     = jsonObject.getString("purePhoneNumber");//小程序的手机号
+        return jsonObject;
     }
     /**
      * 小程序code换取openid与sessionKey

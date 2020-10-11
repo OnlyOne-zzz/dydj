@@ -1,5 +1,6 @@
 package com.bestfeng.dydj.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bestfeng.dydj.dto.SmallProDto;
 import com.bestfeng.dydj.service.impl.WeChatServiceImpl;
 import io.swagger.annotations.Api;
@@ -27,12 +28,13 @@ public class SmallProController {
     private WeChatServiceImpl weChatService;
 
 
-    @PostMapping("/getWechatPhone")
-    @ApiOperation(value = "获取微信注册的手机号")
-    public CommonResult<String> saveOrder(@RequestBody SmallProDto smallProDto)throws Exception{
+    @PostMapping("/getWechatInfo")
+    @ApiOperation(value = "获取微信解密的信息")
+    public CommonResult<JSONObject> getWechatPhone(@RequestBody SmallProDto smallProDto)throws Exception{
         Assert.notNull(smallProDto,"小程序参数不能为空");
-        Assert.isTrue(!StringUtils.isEmpty(smallProDto.getCode()),"code不能为空");
+        Assert.isTrue(!StringUtils.isEmpty(smallProDto.getIv()),"iv不能为空");
+        Assert.isTrue(!StringUtils.isEmpty(smallProDto.getSessionKey()),"sessionKey不能为空");
         Assert.isTrue(!StringUtils.isEmpty(smallProDto.getEncryptedData()),"加密数据不能为空");
-        return CommonResult.success(weChatService.getWechatPhone(smallProDto));
+        return CommonResult.success(weChatService.getWechatInfo(smallProDto));
     }
 }
