@@ -32,8 +32,8 @@ class DydjApplicationTests {
 
     @Test
     public void dataSourceTest(){
-       orderService.delayOrderUnPay("JSAM355389453181075456");
-        System.out.println();
+//       orderService.delayOrderUnPay("JSAM355389453181075456");
+//        System.out.println();
     }
 
     public void redisTest(){
@@ -42,22 +42,22 @@ class DydjApplicationTests {
 
     @Test
     public void delayTest(String orderNo) {
-        NoteOrder noteOrder = noteOrderMapper.selectObjByOrderNo(orderNo);
-        Optional.ofNullable(noteOrder).filter(order->order.getPaid() == OrderEnums.OrderPayStatusEnum.PAY_OFF.getCode()).ifPresent(
-                order->{
-                    Integer couponId = noteOrder.getCouponid();
-                    order.setStatus(OrderEnums.OrderStatusEnum.USER_CLOSE.getCode());
-                    //订单
-                    noteOrderMapper.updateByPrimaryKeySelective(order);
-                    //技师表
-                    orderService.noteServiceStatusHandel(noteOrder.getShopid(), NoteServiceStatusEnums.SERVICEABLE);
-                    if(null!=couponId && 0!=couponId){
-                        //卡券
-                        couponOrderService.cancelUse(couponId);
-                    }
-                    System.out.println("完成了");
-//                    log.info("订单未支付订单关闭订单延迟消息消费 orderNo={} 关闭成功",orderNo);
-                }
-        );
+//        NoteOrder noteOrder = noteOrderMapper.selectObjByOrderNo(orderNo);
+//        Optional.ofNullable(noteOrder).filter(order->order.getPaid() == OrderEnums.OrderPayStatusEnum.PAY_OFF.getCode()).ifPresent(
+//                order->{
+//                    Integer couponId = noteOrder.getCouponid();
+//                    order.setStatus(OrderEnums.OrderStatusEnum.USER_CLOSE.getCode());
+//                    //订单
+//                    noteOrderMapper.updateByPrimaryKeySelective(order);
+//                    //技师表
+//                    orderService.noteServiceStatusHandel(noteOrder.getShopid(), NoteServiceStatusEnums.SERVICEABLE);
+//                    if(null!=couponId && 0!=couponId){
+//                        //卡券
+//                        couponOrderService.cancelUse(couponId);
+//                    }
+//                    System.out.println("完成了");
+////                    log.info("订单未支付订单关闭订单延迟消息消费 orderNo={} 关闭成功",orderNo);
+//                }
+//        );
     }
 }

@@ -3,6 +3,7 @@ package com.bestfeng.dydj;
 import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.utils.DateUtil;
 import com.bestfeng.dydj.utils.IDUtils;
+import com.bestfeng.dydj.utils.SmallEncryptedDateUtil;
 import com.bestfeng.dydj.utils.httpclient.HttpClientUtil;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +22,11 @@ public class IdsTest {
 //        parm.put("data","{\"touser\":\"o6S4e5JS7WnTBe2NfoFPoIt9fAyk\",\"template_id\":\"85th9VjphopyFmmcBahS5Hm4Oq00NSQDQMCDcLxY38o\",\"form_id\":\"the formId is no longer availa\",\"data\":{\"keyword1\":{\"value\":\"\\u5fc6\\u9999\\u8db3\\u7597\"},\"keyword2\":{\"value\":\"\\u79e6\\u6db5\"},\"keyword3\":{\"value\":\"JSAM354682378926141440\"},\"keyword4\":{\"value\":\"10.10\"},\"keyword5\":{\"value\":\"2020-09-05 17:41:09\"}}}");
 //        String res =HttpClientUtil.doPost(url.concat(accessToken),parm);
 //        System.out.println(res);
-        System.out.println(DateUtil.getDate(DateUtil.getCurDate(), DateUtil.DATA_FORMAT_PRE));
+//        System.out.println(DateUtil.getDate(DateUtil.getCurDate(), DateUtil.DATA_FORMAT_PRE));
+        String encryptedData="H65z+FP/QMs8tYa2NiOlpceEaK4esDkLeutecyVHlXF/Y9hHnGfse1SFaNjcekjz9KZ+JcXY3uANsibcuG9/CZIo+01hUkSVRRDRwyopFIESWM6D5vCRfW8I03vQ4hUGjfHGAtfSAQOG2BpCMIRoiUmbCIhF1VioB8ncQ84gUEnSPc7yKlhPsfpjKapOJSuzAjiEikTjwXNBfmyXScWjDw==";
+        String sessionkey ="ylET8jLdznHlD7mFSo\\/\\/gg==";
+        String iv="A5henfifGuw/AH8D6+UIDQ==";
+        String data = SmallEncryptedDateUtil.encryptedData(encryptedData, sessionkey, iv);
+        System.out.println(data);
     }
 }

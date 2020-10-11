@@ -5,23 +5,29 @@ import com.alibaba.fastjson.JSONObject;
 import com.bestfeng.dydj.configuration.AccessTokenManagerCenter;
 import com.bestfeng.dydj.constants.Constants;
 import com.bestfeng.dydj.dto.SendMessageDto;
+import com.bestfeng.dydj.dto.SmallProDto;
 import com.bestfeng.dydj.service.WeChatService;
 import com.bestfeng.dydj.utils.FastJsons;
 import com.bestfeng.dydj.utils.RedisUtil;
+import com.bestfeng.dydj.utils.SmallEncryptedDateUtil;
 import com.bestfeng.dydj.utils.httpclient.HttpClientUtil;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import static cn.hutool.core.util.CharsetUtil.CHARSET_UTF_8;
 
 
 @Service
@@ -43,6 +49,11 @@ public class WeChatServiceImpl implements WeChatService {
     private RedisUtil redisUtil;
 
     private static final String SEND_MESSAGE_URI = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send";
+
+    private static final String  code2sessionUri="https://api.weixin.qq.com/sns/jscode2session";
+
+    private static final String smallAppid = "wxfee9e92111e44d0b";
+    private static final String smallAppSecret= "beac8aa28b94156394432b9e32596c40";
 
     @Override
     public void sendMessage(SendMessageDto sendMessageDto)throws Exception {
@@ -84,5 +95,78 @@ public class WeChatServiceImpl implements WeChatService {
         }
 
         return token;
+    }
+
+    /**
+     * 获取小程序的手机号
+     * @param proDto
+     * @return
+     * @throws Exception
+     */
+    public String getWechatPhone(SmallProDto proDto)throws Exception{
+        String code =proDto.getCode();
+        String iv =proDto.getIv();
+        String encryptedData = proDto.getEncryptedData();
+        Map<String,Object> sessionKeyMap = this.code2session(code);
+        String sessionKey = MapUtils.getString(sessionKeyMap,"sessionKey");
+        JSONObject jsonObject = this.getEncryptedDate(encryptedData,sessionKey,iv);
+        String     phone     = jsonObject.getString("purePhoneNumber");//小程序的手机号
+        return phone;
+    }
+    /**
+     * 小程序code换取openid与sessionKey
+     *
+     * @return
+     */
+    public Map<String, Object> code2session(String code) throws Exception {
+
+        StringBuffer sb = new StringBuffer();
+        sb.append(code2sessionUri).append("?appid=")
+                .append(smallAppid).append("&secret=")
+                .append(smallAppSecret).append("&js_code=")
+                .append(code).append("&grant_type=authorization_code");
+        log.info("小程序code2session请求url与参数:{},code：{}", sb.toString(), code);
+        String result = HttpClientUtil.doGet(sb.toString(), null, CHARSET_UTF_8.displayName());
+        log.info("小程序code2session响应结果:{}", result);
+        if (StringUtils.isBlank(result)) {
+            log.error("微信code2session接口响应结果为空");
+            throw new RuntimeException("微信code2session接口响应结果为空");
+        }
+        JSONObject sessionJSON = JSONObject.parseObject(result);
+        String     unionid     = "";
+        if (sessionJSON.containsKey("openid")) {
+            String              openid     = sessionJSON.getString("openid");
+            String              sessionKey = sessionJSON.getString("session_key");
+            if (sessionJSON.containsKey("unionid")) {
+                unionid = sessionJSON.getString("unionid");
+            }
+            Map<String, Object> retMap     = Maps.newHashMap();
+            retMap.put("openid", openid);
+            retMap.put("sessionKey", sessionKey);
+            retMap.put("unionid", unionid);
+
+            return retMap;
+        } else {
+            throw new BusinessException(sessionJSON.getString("errmsg"));
+        }
+    }
+
+    /**
+     * 获取解密之后的小程序用户信息
+     *
+     * @param encryptedData
+     * @param sessionkey
+     * @param iv
+     * @return
+     * @throws Exception
+     */
+    public JSONObject getEncryptedDate(String encryptedData, String sessionkey, String iv) throws Exception {
+        log.info("encryptedData:{} sessionkey:{} iv:{}", encryptedData, sessionkey, iv);
+        String data = SmallEncryptedDateUtil.encryptedData(encryptedData, sessionkey, iv);
+        log.info(data);
+        if (org.apache.commons.lang.StringUtils.isNotBlank(data)) {
+            return JSONObject.parseObject(data);
+        }
+        throw new BusinessException("解密数据为空字符串!");
     }
 }
