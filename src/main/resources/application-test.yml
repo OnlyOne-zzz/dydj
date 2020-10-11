@@ -12,8 +12,9 @@ logging:
     log4j.logger.com.ibatis: debug
     #system: debug
 wechat:
-  appId: 'wx3a064f24347b34d2'
-  appSecret: '2fe25c657f2c7ab751e09f249c04b7c7'
+  small:
+    appId: 'wxfee9e92111e44d0b'
+    appSecret: 'beac8aa28b94156394432b9e32596c40'
 local:
   access:
     uri: https://www.diany.vip/attachment/
