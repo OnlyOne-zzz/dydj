@@ -124,7 +124,9 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
             String couponMoney = couponOrder.getMoney();
             couponPrice = new BigDecimal(couponMoney);
         }
-        //todo 总金额
+        // 实际总金额
+        BigDecimal actualMoney = new BigDecimal(String.valueOf(contentMoney)).add(trafficMoney);
+        // 实际支付金额
         BigDecimal totalMoney = new BigDecimal(String.valueOf(contentMoney)).add(trafficMoney).subtract(couponPrice);
 //        String orderId = IDUtils.getId(Constants.ORDER_NO_PRE);
         String orderId = IDUtils.getId(DateUtil.getDate(DateUtil.getCurDate(), DateUtil.DATA_FORMAT_PRE));
@@ -144,6 +146,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         order.setNoteAvatarUrl(note.getAvatarurl());
         order.setTrafficMoney(trafficMoney);
         order.setCreatetime((int)(System.currentTimeMillis()/1000));
+        order.setTotalMoney(actualMoney);
         orderMapper.insertSelective(order);
         OrderDto responseOrder = new OrderDto();
         responseOrder.setOrderid(orderId);

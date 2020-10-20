@@ -96,4 +96,7 @@ public class NoteOrder implements Serializable {
 
     @ApiModelProperty(value = "0现金支付1:余额支付")
     private Integer payType;
+
+    @ApiModelProperty(value = "实际的总价格")
+    private BigDecimal totalMoney;
 }
