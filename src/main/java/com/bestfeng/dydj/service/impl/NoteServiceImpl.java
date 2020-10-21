@@ -24,7 +24,6 @@ import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -105,7 +104,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         Note noteObj = this.selectServiceStatus(loginid);
         Integer metaStatus = noteObj.getServiceStatus();
         if(serviceStatus==metaStatus){
-            log.error("技师状态的上线/下线 状态一致不需要操作");
+            log.error("技师状态的上线/下线 状态一致不需要操作 metaStatus={}",metaStatus);
             throw new BusinessException("当前状态不能上线和下线");
         }
         Integer count = noteOrderMapper.selectCountByNoteId(noteObj.getId());
