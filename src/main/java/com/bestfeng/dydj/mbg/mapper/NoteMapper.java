@@ -4,6 +4,7 @@ import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.mbg.model.NoteExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.aspectj.weaver.ast.Not;
 
 public interface NoteMapper {
     long countByExample(NoteExample example);
@@ -33,4 +34,8 @@ public interface NoteMapper {
     int updateByPrimaryKeyWithBLOBs(Note record);
 
     int updateByPrimaryKey(Note record);
+
+    void updateStatusByLoginId(Note note);
+
+    Note selectServiceStatus(Integer loginId);
 }

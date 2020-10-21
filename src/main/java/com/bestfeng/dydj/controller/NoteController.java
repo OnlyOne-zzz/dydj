@@ -3,6 +3,8 @@ package com.bestfeng.dydj.controller;
 import com.bestfeng.dydj.annotation.SignValidated;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.controller.request.NoteListSearchNameRequest;
+import com.bestfeng.dydj.mbg.mapper.NoteMapper;
+import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.service.NoteService;
 import com.bestfeng.dydj.vo.NoteVo;
 import io.swagger.annotations.Api;
@@ -28,6 +30,8 @@ public class NoteController{
 
     @Autowired
     private NoteService noteService;
+    @Autowired
+    private NoteMapper noteMapper;
 
     @PostMapping("/paging")
     @ApiOperation("分页排序查询")
@@ -39,5 +43,11 @@ public class NoteController{
     @ApiOperation("根据名称搜索")
     public CommonResult<CommonPage<NoteVo>> pagingByName(@RequestBody NoteListSearchNameRequest request) {
         return CommonResult.success(noteService.pagingByName(request.getName()));
+    }
+    @PostMapping("/online")
+    @ApiOperation("技师上线/下线")
+    public CommonResult<Void> online(@RequestBody Note note) {
+        noteService.updateStatusByLoginId(note);
+        return CommonResult.success();
     }
 }

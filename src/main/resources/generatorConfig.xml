@@ -42,10 +42,11 @@
         <!--生成全部表tableName设为%-->
 
 
-        <table tableName="ims_weixinmao_jz_gooditems" domainObjectName="GoodItems"></table>
-        <table tableName="ims_weixinmao_jz_comment" domainObjectName="Comment"></table>
-        <table tableName="ims_weixinmao_jz_note" domainObjectName="Note"></table>
-        <table tableName="ims_weixinmao_jz_category" domainObjectName="Category"></table>
+<!--        <table tableName="ims_weixinmao_jz_gooditems" domainObjectName="GoodItems"></table>-->
+<!--        <table tableName="ims_weixinmao_jz_comment" domainObjectName="Comment"></table>-->
+<!--        <table tableName="ims_weixinmao_jz_note" domainObjectName="Note"></table>-->
+<!--        <table tableName="ims_weixinmao_jz_category" domainObjectName="Category"></table>-->
+        <table tableName="ims_weixinmao_jz_online_log" domainObjectName="OnlineLog"></table>
 <!--        <table tableName="ims_weixinmao_jz_coupon" domainObjectName="Coupon"></table>-->
 <!--        <table tableName="ims_weixinmao_jz_order" domainObjectName="Order"></table>-->
 <!--        <table tableName="ims_weixinmao_jz_category" domainObjectName="Category"></table>-->

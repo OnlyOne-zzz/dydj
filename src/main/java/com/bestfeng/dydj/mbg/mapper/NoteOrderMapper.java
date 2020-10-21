@@ -34,4 +34,6 @@ public interface NoteOrderMapper {
     List<NoteOrder> selectListNoteComplete();
 
     List<NoteOrder> selectListNoteOrder();
+
+    Integer selectCountByNoteId(Integer noteId);
 }

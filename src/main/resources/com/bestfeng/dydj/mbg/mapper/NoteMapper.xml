@@ -800,4 +800,18 @@
       basic_service_frequency = #{basicServiceFrequency,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateStatusByLoginId" parameterType="com.bestfeng.dydj.mbg.model.Note">
+    update ims_weixinmao_jz_note
+    set
+    service_status = #{serviceStatus,jdbcType=INTEGER}
+    where loginid = #{loginid}
+  </update>
+
+  <select id="selectServiceStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ims_weixinmao_jz_note
+    where loginid = #{loginid}
+  </select>
 </mapper>

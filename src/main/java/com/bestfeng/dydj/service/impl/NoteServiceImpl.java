@@ -4,9 +4,12 @@ import com.bestfeng.dydj.configuration.LocalAccessConfig;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
 import com.bestfeng.dydj.mbg.mapper.NoteMapper;
+import com.bestfeng.dydj.mbg.mapper.NoteOrderMapper;
+import com.bestfeng.dydj.mbg.mapper.OnlineLogMapper;
 import com.bestfeng.dydj.mbg.model.Category;
 import com.bestfeng.dydj.mbg.model.Note;
 import com.bestfeng.dydj.mbg.model.NoteExample;
+import com.bestfeng.dydj.mbg.model.OnlineLog;
 import com.bestfeng.dydj.service.CategoryService;
 import com.bestfeng.dydj.service.CommentService;
 import com.bestfeng.dydj.service.NoteService;
@@ -18,8 +21,10 @@ import org.aurochsframework.boot.commons.param.QueryParam;
 import org.aurochsframework.boot.commons.param.Sort;
 import org.aurochsframework.boot.commons.param.TermType;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
+import org.aurochsframework.boot.core.exceptions.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -51,6 +56,10 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private NoteOrderMapper noteOrderMapper;
+    @Autowired
+    private OnlineLogMapper onlineLogMapper;
 
     private final static String DEFAULT_CATE_NAME = "暂无推荐";
 
@@ -87,6 +96,36 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
             queryParam.and("shopname", TermType.LIKE, "%".concat(name).concat("%"));
         }
         return query(queryParam);
+    }
+
+    @Override
+    public void updateStatusByLoginId(Note note) {
+        Integer serviceStatus = note.getServiceStatus();
+        Integer loginid = note.getLoginid();
+        Note noteObj = this.selectServiceStatus(loginid);
+        Integer metaStatus = noteObj.getServiceStatus();
+        if(serviceStatus==metaStatus){
+            log.error("技师状态的上线/下线 状态一致不需要操作");
+            throw new BusinessException("当前状态不能上线和下线");
+        }
+        Integer count = noteOrderMapper.selectCountByNoteId(noteObj.getId());
+        /**是否存在这个技师的订单在未完成的订单*/
+        if(count>0){
+            log.error("技师状态的上线/下线 异常操作");
+            throw new BusinessException("有未完成的订单不可更换技师服务的状态");
+        }
+        mapper.updateStatusByLoginId(note);
+        /**操作日志*/
+        OnlineLog onlineLog = new OnlineLog();
+        onlineLog.setNoteId(noteObj.getId());
+        onlineLog.setServiceStatus(serviceStatus);
+        onlineLogMapper.insert(onlineLog);
+
+    }
+
+    @Override
+    public Note selectServiceStatus(Integer loginId) {
+        return mapper.selectServiceStatus(loginId);
     }
 
     private CommonPage<NoteVo> query(QueryParam queryParam) {

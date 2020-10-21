@@ -29,5 +29,9 @@ public interface NoteService extends GeneralService<Note> {
      */
     CommonPage<NoteVo> pagingByName(String name);
 
+    void updateStatusByLoginId(Note note);
+
+    Note selectServiceStatus(Integer loginId);
+
 
 }
