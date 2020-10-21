@@ -14,6 +14,7 @@ import com.bestfeng.dydj.service.CategoryService;
 import com.bestfeng.dydj.service.CommentService;
 import com.bestfeng.dydj.service.NoteService;
 import com.bestfeng.dydj.service.OrderService;
+import com.bestfeng.dydj.utils.DateUtil;
 import com.bestfeng.dydj.vo.NoteVo;
 import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.commons.api.CommonPage;
@@ -118,6 +119,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         OnlineLog onlineLog = new OnlineLog();
         onlineLog.setNoteId(noteObj.getId());
         onlineLog.setServiceStatus(serviceStatus);
+        onlineLog.setCreateTime(DateUtil.getCurDate());
         onlineLogMapper.insert(onlineLog);
 
     }
