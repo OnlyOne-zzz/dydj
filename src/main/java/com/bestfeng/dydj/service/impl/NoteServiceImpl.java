@@ -119,6 +119,11 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         OnlineLog onlineLog = new OnlineLog();
         onlineLog.setNoteId(noteObj.getId());
         onlineLog.setServiceStatus(serviceStatus);
+        if(1==serviceStatus){
+            onlineLog.setServiceStatusRemake("上线操作");
+        }else {
+            onlineLog.setServiceStatusRemake("下线操作");
+        }
         onlineLog.setCreateTime(DateUtil.getCurDate());
         onlineLogMapper.insert(onlineLog);
 

@@ -7,6 +7,7 @@
     <result column="service_status" jdbcType="INTEGER" property="serviceStatus" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="service_status_remake" jdbcType="VARCHAR" property="serviceStatusRemake" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, note_id, service_status, create_time, update_time
+    id, note_id, service_status, create_time, update_time, service_status_remake
   </sql>
   <select id="selectByExample" parameterType="com.bestfeng.dydj.mbg.model.OnlineLogExample" resultMap="BaseResultMap">
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.bestfeng.dydj.mbg.model.OnlineLog">
     insert into ims_weixinmao_jz_online_log (id, note_id, service_status, 
-      create_time, update_time)
+      create_time, update_time, service_status_remake
+      )
     values (#{id,jdbcType=INTEGER}, #{noteId,jdbcType=INTEGER}, #{serviceStatus,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{serviceStatusRemake,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.OnlineLog">
     insert into ims_weixinmao_jz_online_log
@@ -123,6 +126,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="serviceStatusRemake != null">
+        service_status_remake,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -139,6 +145,9 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceStatusRemake != null">
+        #{serviceStatusRemake,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +175,9 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.serviceStatusRemake != null">
+        service_status_remake = #{record.serviceStatusRemake,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +189,8 @@
       note_id = #{record.noteId,jdbcType=INTEGER},
       service_status = #{record.serviceStatus,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      service_status_remake = #{record.serviceStatusRemake,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +210,9 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="serviceStatusRemake != null">
+        service_status_remake = #{serviceStatusRemake,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -205,7 +221,8 @@
     set note_id = #{noteId,jdbcType=INTEGER},
       service_status = #{serviceStatus,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      service_status_remake = #{serviceStatusRemake,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

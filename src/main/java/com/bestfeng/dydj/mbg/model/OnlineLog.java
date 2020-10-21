@@ -19,6 +19,9 @@ public class OnlineLog implements Serializable {
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
 
+    @ApiModelProperty(value = "操作描述")
+    private String serviceStatusRemake;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -61,6 +64,14 @@ public class OnlineLog implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public String getServiceStatusRemake() {
+        return serviceStatusRemake;
+    }
+
+    public void setServiceStatusRemake(String serviceStatusRemake) {
+        this.serviceStatusRemake = serviceStatusRemake;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -72,6 +83,7 @@ public class OnlineLog implements Serializable {
         sb.append(", serviceStatus=").append(serviceStatus);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", serviceStatusRemake=").append(serviceStatusRemake);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

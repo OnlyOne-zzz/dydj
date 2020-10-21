@@ -404,6 +404,76 @@ public class OnlineLogExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andServiceStatusRemakeIsNull() {
+            addCriterion("service_status_remake is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeIsNotNull() {
+            addCriterion("service_status_remake is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeEqualTo(String value) {
+            addCriterion("service_status_remake =", value, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeNotEqualTo(String value) {
+            addCriterion("service_status_remake <>", value, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeGreaterThan(String value) {
+            addCriterion("service_status_remake >", value, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeGreaterThanOrEqualTo(String value) {
+            addCriterion("service_status_remake >=", value, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeLessThan(String value) {
+            addCriterion("service_status_remake <", value, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeLessThanOrEqualTo(String value) {
+            addCriterion("service_status_remake <=", value, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeLike(String value) {
+            addCriterion("service_status_remake like", value, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeNotLike(String value) {
+            addCriterion("service_status_remake not like", value, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeIn(List<String> values) {
+            addCriterion("service_status_remake in", values, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeNotIn(List<String> values) {
+            addCriterion("service_status_remake not in", values, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeBetween(String value1, String value2) {
+            addCriterion("service_status_remake between", value1, value2, "serviceStatusRemake");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceStatusRemakeNotBetween(String value1, String value2) {
+            addCriterion("service_status_remake not between", value1, value2, "serviceStatusRemake");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
