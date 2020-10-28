@@ -66,7 +66,7 @@ public class OrderUnPayDelayTask implements CommandLineRunner {
             o.stream().forEach(order -> {
                 //订单创建时间
                 Integer createTime =order.getCreatetime();
-                Integer metaExpireTime = createTime + 5*60;
+                Integer metaExpireTime = createTime + 1*60;
                 //当前时间
                 Integer curTime = (int)(System.currentTimeMillis()/1000L);
                 //时间差
