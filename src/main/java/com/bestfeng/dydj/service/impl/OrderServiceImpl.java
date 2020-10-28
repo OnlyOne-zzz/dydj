@@ -147,6 +147,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         order.setTrafficMoney(trafficMoney);
         order.setCreatetime((int)(System.currentTimeMillis()/1000));
         order.setTotalMoney(actualMoney);
+        order.setCouponMoney(couponPrice);
         orderMapper.insertSelective(order);
         OrderDto responseOrder = new OrderDto();
         responseOrder.setOrderid(orderId);

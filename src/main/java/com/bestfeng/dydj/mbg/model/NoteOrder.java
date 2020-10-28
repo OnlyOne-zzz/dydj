@@ -99,4 +99,7 @@ public class NoteOrder implements Serializable {
 
     @ApiModelProperty(value = "实际的总价格")
     private BigDecimal totalMoney;
+
+    @ApiModelProperty(value = "卡券的面值")
+    private BigDecimal couponMoney;
 }

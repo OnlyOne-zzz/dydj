@@ -37,6 +37,7 @@
     <result column="updatetime" jdbcType="INTEGER" property="updatetime" />
     <result column="pay_type" jdbcType="INTEGER" property="payType" />
     <result column="total_money" jdbcType="DECIMAL" property="totalMoney" />
+    <result column="coupon_money" jdbcType="DECIMAL" property="couponMoney" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -100,7 +101,7 @@
     id, uniacid, uid, name, tel, msgtime, orderid, money, paytime, createtime, paid, 
     status, address, daddress, content, pid, couponid, shopid, currentid, traffic_type, 
     traffic_reckon_mile, traffic_money, content_money, content_name, content_thumb, note_avatar_url, 
-    note_name, cityid, lat, lng, remake, address_id, updatetime,total_money
+    note_name, cityid, lat, lng, remake, address_id, updatetime,total_money,coupon_money
   </sql>
   <select id="selectByExample" parameterType="com.bestfeng.dydj.mbg.model.NoteOrderExample" resultMap="BaseResultMap">
     select
@@ -143,7 +144,7 @@
       traffic_money, content_money, content_name, 
       content_thumb, note_avatar_url, note_name, 
       cityid, lat, lng, remake, 
-      address_id, updatetime,pay_type,total_money)
+      address_id, updatetime,pay_type,total_money,coupon_money)
     values (#{id,jdbcType=INTEGER}, #{uniacid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{msgtime,jdbcType=VARCHAR}, 
       #{orderid,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{paytime,jdbcType=INTEGER}, 
@@ -154,7 +155,7 @@
       #{trafficMoney,jdbcType=DECIMAL}, #{contentMoney,jdbcType=DECIMAL}, #{contentName,jdbcType=VARCHAR}, 
       #{contentThumb,jdbcType=VARCHAR}, #{noteAvatarUrl,jdbcType=VARCHAR}, #{noteName,jdbcType=VARCHAR}, 
       #{cityid,jdbcType=INTEGER}, #{lat,jdbcType=DECIMAL}, #{lng,jdbcType=DECIMAL}, #{remake,jdbcType=VARCHAR}, 
-      #{addressId,jdbcType=INTEGER}, #{updatetime,jdbcType=INTEGER}, #{payType,jdbcType=INTEGER}, #{totalMoney,jdbcType=DECIMAL})
+      #{addressId,jdbcType=INTEGER}, #{updatetime,jdbcType=INTEGER}, #{payType,jdbcType=INTEGER}, #{totalMoney,jdbcType=DECIMAL}, #{couponMoney,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.bestfeng.dydj.mbg.model.NoteOrder">
     insert into ims_weixinmao_jz_noteorder
@@ -264,6 +265,9 @@
       <if test="totalMoney != null">
         total_money,
       </if>
+      <if test="couponMoney != null">
+        coupon_money,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -370,6 +374,9 @@
       </if>
       <if test="totalMoney != null">
         #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="couponMoney != null">
+        #{couponMoney,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -487,6 +494,9 @@
       <if test="record.totalMoney != null">
         total_money = #{record.totalMoney,jdbcType=DECIMAL},
       </if>
+      <if test="record.couponMoney != null">
+        coupon_money = #{record.couponMoney,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -528,7 +538,8 @@
       address_id = #{record.addressId,jdbcType=INTEGER},
       updatetime = #{record.updatetime,jdbcType=INTEGER},
       pay_type = #{record.payType,jdbcType=INTEGER},
-      total_money = #{record.totalMoney,jdbcType=DECIMAL}
+      total_money = #{record.totalMoney,jdbcType=DECIMAL},
+      coupon_money = #{record.couponMoney,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -638,6 +649,9 @@
       <if test="totalMoney != null">
         total_money = #{totalMoney,jdbcType=DECIMAL},
       </if>
+      <if test="couponMoney != null">
+        coupon_money = #{couponMoney,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -676,7 +690,8 @@
       address_id = #{addressId,jdbcType=INTEGER},
       updatetime = #{updatetime,jdbcType=INTEGER},
       pay_ype = #{payType,jdbcType=INTEGER},
-      total_money = #{totalMoney,jdbcType=DECIMAL}
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      coupon_money = #{couponMoney,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

@@ -13,5 +13,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class LocalAccessConfig {
 
-    private String uri = "https://dydj.gotod.cn/attachment/";
+    private String uri = "https://www.diany.vip/attachment/";
 }
