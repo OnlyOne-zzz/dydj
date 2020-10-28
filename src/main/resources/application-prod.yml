@@ -17,6 +17,6 @@ wechat:
     appSecret: 'beac8aa28b94156394432b9e32596c40'
 local:
   access:
-    uri: https://dydj.gotod.cn/attachment/
+    uri: https://www.diany.vip/attachment/
 
 
