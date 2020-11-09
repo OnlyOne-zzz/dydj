@@ -9,6 +9,7 @@ import com.bestfeng.dydj.manager.travel.TravelServiceSupport;
 import com.bestfeng.dydj.mbg.mapper.*;
 import com.bestfeng.dydj.mbg.model.*;
 import com.bestfeng.dydj.service.CouponOrderService;
+import com.bestfeng.dydj.service.OrderCreateTemplateMessageService;
 import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.utils.DateUtil;
 import com.bestfeng.dydj.utils.IDUtils;
@@ -59,6 +60,8 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
     private CouponOrderService couponOrderService;
     @Autowired
     private OrderUnPayDelayTask task;
+    @Autowired
+    private OrderCreateTemplateMessageService orderCreateTemplateMessageService;
 
 
     @Override
@@ -172,6 +175,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         this.noteServiceStatusHandel(noteId,NoteServiceStatusEnums.IN_SERVICE);
         /**订单延迟队列*/
         this.delayOrderUnPay(orderId);
+        orderCreateTemplateMessageService.orderCreateMsgSend(responseOrder);
         return responseOrder;
     }
 
