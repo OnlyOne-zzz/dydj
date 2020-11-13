@@ -176,7 +176,7 @@ public class OrderServiceImpl extends AbstractGeneralService<NoteOrder> implemen
         /**订单延迟队列*/
         this.delayOrderUnPay(orderId);
         try {
-            orderCreateTemplateMessageService.orderCreateMsgSend(responseOrder);
+            orderCreateTemplateMessageService.orderCreateMsgSend(order);
         }catch (Exception e){
             log.error("用户下单发送模板消息给管理员失败 orderId={} uid={}",orderId,uid);
         }

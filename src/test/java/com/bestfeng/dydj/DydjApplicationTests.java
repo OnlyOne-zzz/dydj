@@ -1,16 +1,21 @@
 package com.bestfeng.dydj;
 
+import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
 import com.bestfeng.dydj.enums.OrderEnums;
 import com.bestfeng.dydj.mbg.mapper.NoteOrderMapper;
 import com.bestfeng.dydj.mbg.mapper.TestMapper;
 import com.bestfeng.dydj.mbg.model.NoteOrder;
 import com.bestfeng.dydj.service.CouponOrderService;
+import com.bestfeng.dydj.service.NoteService;
 import com.bestfeng.dydj.service.OrderService;
 import com.bestfeng.dydj.service.impl.OrderServiceImpl;
 import com.bestfeng.dydj.utils.RedisUtil;
+import com.bestfeng.dydj.vo.NoteVo;
+import com.github.pagehelper.Page;
 import lombok.Getter;
 import lombok.Setter;
+import org.aurochsframework.boot.commons.api.CommonPage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +35,9 @@ class DydjApplicationTests {
     @Autowired
     private CouponOrderService couponOrderService;
 
+    @Autowired
+    private NoteService noteService;
+
     @Test
     public void dataSourceTest(){
 //       orderService.delayOrderUnPay("JSAM355389453181075456");
@@ -38,6 +46,15 @@ class DydjApplicationTests {
 
     public void redisTest(){
         redisUtil.set("test","1");
+    }
+
+    @Test
+    public void testNotePaging(){
+        NoteListRequest request = new NoteListRequest();
+        request.setContentPid(79);
+        request.setServiceStatus(0);
+        CommonPage<NoteVo> pages = noteService.paging(request);
+        System.out.println(pages.getPageSize());
     }
 
     @Test

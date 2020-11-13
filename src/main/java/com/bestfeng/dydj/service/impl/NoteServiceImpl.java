@@ -6,14 +6,8 @@ import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
 import com.bestfeng.dydj.mbg.mapper.NoteMapper;
 import com.bestfeng.dydj.mbg.mapper.NoteOrderMapper;
 import com.bestfeng.dydj.mbg.mapper.OnlineLogMapper;
-import com.bestfeng.dydj.mbg.model.Category;
-import com.bestfeng.dydj.mbg.model.Note;
-import com.bestfeng.dydj.mbg.model.NoteExample;
-import com.bestfeng.dydj.mbg.model.OnlineLog;
-import com.bestfeng.dydj.service.CategoryService;
-import com.bestfeng.dydj.service.CommentService;
-import com.bestfeng.dydj.service.NoteService;
-import com.bestfeng.dydj.service.OrderService;
+import com.bestfeng.dydj.mbg.model.*;
+import com.bestfeng.dydj.service.*;
 import com.bestfeng.dydj.utils.DateUtil;
 import com.bestfeng.dydj.vo.NoteVo;
 import lombok.extern.slf4j.Slf4j;
@@ -28,10 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -53,6 +44,9 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private MsgContentService msgContentService;
 
     @Autowired
     private CommentService commentService;
@@ -86,8 +80,20 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
             sort.setOrder(request.getOrderType());
             queryParam.orderBy(sort);
         }
-        return query(queryParam);
+        CommonPage<NoteVo> page = query(queryParam);
+        List<NoteVo> noteVos = notesIntersection(request.getContentPid(), page.getList());
+
+        // TODO: 2020/11/13 技师数据量大于100是时，分页逻辑需重做
+
+        CommonPage<NoteVo> commonPage = new CommonPage<>();
+        commonPage.setList(noteVos);
+        commonPage.setTotal((long) noteVos.size());
+        commonPage.setPageNum(1);
+        commonPage.setPageSize(100);
+        commonPage.setTotalPage(1);
+        return commonPage;
     }
+
 
     @Override
     public CommonPage<NoteVo> pagingByName(String name) {
@@ -104,13 +110,13 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         Integer loginid = note.getLoginid();
         Note noteObj = this.selectServiceStatus(loginid);
         Integer metaStatus = noteObj.getServiceStatus();
-        if(serviceStatus==metaStatus){
-            log.error("技师状态的上线/下线 状态一致不需要操作 metaStatus={}",metaStatus);
+        if (serviceStatus == metaStatus) {
+            log.error("技师状态的上线/下线 状态一致不需要操作 metaStatus={}", metaStatus);
             throw new BusinessException("当前状态不能上线和下线");
         }
         Integer count = noteOrderMapper.selectCountByNoteId(noteObj.getId());
         /**是否存在这个技师的订单在未完成的订单*/
-        if(count>0){
+        if (count > 0) {
             log.error("技师状态的上线/下线 异常操作");
             throw new BusinessException("有未完成的订单不可更换技师服务的状态");
         }
@@ -119,9 +125,9 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         OnlineLog onlineLog = new OnlineLog();
         onlineLog.setNoteId(noteObj.getId());
         onlineLog.setServiceStatus(serviceStatus);
-        if(1==serviceStatus){
+        if (1 == serviceStatus) {
             onlineLog.setServiceStatusRemake("上线操作");
-        }else {
+        } else {
             onlineLog.setServiceStatusRemake("下线操作");
         }
         onlineLog.setCreateTime(DateUtil.getCurDate());
@@ -174,4 +180,16 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         return orderGroup.getOrDefault(noteId, 0L) + basicServiceFrequency;
     }
 
+    private List<NoteVo> notesIntersection(Integer pid, List<NoteVo> noteVos) {
+        if (pid == null) {
+            return new ArrayList<>();
+        }
+        List<MsgContent> msgContents = msgContentService.fetch(QueryParam.createQueryParam().and("pid", pid));
+        List<Integer> cNoteIds = msgContents.stream()
+                .map(MsgContent::getNoteid)
+                .collect(Collectors.toList());
+        return noteVos.stream()
+                .filter(noteVo -> cNoteIds.contains(noteVo.getId()))
+                .collect(Collectors.toList());
+    }
 }

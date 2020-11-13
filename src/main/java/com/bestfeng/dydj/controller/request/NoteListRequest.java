@@ -18,4 +18,7 @@ public class NoteListRequest extends BasicRequest{
 
     @ApiModelProperty("技师状态")
     private Integer serviceStatus;
+
+    @ApiModelProperty("项目父Id")
+    private Integer contentPid;
 }
