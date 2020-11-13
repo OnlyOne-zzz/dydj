@@ -182,7 +182,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
 
     private List<NoteVo> notesIntersection(Integer pid, List<NoteVo> noteVos) {
         if (pid == null) {
-            return new ArrayList<>();
+            return noteVos;
         }
         List<MsgContent> msgContents = msgContentService.fetch(QueryParam.createQueryParam().and("pid", pid));
         List<Integer> cNoteIds = msgContents.stream()
