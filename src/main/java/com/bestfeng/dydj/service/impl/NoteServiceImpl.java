@@ -1,5 +1,6 @@
 package com.bestfeng.dydj.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.bestfeng.dydj.configuration.LocalAccessConfig;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.enums.NoteServiceStatusEnums;
@@ -70,6 +71,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
 
     @Override
     public CommonPage<NoteVo> paging(NoteListRequest request) {
+        log.warn("收到技师列表查询参数:{}", JSON.toJSONString(request));
         QueryParam queryParam = QueryParam.createQueryParam();
         if (request.getServiceStatus() != 0) {
             queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()).getValue());
@@ -184,7 +186,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         if (pid == null) {
             return noteVos;
         }
-        List<MsgContent> msgContents = msgContentService.fetch(QueryParam.createQueryParam().and("pid", pid));
+        List<MsgContent> msgContents = msgContentService.fetch(QueryParam.createQueryParam().and("pid", pid).and("status", 0));
         List<Integer> cNoteIds = msgContents.stream()
                 .map(MsgContent::getNoteid)
                 .collect(Collectors.toList());
