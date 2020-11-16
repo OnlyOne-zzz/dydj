@@ -53,7 +53,7 @@ public class NoteController {
         return CommonResult.success();
     }
 
-    @PostMapping("/online-interval")
+    @PostMapping("/onlineInterval")
     @ApiOperation("自定义上线区间")
     public CommonResult<CommonPage<Void>> customizeOnlineInterval(@RequestBody CustomizeOnlineIntervalRequest request) {
         noteService.customizeOnlineInterval(request.getStartTime(), request.getEndTime(), request.getLoginid());

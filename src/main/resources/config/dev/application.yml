@@ -32,7 +32,7 @@ secure:
       - /**
 spring:
   profiles:
-    active: dev
+    active: prod
   application:
     name: dydj
   resources:

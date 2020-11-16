@@ -29,6 +29,6 @@ public class TravelController {
     @PostMapping("/fare")
     @ApiOperation("出行价格")
     public CommonResult<Long> travelFate(@RequestBody TravelRequest request) {
-        return CommonResult.success(travelServiceSupport.travelFare(TravelTypeEnums.ofValue(request.getType()), request.getDistance()));
+        return CommonResult.success(travelServiceSupport.travelFareTo(TravelTypeEnums.ofValue(request.getType()), request.getDistance()));
     }
 }

@@ -31,6 +31,16 @@ public class TravelServiceSupport implements BeanPostProcessor {
                 .orElseThrow(() -> new BusinessException("不支持:" + typeEnums.getText() + "类型的出行方式"));
     }
 
+    /**
+     * 往返出行价格
+     *
+     * @param distance
+     * @return
+     */
+    public long travelFareTo(TravelTypeEnums typeEnums, String distance) {
+        return travelFare(typeEnums, distance) * 2;
+    }
+
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof TravelService) {
