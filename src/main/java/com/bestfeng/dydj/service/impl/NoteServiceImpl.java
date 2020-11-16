@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aurochsframework.boot.commons.api.CommonPage;
 import org.aurochsframework.boot.commons.param.QueryParam;
 import org.aurochsframework.boot.commons.param.Sort;
+import org.aurochsframework.boot.commons.param.Term;
 import org.aurochsframework.boot.commons.param.TermType;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
@@ -82,8 +83,12 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     public CommonPage<NoteVo> paging(NoteListRequest request) {
         log.warn("收到技师列表查询参数:{}", JSON.toJSONString(request));
         QueryParam queryParam = QueryParam.createQueryParam();
-        if (request.getServiceStatus() != 0) {
+        if (NoteServiceStatusEnums.SERVICEABLE.getValue().equals(request.getServiceStatus())) {
             queryParam.and("serviceStatus", NoteServiceStatusEnums.ofValue(request.getServiceStatus()).getValue());
+        }
+        // TODO: 2020/11/16 服务中的技师，只要不是可服务就默认服务中
+        if (NoteServiceStatusEnums.IN_SERVICE.getValue().equals(request.getServiceStatus())) {
+            queryParam.and("serviceStatus", TermType.NOT, NoteServiceStatusEnums.SERVICEABLE.getValue());
         }
         Sort sort = new Sort();
         if (StringUtils.hasText(request.getOrderColumn())) {
@@ -236,6 +241,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
 
     /**
      * 记录技师上下线日志
+     *
      * @param noteId
      * @param serviceStatus
      */
