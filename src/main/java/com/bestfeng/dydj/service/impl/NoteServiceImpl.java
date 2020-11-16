@@ -18,12 +18,18 @@ import org.aurochsframework.boot.commons.param.Sort;
 import org.aurochsframework.boot.commons.param.TermType;
 import org.aurochsframework.boot.commons.service.AbstractGeneralService;
 import org.aurochsframework.boot.core.exceptions.BusinessException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -55,6 +61,9 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
     private NoteOrderMapper noteOrderMapper;
     @Autowired
     private OnlineLogMapper onlineLogMapper;
+
+    @Autowired
+    private ScheduledExecutorService executorService;
 
     private final static String DEFAULT_CATE_NAME = "暂无推荐";
 
@@ -112,9 +121,9 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         Integer loginid = note.getLoginid();
         Note noteObj = this.selectServiceStatus(loginid);
         Integer metaStatus = noteObj.getServiceStatus();
-        if (serviceStatus == metaStatus) {
-            log.error("技师状态的上线/下线 状态一致不需要操作 metaStatus={}", metaStatus);
-            throw new BusinessException("当前状态不能上线和下线");
+        if (serviceStatus.equals(metaStatus)) {
+            log.warn("技师状态的上线/下线 状态一致不需要操作 metaStatus={}", metaStatus);
+            return;
         }
         Integer count = noteOrderMapper.selectCountByNoteId(noteObj.getId());
         /**是否存在这个技师的订单在未完成的订单*/
@@ -124,18 +133,19 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         }
         mapper.updateStatusByLoginId(note);
         /**操作日志*/
-        OnlineLog onlineLog = new OnlineLog();
-        onlineLog.setNoteId(noteObj.getId());
-        onlineLog.setServiceStatus(serviceStatus);
-        if (1 == serviceStatus) {
-            onlineLog.setServiceStatusRemake("上线操作");
-        } else {
-            onlineLog.setServiceStatusRemake("下线操作");
-        }
-        onlineLog.setCreateTime(DateUtil.getCurDate());
-        onlineLogMapper.insert(onlineLog);
-
+        noteOnlineLogRecord(note.getId(), serviceStatus);
     }
+
+    @Override
+    public void customizeOnlineInterval(Date startTime, Date endTime, Integer loginid) {
+        Note noteObj = this.selectServiceStatus(loginid);
+        customizeIntervalPointExecute(startTime, endTime, () -> {
+            updateNoteStatus(noteObj, NoteServiceStatusEnums.SERVICEABLE.getValue());
+        }, () -> {
+            updateNoteStatus(noteObj, NoteServiceStatusEnums.OFFLINE.getValue());
+        });
+    }
+
 
     @Override
     public Note selectServiceStatus(Integer loginId) {
@@ -194,4 +204,52 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
                 .filter(noteVo -> cNoteIds.contains(noteVo.getId()))
                 .collect(Collectors.toList());
     }
+
+    private void updateNoteStatus(Note noteSource, int serviceStatus) {
+        Note note = new Note();
+        BeanUtils.copyProperties(noteSource, note);
+        note.setServiceStatus(serviceStatus);
+        mapper.updateStatusByLoginId(note);
+        noteOnlineLogRecord(note.getId(), serviceStatus);
+    }
+
+    /**
+     * 自定义时间区间节点执行器
+     *
+     * @param startPoint   开始时间
+     * @param endPoint     结束时长(单位小时)
+     * @param startCommand
+     * @param endCommand
+     */
+    private void customizeIntervalPointExecute(Date startPoint, Date endPoint, Runnable startCommand, Runnable endCommand) {
+        long delay = startPoint.getTime() - System.currentTimeMillis();
+        long endDelay = endPoint.getTime() - System.currentTimeMillis();
+        if (delay < 0) {
+            delay = 0;
+        }
+        if (endDelay <= delay) {
+            throw new BusinessException("设置技师上下线时间区间错误，开始时间:" + startPoint.getTime() + "结束时间：" + endPoint.getTime());
+        }
+        executorService.schedule(startCommand, delay, TimeUnit.MILLISECONDS);
+        executorService.schedule(endCommand, endDelay, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * 记录技师上下线日志
+     * @param noteId
+     * @param serviceStatus
+     */
+    private void noteOnlineLogRecord(int noteId, int serviceStatus) {
+        OnlineLog onlineLog = new OnlineLog();
+        onlineLog.setNoteId(noteId);
+        onlineLog.setServiceStatus(serviceStatus);
+        if (NoteServiceStatusEnums.SERVICEABLE.getValue().equals(serviceStatus)) {
+            onlineLog.setServiceStatusRemake("上线操作");
+        } else {
+            onlineLog.setServiceStatusRemake("下线操作");
+        }
+        onlineLog.setCreateTime(DateUtil.getCurDate());
+        onlineLogMapper.insert(onlineLog);
+    }
+
 }

@@ -16,7 +16,8 @@ public enum NoteServiceStatusEnums implements EnumDict<Integer> {
 
     ALL(0, "全部"),
     SERVICEABLE(1, "可服务"),
-    IN_SERVICE(2, "服务中");
+    IN_SERVICE(2, "服务中"),
+    OFFLINE(3, "离线");
 
     private Integer value;
 

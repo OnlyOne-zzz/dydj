@@ -1,6 +1,7 @@
 package com.bestfeng.dydj.controller;
 
 import com.bestfeng.dydj.annotation.SignValidated;
+import com.bestfeng.dydj.controller.request.CustomizeOnlineIntervalRequest;
 import com.bestfeng.dydj.controller.request.NoteListRequest;
 import com.bestfeng.dydj.controller.request.NoteListSearchNameRequest;
 import com.bestfeng.dydj.mbg.mapper.NoteMapper;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/note")
 @Api(tags = "NoteController", description = "技师管理")
 @SignValidated
-public class NoteController{
+public class NoteController {
 
 
     @Autowired
@@ -44,10 +45,18 @@ public class NoteController{
     public CommonResult<CommonPage<NoteVo>> pagingByName(@RequestBody NoteListSearchNameRequest request) {
         return CommonResult.success(noteService.pagingByName(request.getName()));
     }
+
     @PostMapping("/online")
     @ApiOperation("技师上线/下线")
     public CommonResult<Void> online(@RequestBody Note note) {
         noteService.updateStatusByLoginId(note);
+        return CommonResult.success();
+    }
+
+    @PostMapping("/online-interval")
+    @ApiOperation("自定义上线区间")
+    public CommonResult<CommonPage<Void>> customizeOnlineInterval(@RequestBody CustomizeOnlineIntervalRequest request) {
+        noteService.customizeOnlineInterval(request.getStartTime(), request.getEndTime(), request.getLoginid());
         return CommonResult.success();
     }
 }
