@@ -138,7 +138,7 @@ public class NoteServiceImpl extends AbstractGeneralService<Note> implements Not
         }
         mapper.updateStatusByLoginId(note);
         /**操作日志*/
-        noteOnlineLogRecord(note.getId(), serviceStatus);
+        noteOnlineLogRecord(noteObj.getId(), serviceStatus);
     }
 
     @Override
